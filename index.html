@@ -90,21 +90,26 @@
             justify-content: center; 
             align-items: center;    
             width: 100%;
+            overflow: hidden; /* Verhindert Scrollbalken, falls das Logo sehr groß wird */
         }
 
         .center-logo {
-            width: 80%;       /* Breite responsive */
+            width: 80%;       /* Basisbreite */
             height: auto;
-            max-width: 1200px; /* Maximale Breite */
+            max-width: 1200px; 
             
             /* Logo Animation */
             opacity: 0;
+            /* Wir nutzen 'forwards', damit der Endzustand (scale 1.5) bleibt */
             animation: subtleFadeIn 1.5s ease-in-out forwards;
         }
 
+        /* HIER IST DIE ÄNDERUNG FÜR DIE GRÖSSE */
         @keyframes subtleFadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to   { opacity: 1; transform: scale(1); }
+            /* Start: Unsichtbar und leicht kleiner als das Ziel */
+            from { opacity: 0; transform: scale(1.4); }
+            /* Ende: Sichtbar und auf 150% (scale 1.5) vergrößert */
+            to   { opacity: 1; transform: scale(1.5); }
         }
 
         /* ================================================================= */
@@ -164,6 +169,15 @@
                 font-size: 10px; 
                 letter-spacing: 0.05em;
             }
+            
+            /* Optional: Auf dem Handy das Logo vielleicht nicht ganz so riesig machen? */
+            /* Wenn es auf dem Handy zu groß ist, entferne die Kommentarzeichen unten: */
+            /*
+            @keyframes subtleFadeIn {
+                from { opacity: 0; transform: scale(1.1); }
+                to   { opacity: 1; transform: scale(1.2); }
+            }
+            */
         }
     </style>
 </head>

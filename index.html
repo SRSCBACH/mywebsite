@@ -7,7 +7,7 @@
 
     <style>
         /* ================================================================= */
-        /* --- SCHRIFTEN (Lokal aus dem Ordner 'Schrift') --- */
+        /* --- SCHRIFTEN --- */
         /* ================================================================= */
         @font-face {
             font-family: 'Eloquia Display ExtBd';
@@ -24,7 +24,7 @@
         }
 
         /* ================================================================= */
-        /* --- GRUNDLEGENDE EINSTELLUNGEN --- */
+        /* --- GLOBALE EINSTELLUNGEN --- */
         /* ================================================================= */
         :root {
             --text-primary: #ffffff;
@@ -45,17 +45,18 @@
         body {
             font-family: var(--font-body);
             
-            /* HINTERGRUNDBILD */
+            /* HINTERGRUND */
             background-image: url('https://srscbach.github.io/mywebsite/images/NewBlueDrawing2.png');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
             background-attachment: fixed; 
 
-            /* FLEXBOX LAYOUT (Footer nach unten drücken) */
+            /* FLEXBOX LAYOUT */
             display: flex;
             flex-direction: column; 
             min-height: 100vh;      
+            overflow-x: hidden; /* Verhindert seitliches Wackeln auf Handys */
         }
 
         /* ================================================================= */
@@ -63,11 +64,12 @@
         /* ================================================================= */
         .header-container {
             width: 100%;
-            padding: 30px 40px; 
+            padding: 40px 50px; /* Großzügiger Abstand am Desktop */
             display: flex;
-            justify-content: flex-end; /* Menü nach rechts */
+            justify-content: flex-end; 
+            z-index: 10; /* Damit Menü über dem Logo liegt falls es riesig wird */
             
-            /* Animation Startzustand (Unsichtbar) */
+            /* Animation Start */
             opacity: 0;
             transform: translateY(-20px);
             transition: opacity 1s ease-out, transform 1s ease-out;
@@ -78,51 +80,48 @@
             margin: 0;
             padding: 0;
             display: flex;
-            gap: 40px;
+            gap: 50px; /* Viel Platz zwischen Links am PC */
         }
 
         /* ================================================================= */
-        /* --- 2. MAIN CONTENT (Mitte - Logo) --- */
+        /* --- 2. MAIN CONTENT (Logo) --- */
         /* ================================================================= */
         .main-content {
-            flex: 1;  /* Füllt den freien Platz aus */
+            flex: 1;  
             display: flex;
             justify-content: center; 
             align-items: center;    
             width: 100%;
-            overflow: hidden; /* Verhindert Scrollbalken, falls das Logo sehr groß wird */
+            position: relative;
         }
 
         .center-logo {
-            width: 80%;       /* Basisbreite */
+            width: 80%;       
             height: auto;
             max-width: 1200px; 
             
-            /* Logo Animation */
+            /* DESKTOP Animation (Groß: 150%) */
             opacity: 0;
-            /* Wir nutzen 'forwards', damit der Endzustand (scale 1.5) bleibt */
-            animation: subtleFadeIn 1.5s ease-in-out forwards;
+            animation: fadeInDesktop 1.5s ease-in-out forwards;
         }
 
-        /* HIER IST DIE ÄNDERUNG FÜR DIE GRÖSSE */
-        @keyframes subtleFadeIn {
-            /* Start: Unsichtbar und leicht kleiner als das Ziel */
+        @keyframes fadeInDesktop {
             from { opacity: 0; transform: scale(1.4); }
-            /* Ende: Sichtbar und auf 150% (scale 1.5) vergrößert */
             to   { opacity: 1; transform: scale(1.5); }
         }
 
         /* ================================================================= */
-        /* --- 3. FOOTER (Ganz unten) --- */
+        /* --- 3. FOOTER (Unten) --- */
         /* ================================================================= */
         .footer-container {
             width: 100%;
             padding: 20px;       
-            padding-bottom: 30px; 
+            padding-bottom: 40px; 
             display: flex;
             justify-content: center; 
+            z-index: 10;
             
-            /* Animation Startzustand (Unsichtbar) */
+            /* Animation Start */
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 1s ease-out, transform 1s ease-out;
@@ -130,54 +129,76 @@
 
         .footer-nav {
             display: flex;
-            gap: 50px;
+            gap: 60px;
         }
 
         /* ================================================================= */
-        /* --- LINKS --- */
+        /* --- LINKS STYLE --- */
         /* ================================================================= */
         a {
             text-decoration: none;
             color: var(--text-primary);
             font-family: var(--font-heading);
             font-weight: 800;
-            font-size: 14px;
+            font-size: 16px; /* Desktop Größe */
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            padding-bottom: 5px;
+            letter-spacing: 0.15em;
+            padding: 5px; /* Klickfläche vergrößern */
             opacity: 0.7;
             transition: all 0.3s ease;
         }
 
         a:hover {
             color: var(--accent-color);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
             opacity: 1;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5); 
+            text-shadow: 0 0 15px rgba(255,255,255,0.6); 
         }
 
         /* ================================================================= */
-        /* --- MOBILE ANPASSUNG --- */
+        /* --- !!! MOBILE OPTIMIERUNG !!! --- */
         /* ================================================================= */
-        @media (max-width: 600px) {
-            .header-container { padding: 15px 20px; }
-            .header-nav ul { gap: 15px; }
-            .footer-nav { gap: 20px; }
-            .footer-container { padding-bottom: 20px; }
-
-            a {
-                font-size: 10px; 
-                letter-spacing: 0.05em;
+        @media (max-width: 768px) {
+            
+            /* Header kompakter machen */
+            .header-container { 
+                padding: 20px; 
+                justify-content: center; /* Auf Handy vielleicht lieber mittig? Oder flex-end lassen */
             }
             
-            /* Optional: Auf dem Handy das Logo vielleicht nicht ganz so riesig machen? */
-            /* Wenn es auf dem Handy zu groß ist, entferne die Kommentarzeichen unten: */
-            /*
-            @keyframes subtleFadeIn {
-                from { opacity: 0; transform: scale(1.1); }
-                to   { opacity: 1; transform: scale(1.2); }
+            .header-nav ul { 
+                gap: 20px; /* Engere Abstände */
             }
-            */
+
+            /* Footer kompakter machen */
+            .footer-container { 
+                padding-bottom: 30px; 
+            }
+            .footer-nav { 
+                gap: 30px; 
+            }
+
+            /* Links lesbarer machen */
+            a {
+                font-size: 12px; /* 12px ist Minimum für gute Lesbarkeit */
+                letter-spacing: 0.1em;
+            }
+
+            /* LOGO ANPASSUNG FÜR HANDY */
+            .center-logo {
+                width: 90%; /* Logo fast volle Breite */
+                /* Wir überschreiben die Desktop Animation mit einer Mobile Animation */
+                animation: fadeInMobile 1.5s ease-in-out forwards;
+            }
+
+            /* Eigene Animation fürs Handy: 
+               Statt scale(1.5) nehmen wir scale(1.1). 
+               Das wirkt auf dem kleinen Screen trotzdem "voll", 
+               schneidet aber nichts ab. */
+            @keyframes fadeInMobile {
+                from { opacity: 0; transform: scale(0.95); }
+                to   { opacity: 1; transform: scale(1.1); }
+            }
         }
     </style>
 </head>
@@ -219,7 +240,7 @@
                     bottom.style.transform = 'translateY(0)';
                 }
 
-            }, 3000); // 3000ms = 3 Sekunden
+            }, 3000); 
         });
     </script>
 

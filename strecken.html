@@ -11,7 +11,7 @@
 
     <style>
         /* ================================================================= */
-        /* --- LOKALE STYLES FÜR STRECKEN (FINAL) --- */
+        /* --- LOKALE STYLES FÜR STRECKEN (ROBUST VERSION) --- */
         /* ================================================================= */
         :root {
             --bg-card-route: rgba(15, 34, 51, 0.5); 
@@ -25,6 +25,11 @@
         html { height: 100%; overflow-y: scroll; }
         body {
             background-color: #0f172a; 
+            /* PARALLAX FIX */
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            
             margin: 0; padding: 0; min-height: 100vh; width: 100%; overflow-x: hidden;
         }
 
@@ -86,16 +91,8 @@
         .data-label { flex: 0 0 45%; color: var(--text-secondary); font-size: 1.2rem; font-weight: 200; border-right: 1px solid var(--border-color); height: 100%; display: flex; align-items: center; }
         .data-value { flex: 1; font-size: 1.5rem; font-family: var(--font-heading); font-weight: 800; padding-left: 15px; display: flex; align-items: center; color: var(--accent-color); }
 
-        /* BUTTONS (DESKTOP) */
-        .button-group { 
-            display: flex; 
-            flex-direction: row; 
-            height: 45px; 
-            /* HIER: Identischer Abstand horizontal */
-            gap: 10px; 
-            width: 100%; 
-            margin-top: 10px; 
-        }
+        /* BUTTONS */
+        .button-group { display: flex; flex-direction: row; height: 45px; gap: 10px; width: 100%; margin-top: 10px; }
         .btn {
             background-color: var(--btn-bg); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px;
             flex: 1; display: flex; align-items: center; justify-content: center;
@@ -127,16 +124,7 @@
             .data-label { font-size: 0.85rem; flex: 0 0 45%; } 
             .data-value { font-size: 1.0rem; padding-left: 8px; } 
 
-            .button-group { 
-                margin-top: 0; 
-                flex-direction: column; 
-                width: 85px; 
-                height: auto; 
-                /* HIER: Identischer Abstand vertikal (5px) */
-                gap: 5px; 
-                justify-content: center; /* Zentriert, kein "space-between" mehr */
-                flex-shrink: 0; 
-            }
+            .button-group { margin-top: 0; flex-direction: column; width: 85px; height: auto; gap: 5px; justify-content: center; flex-shrink: 0; }
             .btn { font-size: 0.6rem; width: 100%; flex: 1; padding: 0; line-height: 1.2; margin: 0; }
         }
     </style>
@@ -164,35 +152,36 @@
     
     <script>
         // #####################################################################
-        //        AUTO-CALC LOGIK
+        //        AUTO-CALC LOGIK (OHNE FONT BLOCKING)
         // #####################################################################
 
-        document.fonts.ready.then(function () {
-            
-            const customFont = "'Eloquia Text ExtLt', sans-serif";
-            
-            Chart.defaults.font.family = customFont;
-            Chart.defaults.color = '#cbd5e1';
+        // Font Settings direkt setzen (nicht warten!)
+        const customFont = "'Eloquia Text ExtLt', sans-serif";
+        Chart.defaults.font.family = customFont;
+        Chart.defaults.color = '#cbd5e1';
 
-            fetch('strecken.json')
-                .then(response => {
-                    if (!response.ok) { throw new Error("strecken.json konnte nicht geladen werden"); }
-                    return response.json();
-                })
-                .then(touren => {
-                    const container = document.getElementById('app-container');
-                    touren.forEach(tour => {
-                        if(tour.active !== false) {
-                            createCardHTML(container, tour.id);
-                            setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
-                        }
-                    });
-                })
-                .catch(err => {
-                    console.error("Fehler beim Laden der Touren:", err);
-                    document.getElementById('app-container').innerText = "Fehler: Touren konnten nicht geladen werden.";
+        // JSON laden
+        fetch('strecken.json')
+            .then(response => {
+                if (!response.ok) { throw new Error("strecken.json konnte nicht geladen werden"); }
+                return response.json();
+            })
+            .then(touren => {
+                const container = document.getElementById('app-container');
+                touren.forEach(tour => {
+                    if(tour.active !== false) {
+                        createCardHTML(container, tour.id);
+                        
+                        // Sofort initialisieren, ohne auf Fonts zu warten
+                        // setTimeout 0 stellt sicher, dass das HTML im DOM ist
+                        setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
+                    }
                 });
-        });
+            })
+            .catch(err => {
+                console.error("Fehler beim Laden der Touren:", err);
+                document.getElementById('app-container').innerText = "Fehler: Touren konnten nicht geladen werden.";
+            });
 
         function createCardHTML(container, id) {
             const html = `
@@ -230,6 +219,7 @@
         }
 
         function initSingleCard(id, data, fontName) {
+            // Buttons prüfen
             if(data.gpx) document.getElementById(`btn-gpx-${id}`).href = data.gpx;
             else document.getElementById(`btn-gpx-${id}`).classList.add('disabled');
 
@@ -246,6 +236,7 @@
             const speedValueStr = data.schnitt || "30"; 
             document.getElementById(`speed-${id}`).innerText = speedValueStr.includes('km/h') ? speedValueStr : speedValueStr + " km/h";
 
+            // Leaflet
             let mapInstance = L.map(`map-${id}`);
             let positionMarker = null;
             let localTrackPoints = []; 
@@ -285,15 +276,12 @@
                     const minutes = Math.round((durationDec - hours) * 60);
                     const timeStr = `${hours} h ${minutes < 10 ? '0' : ''}${minutes} min`;
 
-                    // --- PROFIL LOGIK ---
+                    // Profil-Logik
                     const ratio = elevHm / distKm;
                     let profileStr = "Flach";
                     
-                    if(ratio > 14) {
-                        profileStr = "Bergig";
-                    } else if(ratio >= 8) {
-                        profileStr = "Wellig";
-                    }
+                    if(ratio > 14) { profileStr = "Bergig"; } 
+                    else if(ratio >= 8) { profileStr = "Wellig"; }
 
                     document.getElementById(`dist-${id}`).innerText = Math.round(distKm) + " km";
                     document.getElementById(`elev-${id}`).innerText = elevHm + " hm";
@@ -306,7 +294,8 @@
 
                 }).on('error', function(e) {
                     console.error(`GPX Fehler Tour ${id}:`, e);
-                    document.getElementById(`title-${id}`).innerText = "GPX Fehler";
+                    document.getElementById(`title-${id}`).innerText = "GPX Fehler (siehe Konsole)";
+                    document.getElementById(`title-${id}`).style.color = "red";
                 }).addTo(mapInstance);
             } else {
                 document.getElementById(`title-${id}`).innerText = "Keine GPX Datei";

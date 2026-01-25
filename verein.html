@@ -8,49 +8,51 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* --- LOKALES DESIGN FÜR DAS FORMULAR --- */
+        /* --- LOKALES DESIGN FÜR DAS FORMULAR & FAQ --- */
         
         /* Hintergrund & Layout */
         html { height: 100%; overflow-y: scroll; }
         body {
             background-color: #0f172a;
-            background-attachment: fixed; /* Parallax Effekt */
+            background-attachment: fixed;
             background-size: cover;
             background-position: center;
             margin: 0; padding: 0; min-height: 100vh; width: 100%; overflow-x: hidden;
             display: flex; flex-direction: column;
         }
 
-        /* Hauptcontainer zentrieren */
+        /* Hauptcontainer: Inhalte untereinander zentrieren */
         .main-content {
             flex: 1;
             display: flex;
-            justify-content: center;
-            align-items: flex-start; 
+            flex-direction: column; /* WICHTIG: Untereinander */
+            align-items: center;    /* Mittig */
             padding-top: 40px;
             padding-bottom: 40px;
+            gap: 30px; /* Abstand zwischen Formular und FAQ */
         }
 
-        /* Die Formular-Karte */
-        .form-card {
+        /* Die Karten (Glas-Effekt) */
+        .content-card {
             background-color: rgba(15, 34, 51, 0.7); 
             border-radius: 16px; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             padding: 40px; 
             width: 100%; 
-            max-width: 600px;
+            max-width: 600px; /* Breite begrenzen */
             backdrop-filter: blur(10px); 
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            margin: 0 20px;
+            margin: 0 20px; /* Seitenabstand auf Mobile */
             opacity: 0; 
             animation: fadeInContent 0.8s ease-in-out forwards;
+            box-sizing: border-box;
         }
         @keyframes fadeInContent { to { opacity: 1; } }
 
-        /* Überschrift */
-        .form-title {
+        /* Überschriften */
+        .card-title {
             font-family: var(--font-heading);
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: #ffffff;
             margin-bottom: 10px;
             text-align: center;
@@ -58,7 +60,7 @@
             letter-spacing: 0.05em;
         }
 
-        .form-subtitle {
+        .card-subtitle {
             font-family: var(--font-body);
             color: var(--text-secondary);
             text-align: center;
@@ -67,84 +69,80 @@
             line-height: 1.5;
         }
 
-        /* Formular Felder */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
+        /* --- FORMULAR STYLES --- */
+        .form-group { margin-bottom: 20px; }
         label {
-            display: block;
-            color: #ffffff;
-            font-family: var(--font-heading);
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-            letter-spacing: 0.05em;
+            display: block; color: #ffffff; font-family: var(--font-heading); font-size: 0.9rem;
+            margin-bottom: 8px; letter-spacing: 0.05em;
         }
-
         input, textarea, select {
-            width: 100%;
-            padding: 12px 15px;
+            width: 100%; padding: 12px 15px;
             background-color: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            color: #ffffff;
-            font-family: var(--font-body);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            box-sizing: border-box; 
+            border-radius: 8px; color: #ffffff;
+            font-family: var(--font-body); font-size: 1rem;
+            transition: all 0.3s ease; box-sizing: border-box; 
         }
-
-        /* Fokus-Effekt */
         input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: #64748b; /* Grau beim Fokus */
+            outline: none; border-color: #64748b;
             background-color: rgba(255, 255, 255, 0.1);
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
+        select option { background-color: #0f172a; color: white; }
+        textarea { resize: vertical; min-height: 120px; }
 
-        select option {
-            background-color: #0f172a;
-            color: white;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        /* --- BUTTON DESIGN (GRAU) --- */
         .submit-btn {
-            width: 100%;
-            padding: 15px;
-            
-            /* HIER GEÄNDERT: GRAU (Slate) statt Blau */
-            background-color: #64748b; 
-            
-            color: white;
-            border: none;
-            border-radius: 8px;
+            width: 100%; padding: 15px;
+            background-color: #64748b; /* Grau */
+            color: white; border: none; border-radius: 8px;
+            font-family: var(--font-heading); font-size: 1.1rem;
+            font-weight: 800; text-transform: uppercase; cursor: pointer;
+            transition: all 0.3s ease; margin-top: 10px; letter-spacing: 0.1em;
+        }
+        .submit-btn:hover {
+            background-color: #475569; transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* --- FAQ STYLES --- */
+        .faq-item {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .faq-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        
+        .faq-question {
             font-family: var(--font-heading);
             font-size: 1.1rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-            letter-spacing: 0.1em;
+            color: #ffffff; /* Weiß */
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Kleiner Pfeil oder Punkt vor der Frage */
+        .faq-question::before {
+            content: "•";
+            color: var(--accent-blue, #0055ff); /* Akzentfarbe */
+            margin-right: 10px;
+            font-size: 1.5rem;
+            line-height: 1;
         }
 
-        .submit-btn:hover {
-            /* HIER GEÄNDERT: Dunkleres Grau beim Drüberfahren */
-            background-color: #475569; 
-            
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        .faq-answer {
+            font-family: var(--font-body);
+            color: var(--text-secondary); /* Hellgrau */
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-left: 20px; /* Einrücken */
         }
 
         /* Mobile Anpassung */
         @media (max-width: 600px) {
-            .form-card { padding: 20px; }
-            .form-title { font-size: 1.8rem; }
+            .content-card { padding: 20px; margin: 0 10px; width: auto;}
+            .card-title { font-size: 1.8rem; }
+            .faq-question { font-size: 1rem; }
         }
     </style>
 </head>
@@ -155,9 +153,10 @@
     </header>
 
     <main class="main-content">
-        <div class="form-card">
-            <h1 class="form-title">Probetraining</h1>
-            <p class="form-subtitle">Lust bekommen mitzufahren? Melde dich unverbindlich an. Wir freuen uns auf dich!</p>
+        
+        <div class="content-card">
+            <h1 class="card-title">Probetraining</h1>
+            <p class="card-subtitle">Lust bekommen mitzufahren? Melde dich unverbindlich an. Wir freuen uns auf dich!</p>
 
             <form action="https://formspree.io/f/xkornnjj" method="POST">
                 
@@ -194,6 +193,40 @@
                 <button type="submit" class="submit-btn">Anmeldung Absenden</button>
             </form>
         </div>
+
+        <div class="content-card">
+            <h2 class="card-title" style="font-size: 1.8rem;">Häufige Fragen</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Brauche ich ein Rennrad?</div>
+                <div class="faq-answer">
+                    Ja, grundsätzlich fahren wir mit Rennrädern. Für das erste "Reinschnuppern" ist ein sportliches Gravel- oder Fitnessbike oft auch okay, solange du das Tempo halten kannst. Ein Mountainbike ist für unsere Straßen-Touren eher ungeeignet.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Gibt es eine Helmpflicht?</div>
+                <div class="faq-answer">
+                    Absolut. Sicherheit steht bei uns an erster Stelle. Ohne Helm keine Mitfahrt – da machen wir keine Ausnahmen.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Wie schnell fahrt ihr?</div>
+                <div class="faq-answer">
+                    Das kommt auf die Gruppe an. Wir versuchen oft, verschiedene Leistungsgruppen zu bilden, damit niemand zurückgelassen wird. Beim Probetraining nehmen wir natürlich Rücksicht auf dich!
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Kostet das Probetraining etwas?</div>
+                <div class="faq-answer">
+                    Nein, das Probetraining ist natürlich kostenlos und unverbindlich. Komm einfach vorbei und schau, ob es dir bei uns gefällt.
+                </div>
+            </div>
+
+        </div>
+
     </main>
 
     <footer class="footer-container" id="footer-container">

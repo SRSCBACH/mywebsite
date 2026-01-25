@@ -7,7 +7,7 @@
 
     <style>
         /* ================================================================= */
-        /* --- SCHRIFTEN --- */
+        /* --- 1. SCHRIFTEN (Lokal) --- */
         /* ================================================================= */
         @font-face {
             font-family: 'Eloquia Display ExtBd';
@@ -24,7 +24,7 @@
         }
 
         /* ================================================================= */
-        /* --- GLOBALE EINSTELLUNGEN --- */
+        /* --- 2. GLOBALE EINSTELLUNGEN --- */
         /* ================================================================= */
         :root {
             --text-primary: #ffffff;
@@ -52,39 +52,37 @@
             background-repeat: no-repeat;
             background-attachment: fixed; 
 
-            /* FLEXBOX LAYOUT */
+            /* FLEXBOX LAYOUT (Footer nach unten drücken) */
             display: flex;
             flex-direction: column; 
             min-height: 100vh;      
-            overflow-x: hidden; /* Verhindert seitliches Wackeln auf Handys */
+            overflow-x: hidden; 
         }
 
         /* ================================================================= */
-        /* --- 1. HEADER (Oben Rechts) --- */
+        /* --- 3. HEADER CONTAINER --- */
         /* ================================================================= */
         .header-container {
             width: 100%;
-            padding: 40px 50px; /* Großzügiger Abstand am Desktop */
+            padding: 40px 50px; 
             display: flex;
             justify-content: flex-end; 
-            z-index: 10; /* Damit Menü über dem Logo liegt falls es riesig wird */
+            z-index: 10;
             
-            /* Animation Start */
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
+            /* KEINE ANIMATION MEHR - SOFORT SICHTBAR */
         }
 
+        /* Styles für das Menü, das per JS reingeladen wird */
         .header-nav ul {
             list-style: none;
             margin: 0;
             padding: 0;
             display: flex;
-            gap: 50px; /* Viel Platz zwischen Links am PC */
+            gap: 50px; 
         }
 
         /* ================================================================= */
-        /* --- 2. MAIN CONTENT (Logo) --- */
+        /* --- 4. MAIN CONTENT (Logo) --- */
         /* ================================================================= */
         .main-content {
             flex: 1;  
@@ -111,7 +109,7 @@
         }
 
         /* ================================================================= */
-        /* --- 3. FOOTER (Unten) --- */
+        /* --- 5. FOOTER CONTAINER --- */
         /* ================================================================= */
         .footer-container {
             width: 100%;
@@ -121,34 +119,33 @@
             justify-content: center; 
             z-index: 10;
             
-            /* Animation Start */
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
+            /* KEINE ANIMATION MEHR - SOFORT SICHTBAR */
         }
 
+        /* Styles für das Footer-Menü, das per JS reingeladen wird */
         .footer-nav {
             display: flex;
             gap: 60px;
         }
 
         /* ================================================================= */
-        /* --- LINKS STYLE --- */
+        /* --- LINKS STYLE (Gültig für Header & Footer) --- */
         /* ================================================================= */
-        a {
+        /* WICHTIG: Diese Styles müssen hier sein, damit das geladene HTML schön aussieht */
+        .nav-link {
             text-decoration: none;
             color: var(--text-primary);
             font-family: var(--font-heading);
             font-weight: 800;
-            font-size: 16px; /* Desktop Größe */
+            font-size: 16px; 
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            padding: 5px; /* Klickfläche vergrößern */
+            padding: 5px; 
             opacity: 0.7;
             transition: all 0.3s ease;
         }
 
-        a:hover {
+        .nav-link:hover {
             color: var(--accent-color);
             transform: translateY(-3px);
             opacity: 1;
@@ -156,21 +153,19 @@
         }
 
         /* ================================================================= */
-        /* --- !!! MOBILE OPTIMIERUNG !!! --- */
+        /* --- MOBILE OPTIMIERUNG --- */
         /* ================================================================= */
         @media (max-width: 768px) {
             
-            /* Header kompakter machen */
             .header-container { 
                 padding: 20px; 
-                justify-content: center; /* Auf Handy vielleicht lieber mittig? Oder flex-end lassen */
+                justify-content: center; 
             }
             
             .header-nav ul { 
-                gap: 20px; /* Engere Abstände */
+                gap: 20px; 
             }
 
-            /* Footer kompakter machen */
             .footer-container { 
                 padding-bottom: 30px; 
             }
@@ -178,23 +173,17 @@
                 gap: 30px; 
             }
 
-            /* Links lesbarer machen */
-            a {
-                font-size: 12px; /* 12px ist Minimum für gute Lesbarkeit */
+            .nav-link {
+                font-size: 12px; 
                 letter-spacing: 0.1em;
             }
 
             /* LOGO ANPASSUNG FÜR HANDY */
             .center-logo {
-                width: 90%; /* Logo fast volle Breite */
-                /* Wir überschreiben die Desktop Animation mit einer Mobile Animation */
+                width: 90%; 
                 animation: fadeInMobile 1.5s ease-in-out forwards;
             }
 
-            /* Eigene Animation fürs Handy: 
-               Statt scale(1.5) nehmen wir scale(1.1). 
-               Das wirkt auf dem kleinen Screen trotzdem "voll", 
-               schneidet aber nichts ab. */
             @keyframes fadeInMobile {
                 from { opacity: 0; transform: scale(0.95); }
                 to   { opacity: 1; transform: scale(1.1); }
@@ -204,45 +193,19 @@
 </head>
 <body>
 
-    <header class="header-container" id="topMenu">
-        <nav class="header-nav">
-            <ul>
-                <li><a href="https://www.srsc-bach.de/verein">Verein</a></li>
-                <li><a href="https://www.srsc-bach.de/streckenkatalog">Strecken</a></li>
-                <li><a href="https://www.srsc-bach.de/kalender">Kalender</a></li>
-            </ul>
-        </nav>
+    <header class="header-container" id="header-container">
+        <div id="header-placeholder" style="width: 100%; display: flex; justify-content: flex-end;"></div>
     </header>
 
     <main class="main-content">
         <img src="https://srscbach.github.io/mywebsite/images/DeineCrewlang.svg" alt="SRSC Bach Crew Logo" class="center-logo">
     </main>
 
-    <footer class="footer-container" id="bottomMenu">
-        <nav class="footer-nav">
-            <a href="https://www.srsc-bach.de/landingpage">Startseite</a>
-            <a href="https://www.srsc-bach.de/impressumneu">Impressum</a>
-        </nav>
+    <footer class="footer-container" id="footer-container">
+        <div id="footer-placeholder" style="width: 100%; display: flex; justify-content: center;"></div>
     </footer>
 
-    <script>
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                var top = document.getElementById('topMenu');
-                var bottom = document.getElementById('bottomMenu');
-
-                if (top) {
-                    top.style.opacity = '1';
-                    top.style.transform = 'translateY(0)';
-                }
-                if (bottom) {
-                    bottom.style.opacity = '1';
-                    bottom.style.transform = 'translateY(0)';
-                }
-
-            }, 3000); 
-        });
-    </script>
+    <script src="main.js"></script>
 
 </body>
 </html>

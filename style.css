@@ -46,7 +46,6 @@ body {
     color: var(--text-primary);
     
     /* HINTERGRUNDBILD - ZENTRAL GESTEUERT */
-    background-image: url('https://srscbach.github.io/mywebsite/images/NewBlueDrawing2.png');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;

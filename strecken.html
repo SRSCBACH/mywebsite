@@ -200,7 +200,7 @@
         Chart.defaults.font.family = 'Eloquia Text ExtLt';
         Chart.defaults.color = '#cbd5e1';
 
-        // Wir laden jetzt direkt die strecken.json statt Google Sheets
+        // Wir laden jetzt direkt die strecken.json
         fetch('strecken.json')
             .then(response => {
                 if (!response.ok) { throw new Error("strecken.json konnte nicht geladen werden"); }
@@ -209,12 +209,9 @@
             .then(touren => {
                 const container = document.getElementById('app-container');
                 
-                // Wir gehen durch jede Tour im JSON
                 touren.forEach(tour => {
-                    // Optional: 'active' Flag prüfen, falls man Touren ausblenden will
                     if(tour.active !== false) {
                         createCardHTML(container, tour.id);
-                        // Wir warten kurz, damit das HTML existiert, bevor wir die Karte laden
                         setTimeout(() => initSingleCard(tour.id, tour), 0);
                     }
                 });
@@ -224,7 +221,7 @@
             .catch(err => {
                 console.error("Fehler beim Laden der Touren:", err);
                 removeLoader();
-                document.getElementById('app-container').innerText = "Fehler: Touren konnten nicht geladen werden. Prüfe die strecken.json.";
+                document.getElementById('app-container').innerText = "Fehler: Touren konnten nicht geladen werden.";
             });
 
         function removeLoader() {
@@ -301,8 +298,11 @@
                 attribution: '© OpenStreetMap', opacity: 1.0
             }).addTo(mapInstance);
 
+            // Roter Punkt für Position auf der Karte (bleibt rot oder soll der auch blau?)
+            // Ich lasse ihn rot (#ef4444) damit man ihn sieht, aber den Füllkreis blau?
+            // Hier ist der blaue Marker auf der Karte:
             positionMarker = L.circleMarker([0, 0], {
-                radius: 6, fillColor: "#38bdf8", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 1, zIndexOffset: 1000
+                radius: 6, fillColor: "#0055ff", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 1, zIndexOffset: 1000
             }).addTo(mapInstance);
             positionMarker.setStyle({ opacity: 0, fillOpacity: 0 });
 
@@ -314,7 +314,8 @@
                         startIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-start.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
                         endIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-end.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
                     },
-                    polyline_options: { color: '#38bdf8', opacity: 0.9, weight: 4, lineCap: 'round' }
+                    // HIER GEÄNDERT: Linie auf der Karte ist jetzt #0055ff
+                    polyline_options: { color: '#0055ff', opacity: 0.9, weight: 4, lineCap: 'round' }
                 }).on('loaded', function(e) {
                     const gpx = e.target;
                     mapInstance.fitBounds(gpx.getBounds());
@@ -371,7 +372,8 @@
                     L.polylineDecorator(l, {
                         patterns: [{ 
                             offset: '100px', repeat: '200px', 
-                            symbol: L.Symbol.arrowHead({ pixelSize: 8, polygon: false, pathOptions: { stroke: true, color: '#38bdf8', weight: 2, opacity: 1 } })
+                            // HIER GEÄNDERT: Pfeile auf der Karte sind jetzt #0055ff
+                            symbol: L.Symbol.arrowHead({ pixelSize: 8, polygon: false, pathOptions: { stroke: true, color: '#0055ff', weight: 2, opacity: 1 } })
                         }]
                     }).addTo(mapRef);
                     const latlngs = l.getLatLngs();
@@ -412,11 +414,13 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        data: points, borderColor: '#38bdf8', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
+                        // HIER GEÄNDERT: Standardlinie ist jetzt #0055ff
+                        data: points, borderColor: '#0055ff', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
                         segment: {
                             borderColor: ctx => {
                                 if (ctx.p0DataIndex === undefined) return undefined;
-                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? '#ef4444' : (s >= 4 ? '#f97316' : '#38bdf8');
+                                // HIER GEÄNDERT: Die flachen Stücke (letzter Wert) sind jetzt #0055ff
+                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? '#ef4444' : (s >= 4 ? '#f97316' : '#0055ff');
                             },
                             backgroundColor: ctx => {
                                 if (ctx.p0DataIndex === undefined) return undefined;

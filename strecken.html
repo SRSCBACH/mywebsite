@@ -11,7 +11,7 @@
 
     <style>
         /* ================================================================= */
-        /* --- LOKALE STYLES FÜR STRECKEN (SYMMETRISCHE VERSION) --- */
+        /* --- LOKALE STYLES FÜR STRECKEN (FINAL OPTIMIZED) --- */
         /* ================================================================= */
         :root {
             --bg-card-route: rgba(15, 34, 51, 0.5); 
@@ -19,6 +19,22 @@
             --border-color: rgba(255, 255, 255, 0.1); 
             --btn-bg: rgba(255, 255, 255, 0.1);
             --spacing-unit: 15px; 
+        }
+
+        /* --- FIX FÜR WEISSEN BALKEN & SCROLLING --- */
+        html {
+            height: 100%;
+            overflow-y: scroll; 
+        }
+
+        body {
+            /* Fallback Farbe dunkel setzen, falls Bild kurz weg ist */
+            background-color: #0f172a; 
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         /* CONTAINER */
@@ -44,11 +60,13 @@
             display: flex; justify-content: space-between; align-items: center; 
             border-bottom: 1px solid var(--border-color);
         }
+        
+        /* Fix für abgeschnittene Umlaute (Ä, Ö, Ü) */
         .title { 
             font-size: 1.8rem; 
             padding-top: 5px; 
-            padding-bottom: 2px;
-            line-height: 1.4; 
+            padding-bottom: 3px; /* Etwas Platz unten */
+            line-height: 1.4;    /* Mehr Höhe für die Zeile */
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
         }
         .brand-logo { height: 22px; width: auto; opacity: 0.7; display: block; flex-shrink: 0; margin-left: 15px; }
@@ -74,7 +92,7 @@
             box-shadow: inset 0 0 10px rgba(0,0,0,0.1); z-index: 1;
         }
 
-        /* HIER GEÄNDERT: ZOOM BUTTONS 50% KLEINER */
+        /* ZOOM BUTTONS 50% KLEINER */
         .leaflet-bar a { 
             background-color: #fff !important; 
             color: #333 !important; 
@@ -106,8 +124,9 @@
         }
         .data-row:last-child { border-bottom: none; }
         
-        .data-label { flex: 0 0 45%; color: var(--text-secondary); font-size: 1.1rem; font-weight: 200; border-right: 1px solid var(--border-color); height: 100%; display: flex; align-items: center; }
-        .data-value { flex: 1; font-size: 1.4rem; font-family: var(--font-heading); font-weight: 800; padding-left: 15px; display: flex; align-items: center; color: var(--accent-color); }
+        /* Schriftgrößen Tabelle */
+        .data-label { flex: 0 0 45%; color: var(--text-secondary); font-size: 1.2rem; font-weight: 200; border-right: 1px solid var(--border-color); height: 100%; display: flex; align-items: center; }
+        .data-value { flex: 1; font-size: 1.5rem; font-family: var(--font-heading); font-weight: 800; padding-left: 15px; display: flex; align-items: center; color: var(--accent-color); }
 
         /* BUTTONS */
         .button-group { display: flex; flex-direction: row; height: 45px; gap: 10px; width: 100%; margin-top: 10px; }
@@ -118,6 +137,7 @@
             cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.05em; padding: 0; 
         }
         
+        /* HOVER: DUNKELGRAU */
         .btn:hover { 
             background-color: #334155; 
             color: #ffffff; 
@@ -127,9 +147,6 @@
         
         .btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
 
-        .loading-text { font-size: 1rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
-        @keyframes blink { 50% { opacity: 0.5; } }
-
         /* MOBILE ANPASSUNG */
         @media (max-width: 850px) {
             .card { padding: 12px; }
@@ -138,17 +155,19 @@
             .brand-logo { display: none; } 
             
             .content-grid { grid-template-columns: 1fr; gap: 10px; }
-            
             .left-column { gap: 10px; } 
 
             .map-wrapper { height: 220px; } 
             .profile-container { height: 100px; }
 
+            /* Mobile: Buttons rechts neben Tabelle */
             .stats-wrapper { flex-direction: row; gap: 8px; align-items: stretch; }
             .data-table { flex: 1; border-top: none; }
             .data-row { min-height: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-            .data-label { font-size: 0.75rem; flex: 0 0 45%; } 
-            .data-value { font-size: 0.9rem; padding-left: 8px; } 
+            
+            /* Mobile Schriftgrößen */
+            .data-label { font-size: 0.85rem; flex: 0 0 45%; } 
+            .data-value { font-size: 1.0rem; padding-left: 8px; } 
 
             .button-group { 
                 margin-top: 0; flex-direction: column; width: 85px; height: auto; gap: 4px; justify-content: space-between; flex-shrink: 0;
@@ -185,8 +204,10 @@
         //        LOGIK
         // #####################################################################
 
+        // 1. Warten bis Schriften wirklich geladen sind (Chart-Fix)
         document.fonts.ready.then(function () {
             
+            // Name der Schriftart definieren
             const customFont = "'Eloquia Text ExtLt', sans-serif";
             
             Chart.defaults.font.family = customFont;
@@ -202,6 +223,7 @@
                     touren.forEach(tour => {
                         if(tour.active !== false) {
                             createCardHTML(container, tour.id);
+                            // Font-Name an die Funktion übergeben
                             setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
                         }
                     });
@@ -272,6 +294,7 @@
                 attribution: '© OpenStreetMap', opacity: 1.0
             }).addTo(mapInstance);
 
+            // Marker in Royal Blue (#0055ff)
             positionMarker = L.circleMarker([0, 0], {
                 radius: 6, fillColor: "#0055ff", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 1, zIndexOffset: 1000
             }).addTo(mapInstance);
@@ -284,6 +307,7 @@
                         startIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-start.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
                         endIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-end.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
                     },
+                    // GPX Linie in Royal Blue (#0055ff)
                     polyline_options: { color: '#0055ff', opacity: 0.9, weight: 4, lineCap: 'round' }
                 }).on('loaded', function(e) {
                     const gpx = e.target;
@@ -341,6 +365,7 @@
                     L.polylineDecorator(l, {
                         patterns: [{ 
                             offset: '100px', repeat: '200px', 
+                            // Pfeile in Royal Blue (#0055ff)
                             symbol: L.Symbol.arrowHead({ pixelSize: 8, polygon: false, pathOptions: { stroke: true, color: '#0055ff', weight: 2, opacity: 1 } })
                         }]
                     }).addTo(mapRef);
@@ -370,6 +395,7 @@
 
             const ctx = document.getElementById(`chart-${id}`).getContext('2d');
             
+            // GRÜN (#10b981) als Hauptfarbe
             const gradientGreen = ctx.createLinearGradient(0, 0, 0, 160); 
             gradientGreen.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); 
             gradientGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)'); 
@@ -391,10 +417,12 @@
                 data: {
                     labels: labels,
                     datasets: [{
+                        // Grüne Linie
                         data: points, borderColor: '#10b981', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
                         segment: {
                             borderColor: ctx => {
                                 if (ctx.p0DataIndex === undefined) return undefined;
+                                // Standard Flach = Grün
                                 const s = slopes[ctx.p1DataIndex]; return s > 6 ? '#ef4444' : (s >= 4 ? '#f97316' : '#10b981');
                             },
                             backgroundColor: ctx => {
@@ -430,6 +458,7 @@
                                 font: { family: fontName, size: chartFontSize },
                                 callback: function(value, index, values) {
                                     const label = this.getLabelForValue(value);
+                                    // Ganze Zahlen
                                     return Math.round(label) + ' km';
                                 }
                             } 

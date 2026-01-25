@@ -1,0 +1,11 @@
+{
+    "headerLinks": [
+        { "text": "Verein", "url": "https://srscbach.github.io/mywebsite/" },
+        { "text": "Strecken", "url": "strecken.html" },
+        { "text": "Kalender", "url": "kalender.html" }
+    ],
+    "footerLinks": [
+        { "text": "Startseite", "url": "https://srscbach.github.io/mywebsite/" },
+        { "text": "Impressum", "url": "impressum.html" }
+    ]
+}

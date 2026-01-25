@@ -23,7 +23,7 @@
         /* CONTAINER */
         #app-container {
             display: flex; flex-direction: column; gap: 30px; align-items: center; width: 100%;
-            /* Sanftes Einblenden der Inhalte */
+            /* Sanftes Einblenden */
             opacity: 0; animation: fadeInContent 0.8s ease-in-out forwards;
         }
         @keyframes fadeInContent { to { opacity: 1; } }
@@ -143,6 +143,7 @@
         //        LOGIK
         // #####################################################################
 
+        // GLOBAL: Standardschrift für Chart.js
         Chart.defaults.font.family = 'Eloquia Text ExtLt';
         Chart.defaults.color = '#cbd5e1';
 
@@ -159,7 +160,6 @@
                         setTimeout(() => initSingleCard(tour.id, tour), 0);
                     }
                 });
-                // removeLoader() wird nicht mehr benötigt
             })
             .catch(err => {
                 console.error("Fehler beim Laden der Touren:", err);
@@ -325,7 +325,7 @@
 
             const ctx = document.getElementById(`chart-${id}`).getContext('2d');
             
-            // GRÜNE VERLÄUFE
+            // GRÜNE VERLÄUFE (Original)
             const gradientGreen = ctx.createLinearGradient(0, 0, 0, 160); 
             gradientGreen.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); 
             gradientGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)'); 
@@ -347,7 +347,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        // Farbe GRÜN (#10b981)
+                        // Farbe wieder GRÜN (#10b981)
                         data: points, borderColor: '#10b981', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
                         segment: {
                             borderColor: ctx => {
@@ -384,8 +384,9 @@
                             ticks: { 
                                 maxTicksLimit: 8, 
                                 color: '#94a3b8', 
+                                // EXPLIZIT: SCHRIFTART SETZEN
                                 font: { family: 'Eloquia Text ExtLt', size: chartFontSize },
-                                // Ganze Zahlen für X-Achse
+                                // X-Achse: Ganze Zahlen
                                 callback: function(value, index, values) {
                                     const label = this.getLabelForValue(value);
                                     return Math.round(label) + ' km';
@@ -399,6 +400,7 @@
                                 stepSize: 50, 
                                 maxTicksLimit: 5, 
                                 color: '#94a3b8', 
+                                // EXPLIZIT: SCHRIFTART SETZEN
                                 font: { family: 'Eloquia Text ExtLt', size: chartFontSize }, 
                                 callback: v => v + ' m' 
                             } 

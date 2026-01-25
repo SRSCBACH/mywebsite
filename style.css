@@ -2,10 +2,9 @@
 /* style.css - DAS ZENTRALE DESIGN-DOKUMENT */
 /* ================================================================= */
 
-/* --- 1. SCHRIFTEN LADEN --- */
+/* --- 1. SCHRIFTEN LADEN (Ordner: schrift/) --- */
 @font-face {
     font-family: 'Eloquia Display ExtBd';
-    /* HIER ÄNDERN: schrift statt Schrift */
     src: url('schrift/Typekiln - EloquiaDisplay-ExtraBold.otf') format('opentype');
     font-weight: 800;
     font-style: normal;
@@ -13,18 +12,20 @@
 
 @font-face {
     font-family: 'Eloquia Text ExtLt';
-    /* HIER ÄNDERN: schrift statt Schrift */
     src: url('schrift/Typekiln - EloquiaText-ExtraLight.otf') format('opentype');
     font-weight: 200;
     font-style: normal;
 }
 
-/* --- 2. FARBEN & VARIABLEN (Hier zentral ändern!) --- */
+/* --- 2. FARBEN & VARIABLEN --- */
 :root {
     --text-primary: #ffffff;
     --text-secondary: #e2e8f0; 
     --accent-color: #ffffff;
-    --accent-blue: #0055ff;
+    
+    /* Globaler Akzent (Royal Blue für Links, Loader, Marker) */
+    --accent-blue: #0055ff; 
+    
     --accent-gray: #cbd5e1;
     
     --font-heading: 'Eloquia Display ExtBd', sans-serif;
@@ -45,13 +46,14 @@ body {
     font-family: var(--font-body);
     color: var(--text-primary);
     
-    /* HINTERGRUNDBILD - ZENTRAL GESTEUERT */
+    /* HINTERGRUND-KONFIGURATION */
+    /* Das Bild (URL) wird von main.js / config.json gesetzt */
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    background-attachment: fixed; 
+    background-attachment: fixed; /* Wichtig: Bild bleibt beim Scrollen stehen */
 
-    /* Flexbox Layout für Footer unten */
+    /* Flexbox Layout (Footer unten halten) */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -80,17 +82,17 @@ body {
     z-index: 10;
 }
 
-/* Navigation Listen */
+/* Navigation Listen (werden von JS gebaut) */
 .header-nav ul, .footer-nav {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 40px; /* Standard Abstand */
+    gap: 40px; 
 }
 
-/* LINKS STYLE (Gültig für alles) */
-.nav-link, a.text-link, .header-nav a, .footer-nav a {
+/* LINKS STYLE (Gültig für Header & Footer) */
+.nav-link, .header-nav a, .footer-nav a {
     text-decoration: none;
     color: var(--text-primary);
     font-family: var(--font-heading);
@@ -103,16 +105,6 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Spezieller Link-Stil im Text (Impressum) */
-a.text-link {
-    font-size: 1rem;
-    border-bottom: 1px solid var(--accent-gray);
-    letter-spacing: normal;
-    font-family: var(--font-body);
-    font-weight: normal;
-    padding: 0;
-}
-
 .nav-link:hover, .header-nav a:hover, .footer-nav a:hover {
     color: var(--accent-color);
     transform: translateY(-3px);
@@ -120,10 +112,22 @@ a.text-link {
     text-shadow: 0 0 15px rgba(255,255,255,0.6); 
 }
 
+/* Spezieller Link-Stil im Fließtext (z.B. im Impressum) */
+a.text-link {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 1rem;
+    border-bottom: 1px solid var(--accent-gray);
+    letter-spacing: normal;
+    font-family: var(--font-body);
+    font-weight: normal;
+    padding: 0;
+    transition: all 0.2s;
+}
+
 a.text-link:hover {
     color: var(--accent-blue);
     border-color: var(--accent-blue);
-    transform: none;
     text-shadow: none;
 }
 
@@ -132,13 +136,13 @@ a.text-link:hover {
     flex: 1; 
     display: flex;
     justify-content: center;
-    align-items: center; /* Standard: Mittig (für Startseite) */
+    align-items: center; /* Standard: Vertikal mittig (für Startseite) */
     width: 100%;
     padding: 20px;
     position: relative;
 }
 
-/* Speziell für Impressum: Oben ausgerichtet */
+/* WICHTIG: Für Impressum, Kalender & Strecken (Inhalt oben) */
 .main-content.top-aligned {
     align-items: flex-start;
 }
@@ -158,7 +162,7 @@ a.text-link:hover {
     to   { opacity: 1; transform: scale(1.5); }
 }
 
-/* --- 7. ELEMENTE: IMPRESSUM (TEXT) --- */
+/* --- 7. ELEMENTE: IMPRESSUM & STANDARDS --- */
 .impressum-card {
     width: 100%;
     max-width: 950px;
@@ -198,19 +202,84 @@ h2 {
     padding-left: 10px;
 }
 .info-block h2 { margin-top: 0; }
+
 p { font-size: 1rem; line-height: 1.6; color: var(--text-secondary); margin: 0 0 15px 0; }
 strong { color: var(--text-primary); font-weight: 600; }
+
 .legal-text { grid-column: span 2; margin-top: 20px; }
-.legal-text h3 { font-family: var(--font-heading); font-size: 1rem; margin-top: 20px; }
-.legal-text h4 { font-family: var(--font-heading); font-size: 0.9rem; color: var(--accent-gray); margin-top: 15px; }
+.legal-text h3 { font-family: var(--font-heading); font-size: 1rem; margin-top: 20px; margin-bottom: 10px; color: var(--text-primary);}
+.legal-text h4 { font-family: var(--font-heading); font-size: 0.9rem; color: var(--accent-gray); margin-top: 15px; margin-bottom: 5px; }
 
 
-/* --- 8. MOBILE OPTIMIERUNG (Für alles) --- */
-@media (max-width: 800px) {
+/* --- 8. ELEMENTE: STRECKEN / TABELLEN & BUTTONS --- */
+
+/* Tabelle: Schrift vergrößert */
+.data-table {
+    width: 100%; 
+    display: flex; flex-direction: column; flex: 1; 
+}
+
+.data-row {
+    display: flex; 
+    /* Farbe lokal in strecken.html definiert, hier nur Fallback */
+    border-bottom: 1px solid rgba(255,255,255,0.1); 
+    align-items: center; 
+    flex: 1; 
+    min-height: 40px; 
+}
+
+.data-label {
+    flex: 0 0 45%; 
+    color: var(--text-secondary); 
+    font-size: 1.3rem; /* Vergrößert */
+    font-weight: 200; 
+    border-right: 1px solid rgba(255,255,255,0.1); 
+    height: 100%; 
+    display: flex; 
+    align-items: center;
+}
+
+.data-value {
+    flex: 1; 
+    font-size: 1.6rem; /* Vergrößert */
+    font-family: var(--font-heading); 
+    font-weight: 800; 
+    padding-left: 20px; 
+    display: flex; 
+    align-items: center; 
+    color: var(--accent-color);
+}
+
+/* Buttons */
+.btn {
+    background-color: rgba(255, 255, 255, 0.1); 
+    color: var(--text-primary); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border-radius: 8px;
+    flex: 1; 
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; font-family: var(--font-heading); font-weight: 800; text-transform: uppercase;
+    cursor: pointer; text-decoration: none; transition: all 0.2s;
+    letter-spacing: 0.05em; padding: 0; 
+}
+
+/* Button Hover: DUNKELGRAU statt Blau */
+.btn:hover { 
+    background-color: #334155; 
+    color: #ffffff;
+    transform: translateY(-2px); 
+    border-color: #334155;
+}
+
+.btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+
+
+/* --- 9. MOBILE OPTIMIERUNG --- */
+@media (max-width: 850px) {
     .header-container { padding: 15px 20px; justify-content: center; }
     .footer-container { padding-bottom: 30px; }
     
-    .header-nav ul, .footer-nav { gap: 15px; } /* Engere Abstände */
+    .header-nav ul, .footer-nav { gap: 15px; } 
     
     .nav-link, .header-nav a, .footer-nav a { 
         font-size: 12px; 
@@ -231,4 +300,8 @@ strong { color: var(--text-primary); font-weight: 600; }
         from { opacity: 0; transform: scale(0.95); }
         to   { opacity: 1; transform: scale(1.1); }
     }
+
+    /* Tabellen Schrift Mobile */
+    .data-label { font-size: 0.85rem; } 
+    .data-value { font-size: 1.0rem; } 
 }

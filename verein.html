@@ -60,15 +60,14 @@
             box-sizing: border-box; color: #ffffff;
         }
         
-        /* --- NEU: HIER WIRD DIE ERSTE BOX TRANSPARENT GEMACHT --- */
-        /* Wählt das erste Kind-Element (.content-card) im Hauptcontainer aus */
+        /* HIER WIRD DIE ERSTE BOX (VEREIN) TRANSPARENT GEMACHT */
         .main-content > .content-card:first-child {
-            background-color: transparent; /* Kein Hintergrund */
-            border: none;                  /* Kein Rahmen */
-            box-shadow: none;              /* Kein Schatten */
-            backdrop-filter: none;         /* Kein Blur-Effekt */
-            padding-top: 0;                /* Weniger Abstand nach oben */
-            padding-bottom: 10px;          /* Weniger Abstand nach unten */
+            background-color: transparent; 
+            border: none;                 
+            box-shadow: none;             
+            backdrop-filter: none;        
+            padding-top: 0;               
+            padding-bottom: 10px;         
         }
         
         /* Den Titel der ersten, freien Box etwas größer machen */
@@ -182,7 +181,6 @@
             text-align: justify;
         }
         .faq-item.active .faq-toggle { transform: rotate(45deg); color: #94a3b8; }
-        /* HIER ERHÖHT: 2000px damit lange Rechtstexte reinpassen */
         .faq-item.active .faq-answer { max-height: 2000px; opacity: 1; padding-bottom: 20px; }
         
         .faq-answer strong { color: #ffffff; font-weight: 600; }
@@ -193,7 +191,6 @@
             .content-card { padding: 20px; margin: 0 10px; width: auto;}
             .card-title { font-size: 1.5rem; }
             .form-row { flex-direction: column; gap: 0; }
-            /* Auf Handy den Titel der ersten Box auch anpassen */
             .main-content > .content-card:first-child .card-title { font-size: 2rem; }
         }
     </style>
@@ -352,8 +349,8 @@
                     <select name="member_beitrag" required>
                         <option value="" disabled selected>Bitte wählen...</option>
                         <option value="Erwachsene (40€)">Erwachsene (40 €)</option>
-                        <option value="Jugendliche (16€)">Jugendliche 15–17 J. (16 €)</option>
-                        <option value="Kinder (10€)">Kinder bis 14 J. (10 €)</option>
+                        <option value="Jugendliche (16€)">Jugendliche 14–17 J. (16 €)</option>
+                        <option value="Kinder (10€)">Kinder bis 13 J. (10 €)</option>
                         <option value="Familie (60€)">Familien / Lebensgem. (60 €)</option>
                     </select>
                 </div>

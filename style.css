@@ -350,3 +350,75 @@ strong { color: var(--text-primary); font-weight: 600; }
     .data-label { font-size: 0.85rem; } 
     .data-value { font-size: 1.0rem; } 
 }
+/* ========================================= */
+/* LEBENDIGER HINTERGRUND (ORBS)            */
+/* ========================================= */
+
+/* Container für den Hintergrund */
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Ganz hinten */
+    overflow: hidden; /* Damit nichts scrollt */
+    pointer-events: none; /* Klicks gehen durch */
+}
+
+/* Basis-Design für alle Orbs */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px); /* Der Weichzeichner-Effekt! */
+    opacity: 0.4; /* Nicht zu grell, damit Text lesbar bleibt */
+    animation: float 20s infinite ease-in-out alternate;
+}
+
+/* ORB 1: Dein Royal Blue (Oben Links) */
+.orb-1 {
+    top: -10%;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: #0055ff;
+    animation-duration: 25s;
+}
+
+/* ORB 2: Ein helles Cyan/Türkis (Unten Rechts) - Moderner Kontrast */
+.orb-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: #06b6d4; /* Cyan */
+    animation-duration: 30s;
+    animation-direction: alternate-reverse;
+}
+
+/* ORB 3: Ein dunkleres Violett (Mitte) - Für Tiefe */
+.orb-3 {
+    top: 30%;
+    left: 40%;
+    width: 40vw;
+    height: 40vw;
+    background: #7c3aed; /* Violett */
+    animation-duration: 22s;
+    opacity: 0.3;
+}
+
+/* Die Bewegung */
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(50px, -50px) scale(1.1);
+    }
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+}

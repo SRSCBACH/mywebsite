@@ -93,7 +93,6 @@
             transition: all 0.3s ease; 
             box-sizing: border-box; 
             
-            /* WICHTIG FÜR SELECT: Standard-Pfeil entfernen */
             appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -105,17 +104,15 @@
             background-repeat: no-repeat;
             background-position: right 15px top 50%;
             background-size: 12px auto;
-            padding-right: 40px; /* Platz für den Pfeil */
+            padding-right: 40px; 
             cursor: pointer;
         }
 
-        /* Optionen im Dropdown dunkel machen */
         select option { background-color: #0f172a; color: white; }
 
-        /* Fokus-Effekt (Grau statt Blau) */
         input:focus, textarea:focus, select:focus {
             outline: none; 
-            border-color: #94a3b8; /* Helles Grau */
+            border-color: #94a3b8; 
             background-color: rgba(255, 255, 255, 0.1);
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
@@ -124,7 +121,7 @@
 
         .submit-btn {
             width: 100%; padding: 15px;
-            background-color: #64748b; /* Grau */
+            background-color: #64748b; 
             color: white; border: none; border-radius: 8px;
             font-family: var(--font-heading), sans-serif; 
             font-size: 1.1rem;
@@ -154,9 +151,8 @@
             transition: color 0.3s ease;
         }
         
-        /* HIER GEÄNDERT: Hover Farbe jetzt Grau/Weiß statt Blau */
         .faq-question:hover {
-            color: #94a3b8; /* Slate-400 (Grau) */
+            color: #94a3b8; 
         }
 
         .faq-toggle {
@@ -181,7 +177,6 @@
         /* Wenn aktiv */
         .faq-item.active .faq-toggle {
             transform: rotate(45deg); 
-            /* HIER GEÄNDERT: Icon Farbe jetzt Grau statt Blau */
             color: #94a3b8; 
         }
         .faq-item.active .faq-answer {
@@ -249,16 +244,6 @@
 
             <div class="faq-item">
                 <div class="faq-question">
-                    Brauche ich ein Rennrad?
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    Ja, grundsätzlich fahren wir mit Rennrädern. Für das erste "Reinschnuppern" ist ein sportliches Gravel- oder Fitnessbike oft auch okay, solange du das Tempo halten kannst. Ein Mountainbike ist für unsere Straßen-Touren eher ungeeignet.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
                     Gibt es eine Helmpflicht?
                     <span class="faq-toggle">+</span>
                 </div>
@@ -278,16 +263,6 @@
                     <strong>Bestellung:</strong> Einmal im Jahr öffnen wir unser Bestellfenster für die neue Kollektion.
                     <br>
                     <strong>Bonus:</strong> Da uns der Team-Auftritt wichtig ist, wird die Erstbestellung vom Verein bezuschusst, damit du in Profi-Qualität unterwegs sein kannst, ohne dein Budget zu sprengen.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    Wie schnell fahrt ihr?
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    Das kommt auf die Gruppe an. Wir versuchen oft, verschiedene Leistungsgruppen zu bilden, damit niemand zurückgelassen wird. Beim Probetraining nehmen wir natürlich Rücksicht auf dich!
                 </div>
             </div>
 

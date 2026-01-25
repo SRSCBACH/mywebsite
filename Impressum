@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressum - SRSC Bach</title>
+
+    <style>
+        /* ================================================================= */
+        /* --- 1. SCHRIFTEN (Lokal) --- */
+        /* ================================================================= */
+        @font-face {
+            font-family: 'Eloquia Display ExtBd';
+            src: url('Schrift/Typekiln - EloquiaDisplay-ExtraBold.otf') format('opentype');
+            font-weight: 800;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Eloquia Text ExtLt';
+            src: url('Schrift/Typekiln - EloquiaText-ExtraLight.otf') format('opentype');
+            font-weight: 200;
+            font-style: normal;
+        }
+
+        /* ================================================================= */
+        /* --- 2. GLOBALE EINSTELLUNGEN --- */
+        /* ================================================================= */
+        :root {
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0; /* Leicht abgedunkeltes Weiß für Lesbarkeit */
+            --accent-blue: #38bdf8;
+            --accent-gray: #cbd5e1;
+            --font-heading: 'Eloquia Display ExtBd', sans-serif;
+            --font-body: 'Eloquia Text ExtLt', sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-primary);
+            
+            /* HINTERGRUND */
+            background-image: url('https://srscbach.github.io/mywebsite/images/NewBlueDrawing2.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Hintergrund bleibt stehen beim Scrollen */
+
+            /* FLEXBOX LAYOUT */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            
+            /* WICHTIG: Scrollen erlauben für Impressum, aber kein seitliches Wackeln */
+            overflow-x: hidden;
+            overflow-y: auto; 
+        }
+
+        /* ================================================================= */
+        /* --- 3. HEADER (Oben Rechts) --- */
+        /* ================================================================= */
+        .header-container {
+            width: 100%;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: flex-end;
+            flex-shrink: 0; /* Verhindert Schrumpfen */
+            
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .header-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 40px;
+        }
+
+        /* ================================================================= */
+        /* --- 4. MAIN CONTENT (Das Impressum) --- */
+        /* ================================================================= */
+        .main-content {
+            flex: 1; /* Drückt den Footer nach unten */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Oben ausrichten, nicht mittig */
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* Die Karte für den Text */
+        .impressum-card {
+            width: 100%;
+            max-width: 950px;
+            padding: 20px;
+            background-color: transparent; /* Wie gewünscht transparent */
+            
+            /* Damit man den Text auf dem Bild besser lesen kann, optional: */
+            /* background-color: rgba(0, 0, 0, 0.2); border-radius: 10px; */
+
+            opacity: 0; /* Startet unsichtbar */
+            animation: fadeInContent 1.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeInContent {
+            to { opacity: 1; }
+        }
+
+        /* TYPOGRAFIE IMPRESSUM */
+        .title {
+            font-family: var(--font-heading); font-weight: 800; font-size: 2.2rem;
+            margin: 0; text-transform: uppercase; letter-spacing: 0.02em; color: #fff;
+            line-height: 1.1;
+        }
+        
+        .subtitle {
+            font-family: var(--font-body); font-size: 1rem; color: var(--accent-gray);
+            margin-top: 5px; text-transform: uppercase; letter-spacing: 0.1em;
+            margin-bottom: 40px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            gap: 40px;
+        }
+
+        .info-block { margin-bottom: 25px; }
+        
+        h2 {
+            font-family: var(--font-heading); font-size: 1.1rem; color: var(--accent-gray);
+            border-left: 3px solid var(--accent-gray);
+            text-transform: uppercase; margin-bottom: 10px; margin-top: 30px;
+            padding-left: 10px;
+        }
+        .info-block h2 { margin-top: 0; }
+
+        p { font-size: 1rem; line-height: 1.6; color: var(--text-secondary); margin: 0 0 15px 0; }
+        strong { color: var(--text-primary); font-weight: 600; }
+        
+        /* Links im Text */
+        .text-link { 
+            color: var(--text-primary); text-decoration: none; 
+            border-bottom: 1px solid var(--accent-gray); transition: all 0.2s; 
+        }
+        .text-link:hover { color: var(--accent-blue); border-color: var(--accent-blue); }
+
+        .legal-text {
+            grid-column: span 2;
+            margin-top: 20px;
+        }
+        
+        .legal-text h3 {
+            font-family: var(--font-heading); font-size: 1rem; color: var(--text-primary);
+            margin-bottom: 10px; margin-top: 20px;
+        }
+
+        /* ================================================================= */
+        /* --- 5. FOOTER (Unten) --- */
+        /* ================================================================= */
+        .footer-container {
+            width: 100%;
+            padding: 20px;       
+            padding-bottom: 30px; 
+            display: flex;
+            justify-content: center; 
+            flex-shrink: 0; /* Verhindert Schrumpfen */
+            
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 50px;
+        }
+
+        /* ================================================================= */
+        /* --- NAVIGATION LINKS STYLE --- */
+        /* ================================================================= */
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding-bottom: 5px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color);
+            transform: translateY(-2px);
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5); 
+        }
+
+        /* ================================================================= */
+        /* --- MOBILE ANPASSUNG --- */
+        /* ================================================================= */
+        @media (max-width: 800px) {
+            .header-container { padding: 15px 20px; justify-content: center; }
+            .header-nav ul { gap: 15px; }
+            .footer-nav { gap: 20px; }
+            
+            /* Grid auflösen */
+            .content-grid { display: flex; flex-direction: column; gap: 15px; }
+            .legal-text { grid-column: auto; }
+            
+            /* Schriftgrößen anpassen */
+            .title { font-size: 1.5rem; }
+            .subtitle { font-size: 0.8rem; margin-bottom: 20px; }
+            h2 { font-size: 0.9rem; margin-top: 20px; }
+            p { font-size: 0.85rem; }
+            
+            /* Nav Links */
+            .nav-link { font-size: 12px; letter-spacing: 0.05em; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-container" id="topMenu">
+        <nav class="header-nav">
+            <ul>
+                <li><a href="https://www.srsc-bach.de/verein" class="nav-link">Verein</a></li>
+                <li><a href="https://www.srsc-bach.de/streckenkatalog" class="nav-link">Strecken</a></li>
+                <li><a href="https://www.srsc-bach.de/kalender" class="nav-link">Kalender</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="impressum-card">
+            
+            <h1 class="title">IMPRESSUM</h1>
+            <div class="subtitle">Angaben gemäß § 5 TMG</div>
+
+            <div class="content-grid">
+                
+                <div class="column-left">
+                    <div class="info-block">
+                        <h2>Vereinsanschrift</h2>
+                        <p>
+                            <strong>Ski- und Radsportclub Bach a.d. Donau e.V.</strong><br>
+                            Obere Bachgasse 13b<br>
+                            93090 Bach a. d. Donau
+                        </p>
+                    </div>
+
+                    <div class="info-block">
+                        <h2>Vertreten durch</h2>
+                        <p>
+                            <strong>1. Vorsitzender:</strong> Matthias Winkler<br>
+                        </p>
+                    </div>
+
+                    <div class="info-block">
+                        <h2>Kontakt</h2>
+                        <p>
+                            Telefon:<br>
+                            <a href="tel:+4915115821172" class="text-link">0151 / 158 21 172</a>
+                        </p>
+                        <p>
+                            E-Mail:<br>
+                            <a href="mailto:matthias.winkler82@gmail.com" class="text-link">matthias.winkler82@gmail.com</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="column-right">
+                    <div class="info-block">
+                        <h2>Registereintrag</h2>
+                        <p>
+                            Vereinsregister: <strong>VR 1034</strong><br>
+                            Gericht: <strong>Amtsgericht Regensburg</strong>
+                        </p>
+                    </div>
+
+                    <div class="info-block">
+                        <h2>Verantwortlich für den Inhalt</h2>
+                        <p>
+                            (gemäß § 18 Abs. 2 MStV)<br>
+                            Matthias Winkler<br>
+                            Obere Bachgasse 13b<br>
+                            93090 Bach a. d. Donau
+                        </p>
+                    </div>
+                </div>
+
+                <div class="legal-text">
+                    <h2>Haftungsausschluss</h2>
+                    
+                    <h3>Haftung für Inhalte</h3>
+                    <p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+                    
+                    <h3>Haftung für Links</h3>
+                    <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.</p>
+                    
+                    <h3>Urheberrecht</h3>
+                    <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
+
+                    <h2>Datenschutz: Karten & Tools</h2>
+                    
+                    <h3>Einbindung von Diensten Dritter</h3>
+                    <p>Wir setzen auf unserer Website Inhalte Dritter ein, um Ihnen interaktive Karten, Höhenprofile und aktuelle Streckendaten anzuzeigen. Damit diese Inhalte in Ihrem Browser dargestellt werden können, ist es technisch notwendig, dass Ihre IP-Adresse an den jeweiligen Anbieter übermittelt wird. Grundlage: Art. 6 Abs. 1 lit. f DSGVO.</p>
+                    
+                    <h4>OpenStreetMap</h4>
+                    <p>Kartenmaterial von „OpenStreetMap“ (OSM Foundation). Zur Anzeige wird Ihre IP-Adresse an OSM-Server übertragen. <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" class="text-link">Datenschutz OSM</a>.</p>
+                    
+                    <h4>CDNs & Bibliotheken</h4>
+                    <p>Für schnelle Ladezeiten laden wir Programmbibliotheken (Leaflet, Chart.js) und Daten (OpenSheet) über externe Server. Ihre IP-Adresse wird dabei an diese Dienste (unpkg, jsdelivr, opensheet) übertragen.</p>
+                    
+                    <h4>Web Fonts</h4>
+                    <p>Schriften werden lokal von unserem Server geladen (ehemals online), um ein einheitliches Design zu gewährleisten.</p>
+                    
+                    <h3>Keine Cookies</h3>
+                    <p>Das Touren-Widget verwendet <strong>keine Cookies</strong> und speichert keine Nutzerdaten auf Ihrem Gerät.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-container" id="bottomMenu">
+        <nav class="footer-nav">
+            <a href="index.html" class="nav-link">Startseite</a>
+            <a href="#" class="nav-link" style="color: var(--accent-blue); opacity: 1;">Impressum</a>
+        </nav>
+    </footer>
+
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var top = document.getElementById('topMenu');
+                var bottom = document.getElementById('bottomMenu');
+
+                if (top) {
+                    top.style.opacity = '1';
+                    top.style.transform = 'translateY(0)';
+                }
+                if (bottom) {
+                    bottom.style.opacity = '1';
+                    bottom.style.transform = 'translateY(0)';
+                }
+
+            }, 3000); 
+        });
+    </script>
+
+</body>
+</html>

@@ -148,7 +148,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        /* --- FAQ STYLES --- */
+        /* --- FAQ / DROPDOWN STYLES --- */
         .faq-item { border-bottom: none; margin-bottom: 15px; }
         .faq-question {
             font-family: var(--font-heading), sans-serif; font-size: 1.1rem; color: #ffffff; padding: 10px 0; 
@@ -161,9 +161,12 @@
             font-size: 0.95rem; line-height: 1.6; max-height: 0; overflow: hidden;
             transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
             opacity: 0; padding-bottom: 0;
+            text-align: justify; /* Blocksatz für lange Texte */
         }
         .faq-item.active .faq-toggle { transform: rotate(45deg); color: #94a3b8; }
-        .faq-item.active .faq-answer { max-height: 600px; opacity: 1; padding-bottom: 20px; }
+        /* HIER ERHÖHT: 2000px damit lange Rechtstexte reinpassen */
+        .faq-item.active .faq-answer { max-height: 2000px; opacity: 1; padding-bottom: 20px; }
+        
         .faq-answer strong { color: #ffffff; font-weight: 600; }
         .faq-answer a { color: #ffffff; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
         .faq-answer a:hover { color: #94a3b8; }
@@ -334,9 +337,62 @@
                         <option value="Familie (60€)">Familien / Lebensgem. (60 €)</option>
                     </select>
                 </div>
-                <div class="checkbox-container">
+
+                <h3 class="form-section-title">Rechtliche Hinweise & Datenschutz</h3>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Anerkennung der Regularien des Vereins<span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">
+                        Mit der Aufnahme in den Verein erhalte ich Kenntnis und erkenne ausdrücklich die Satzung des Vereins, sowie die Beitragsordnung und die jeweils gültigen Beitragssätze an.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Beitragshaftung für minderjährige Mitglieder<span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">
+                        Ich/wir als der/die gesetzliche/n Vertreter genehmige/n hiermit den Beitritt für mein/unser Kind und übernehme/n bis zum Eintritt der Volljährigkeit (18. Lebensjahr) die persönliche Haftung für die Beitragspflichten meines/unseres Kindes gegenüber dem Verein.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Datenschutzeinwilligung (Allgemein)<span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">
+                        Mit der Speicherung, Übermittlung und Verarbeitung meiner personenbezogenen Daten für Vereinszwecke gemäß den Bestimmungen des Bundesdatenschutzgesetzes (BDSG) bin ich einverstanden. Ich habe jederzeit die Möglichkeit, vom Verein Auskunft über diese Daten von mir zu erhalten. Meine Daten werden nach meinem Austritt aus dem Verein gelöscht.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Datenschutzerklärung des SRSC Bach (Details)<span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">
+                        Ich willige ein, dass der SRSC Bach als verantwortliche Stelle, die in der Beitrittserklärung erhobenen personenbezogenen Daten, wie Name, Vorname, Geburtsdatum, Adresse, Emailadresse, Telefonnummer und Bankverbindung ausschließlich zum Zwecke der Mitgliederverwaltung, des Beitragseinzuges und der Übermittlung von Vereinsinformationen durch den Verein verarbeitet und genutzt werden.
+                        <br><br>
+                        Eine Übermittlung von Teilen dieser Daten an die jeweiligen Sportfachverbände und den Bayerischen Landes- Sportverband (BLSV) findet nur im Rahmen der in den Satzungen der Fachverbände bzw. des BLSV festgelegten Zwecke statt.
+                        <br><br>
+                        Diese Datenübermittlungen sind notwendig zum Zwecke der Organisation eines Spiel- bzw. Wettkampfbetriebes und zum Zwecke des Erhalts von öffentlichen Fördermitteln.
+                        <br><br>
+                        Eine Datenübermittlung an Dritte, außerhalb der Fachverbände und des BLSV, findet nicht statt. Eine Datennutzung für Werbezwecke findet ebenfalls nicht statt.
+                        <br><br>
+                        Bei Beendigung der Mitgliedschaft werden die personenbezogenen Daten gelöscht, soweit sie nicht entsprechend den steuerrechtlichen Vorgaben aufbewahrt werden müssen.
+                        <br><br>
+                        Jedes Mitglied hat im Rahmen der Vorgaben des Bundesdatenschutzgesetzes das Recht auf Auskunft über die personenbezogenen Daten, die zu seiner Person bei der verantwortlichen Stelle gespeichert sind. Außerdem hat das Mitglied, im Falle von fehlerhaften Daten, ein Korrekturrecht.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Nutzung von Bildern und Medien<span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">
+                        Ich willige ein, dass der SRSC Bach Bilder von sportbezogenen oder gesellschaftlichen Veranstaltungen auf der Website des Vereines oder sonstigen Vereinspublikationen veröffentlicht und an die Presse zum Zwecke der Veröffentlichung ohne spezielle Einwilligung weitergibt.
+                        <br><br>
+                        Abbildungen von genannten Einzelpersonen oder Kleingruppen hingegen bedürfen einer gesonderten Einwilligung der abgebildeten Personen.
+                    </div>
+                </div>
+
+
+                <div class="checkbox-container" style="margin-top: 20px;">
                     <input type="checkbox" id="satzung" name="satzung_accept" required>
-                    <label for="satzung" class="checkbox-label">Mit der Aufnahme erkenne ich die Satzung und Beitragsordnung an.</label>
+                    <label for="satzung" class="checkbox-label">
+                        <strong>Ich habe die obenstehenden Regularien und Datenschutzbestimmungen gelesen und akzeptiere sie.</strong>
+                    </label>
                 </div>
 
                 <h3 class="form-section-title">SEPA-Lastschrift</h3>
@@ -349,12 +405,6 @@
                     <label for="sepa" class="checkbox-label">Ich erteile hiermit das SEPA-Lastschriftmandat.</label>
                 </div>
 
-                <h3 class="form-section-title">Datenschutz</h3>
-                <div class="checkbox-container">
-                    <input type="checkbox" id="data" name="data_processing" required>
-                    <label for="data" class="checkbox-label">Ich willige in die Verarbeitung meiner Daten zur Mitgliederverwaltung ein.</label>
-                </div>
-                
                 <button type="submit" class="submit-btn">Kostenpflichtig Beitreten</button>
             </form>
         </div>

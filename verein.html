@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Probetraining - SRSC Bach</title>
+    <title>Der Verein - SRSC Bach</title>
     
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* --- LOKALES DESIGN FÜR DAS FORMULAR & FRAGEN --- */
+        /* --- LOKALES DESIGN FÜR VEREIN, FAQ & FORMULAR --- */
         
         html { height: 100%; overflow-y: scroll; }
         body {
@@ -33,20 +33,21 @@
             gap: 30px; 
         }
 
-        /* KARTE */
+        /* KARTE (Einheitlicher Glas-Look) */
         .content-card {
             background-color: rgba(15, 34, 51, 0.5); 
             border-radius: 16px; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             padding: 40px; 
             width: 100%; 
-            max-width: 600px; 
+            max-width: 800px; /* Etwas breiter für Vereins-Infos */
             backdrop-filter: blur(10px); 
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             margin: 0 20px; 
             opacity: 0; 
             animation: fadeInContent 0.8s ease-in-out forwards;
             box-sizing: border-box;
+            color: #ffffff;
         }
         @keyframes fadeInContent { to { opacity: 1; } }
 
@@ -71,6 +72,15 @@
             line-height: 1.5;
         }
 
+        /* TEXT STYLES FÜR DEN VEREINS-BEREICH */
+        .text-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
         /* --- FORMULAR STYLES --- */
         .form-group { margin-bottom: 20px; }
         label {
@@ -80,7 +90,6 @@
             margin-bottom: 8px; letter-spacing: 0.05em;
         }
 
-        /* INPUTS, TEXTAREA UND SELECT (Einheitliches Design) */
         input, textarea, select {
             width: 100%; 
             padding: 12px 15px;
@@ -92,13 +101,10 @@
             font-size: 1rem;
             transition: all 0.3s ease; 
             box-sizing: border-box; 
-            
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
+            appearance: none; -webkit-appearance: none; -moz-appearance: none;
         }
 
-        /* Eigenes Pfeil-Icon für das Select-Feld */
+        /* Select Pfeil */
         select {
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
@@ -107,7 +113,6 @@
             padding-right: 40px; 
             cursor: pointer;
         }
-
         select option { background-color: #0f172a; color: white; }
 
         input:focus, textarea:focus, select:focus {
@@ -121,7 +126,7 @@
 
         .submit-btn {
             width: 100%; padding: 15px;
-            background-color: #64748b; 
+            background-color: #64748b; /* Grau */
             color: white; border: none; border-radius: 8px;
             font-family: var(--font-heading), sans-serif; 
             font-size: 1.1rem;
@@ -133,62 +138,35 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        /* --- FRAGEN & ANTWORTEN STYLES --- */
-        .faq-item {
-            border-bottom: none; 
-            margin-bottom: 15px; 
-        }
+        /* --- FAQ STYLES --- */
+        .faq-item { border-bottom: none; margin-bottom: 15px; }
         
         .faq-question {
             font-family: var(--font-heading), sans-serif;
-            font-size: 1.1rem;
-            color: #ffffff;
-            padding: 10px 0; 
-            display: flex;
-            justify-content: space-between; 
-            align-items: center;
-            cursor: pointer;
-            transition: color 0.3s ease;
+            font-size: 1.1rem; color: #ffffff; padding: 10px 0; 
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; transition: color 0.3s ease;
         }
         
-        .faq-question:hover {
-            color: #94a3b8; 
-        }
+        .faq-question:hover { color: #94a3b8; }
 
         .faq-toggle {
-            font-size: 1.5rem;
-            font-weight: 300;
-            transition: transform 0.3s ease;
-            color: #64748b;
+            font-size: 1.5rem; font-weight: 300; transition: transform 0.3s ease; color: #64748b;
         }
 
         .faq-answer {
-            font-family: var(--font-body), sans-serif;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            max-height: 0;
-            overflow: hidden;
+            font-family: var(--font-body), sans-serif; color: var(--text-secondary);
+            font-size: 0.95rem; line-height: 1.6;
+            max-height: 0; overflow: hidden;
             transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
-            opacity: 0;
-            padding-bottom: 0;
+            opacity: 0; padding-bottom: 0;
         }
 
-        /* Wenn aktiv */
-        .faq-item.active .faq-toggle {
-            transform: rotate(45deg); 
-            color: #94a3b8; 
-        }
-        .faq-item.active .faq-answer {
-            max-height: 600px; 
-            opacity: 1;
-            padding-bottom: 20px; 
-        }
-        
-        .faq-answer strong {
-            color: #ffffff;
-            font-weight: 600;
-        }
+        .faq-item.active .faq-toggle { transform: rotate(45deg); color: #94a3b8; }
+        .faq-item.active .faq-answer { max-height: 600px; opacity: 1; padding-bottom: 20px; }
+        .faq-answer strong { color: #ffffff; font-weight: 600; }
+        .faq-answer a { color: #ffffff; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+        .faq-answer a:hover { color: #94a3b8; }
 
         @media (max-width: 600px) {
             .content-card { padding: 20px; margin: 0 10px; width: auto;}
@@ -206,33 +184,37 @@
     <main class="main-content">
         
         <div class="content-card">
+            <h1 class="card-title">Der Verein</h1>
+            <div class="text-content">
+                <p>
+                    <strong>Willkommen beim SRSC Bach e.V.!</strong>
+                </p>
+                <p>
+                    Hier ist Platz für die Vorstellung des Vereins, die Geschichte oder den Vorstand. 
+                    Wir sind eine leidenschaftliche Gemeinschaft, die den Radsport in der Region fördert...
+                </p>
+            </div>
+        </div>
+
+        <div class="content-card">
             <h2 class="card-title">Fragen & Antworten</h2>
             
             <div class="faq-item">
-                <div class="faq-question">
-                    Wie groß ist euer Verein?
-                    <span class="faq-toggle">+</span>
-                </div>
+                <div class="faq-question">Wie groß ist euer Verein?<span class="faq-toggle">+</span></div>
                 <div class="faq-answer">
                     Aktuell sind wir eine eingeschworene Gemeinschaft von rund 100 Mitgliedern. Das ist für uns die perfekte Größe: Groß genug, um immer eine motivierte Gruppe für die Straße zu finden, aber klein genug, dass man sich untereinander noch persönlich kennt und schätzt.
                 </div>
             </div>
 
             <div class="faq-item">
-                <div class="faq-question">
-                    Wie alt sind eure Fahrer?
-                    <span class="faq-toggle">+</span>
-                </div>
+                <div class="faq-question">Wie alt sind eure Fahrer?<span class="faq-toggle">+</span></div>
                 <div class="faq-answer">
                     Unsere aktive Crew ist bunt gemischt und deckt eine breite Altersspanne ab. Die meisten unserer Fahrer bewegen sich im Alter zwischen 18 und 50 Jahren. Was uns eint, ist nicht das Geburtsdatum auf dem Papier, sondern die Leidenschaft für den Radsport und das Tempo auf dem Asphalt.
                 </div>
             </div>
 
             <div class="faq-item">
-                <div class="faq-question">
-                    Wie fit muss ich sein, um bei euch mitzufahren?
-                    <span class="faq-toggle">+</span>
-                </div>
+                <div class="faq-question">Wie fit muss ich sein, um bei euch mitzufahren?<span class="faq-toggle">+</span></div>
                 <div class="faq-answer">
                     Wir sehen uns sportlich im oberen Mittelfeld. Bei uns wird zügig gefahren, und wir lieben die sportliche Herausforderung.
                     <br><br>
@@ -241,22 +223,35 @@
                     <strong>Das Ziel:</strong> Wir wollen gemeinsam trainieren, ohne dass die Gruppe ständig auseinanderfällt. Wenn du diesen Leistungsbereich mitbringst, wirst du bei unseren Ausfahrten definitiv deinen Spaß haben!
                 </div>
             </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Wann finden die Ausfahrten statt?<span class="faq-toggle">+</span></div>
+                <div class="faq-answer">
+                    Wir haben zwei feste Termine in der Woche, an denen wir gemeinsam in die Pedale treten:
+                    <br><br>
+                    <strong>Dienstag:</strong> Start um 17:00 Uhr (Dauer ca. 2,5 – 3 Std.)<br>
+                    <strong>Sonntag:</strong> Start um 09:00 Uhr (Dauer ca. 3 – 4 Std.)
+                </div>
+            </div>
 
             <div class="faq-item">
-                <div class="faq-question">
-                    Gibt es eine Helmpflicht?
-                    <span class="faq-toggle">+</span>
+                <div class="faq-question">Welche Distanzen fahrt ihr?<span class="faq-toggle">+</span></div>
+                <div class="faq-answer">
+                    Einen perfekten Vorgeschmack bekommst du direkt in unserer <a href="strecken.html">Streckenübersicht</a>.
+                    <br><br>
+                    Dort findest du unsere typischen Routen im Detail. Der dort angegebene <strong>Schnitt</strong> (Durchschnittsgeschwindigkeit) dient dir dabei als gute Orientierung, was dich erwartet.
                 </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Gibt es eine Helmpflicht?<span class="faq-toggle">+</span></div>
                 <div class="faq-answer">
                     Absolut. Sicherheit steht bei uns an erster Stelle. Ohne Helm keine Mitfahrt – da machen wir keine Ausnahmen.
                 </div>
             </div>
 
             <div class="faq-item">
-                <div class="faq-question">
-                    Fahrt ihr in einheitlicher Teamkleidung?
-                    <span class="faq-toggle">+</span>
-                </div>
+                <div class="faq-question">Fahrt ihr in einheitlicher Teamkleidung?<span class="faq-toggle">+</span></div>
                 <div class="faq-answer">
                     Definitiv – und darauf sind wir stolz! Wir setzen auf Premium-Bekleidung von Kalas, dem Ausstatter, dem auch Profi-Teams wie Alpecin-Deceuninck vertrauen.
                     <br><br>
@@ -267,19 +262,22 @@
             </div>
 
             <div class="faq-item">
-                <div class="faq-question">
-                    Kostet das Probetraining etwas?
-                    <span class="faq-toggle">+</span>
-                </div>
+                <div class="faq-question">Kostet das Probetraining etwas?<span class="faq-toggle">+</span></div>
                 <div class="faq-answer">
                     Nein, das Probetraining ist natürlich kostenlos und unverbindlich. Komm einfach vorbei und schau, ob es dir bei uns gefällt.
                 </div>
             </div>
-
+            
+            <div class="faq-item">
+                <div class="faq-question">Gibt es eine Stärkung nach dem Training?<span class="faq-toggle">+</span></div>
+                <div class="faq-answer">
+                    Aber sicher! Wenn es das Wetter zulässt, kehren wir traditionell im <strong>Gasthof Peutl in Kiefenholz</strong> ein. Dort lassen wir die Tour gemütlich bei einem Bier und einer der legendären Spezialsemmeln ausklingen.
+                </div>
+            </div>
         </div>
 
         <div class="content-card">
-            <h1 class="card-title" style="margin-bottom: 10px;">Probetraining</h1>
+            <h2 class="card-title" style="margin-bottom: 10px;">Probetraining</h2>
             <p class="card-subtitle">Lust bekommen mitzufahren? Melde dich unverbindlich an. Wir freuen uns auf dich!</p>
 
             <form action="https://formspree.io/f/xkornnjj" method="POST">

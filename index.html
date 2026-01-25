@@ -5,10 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SRSC Bach</title>
 
-    <link href="https://db.onlinewebfonts.com/c/321e53022d0a33d76e1b4791d82b7314?family=Eloquia+Display+ExtBd" rel="stylesheet">
-    <link href="https://db.onlinewebfonts.com/c/43bcf95cd1b2e5e6ba33de34ba10ba10?family=Eloquia+Text+ExtLt" rel="stylesheet">
-
     <style>
+        /* ================================================================= */
+        /* --- SCHRIFTEN (Lokal aus dem Ordner 'Schrift') --- */
+        /* ================================================================= */
+        @font-face {
+            font-family: 'Eloquia Display ExtBd';
+            src: url('Schrift/Typekiln - EloquiaDisplay-ExtraBold.otf') format('opentype');
+            font-weight: 800;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Eloquia Text ExtLt';
+            src: url('Schrift/Typekiln - EloquiaText-ExtraLight.otf') format('opentype');
+            font-weight: 200;
+            font-style: normal;
+        }
+
         /* ================================================================= */
         /* --- GRUNDLEGENDE EINSTELLUNGEN --- */
         /* ================================================================= */
@@ -25,7 +39,7 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100%; /* Wichtig für die Höhe */
+            height: 100%; 
         }
 
         body {
@@ -36,24 +50,24 @@
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            background-attachment: fixed; /* Fixiert den Hintergrund beim Scrollen */
+            background-attachment: fixed; 
 
-            /* FLEXBOX LAYOUT - Das Geheimnis für den Footer unten */
+            /* FLEXBOX LAYOUT (Footer nach unten drücken) */
             display: flex;
-            flex-direction: column; /* Elemente untereinander anordnen */
-            min-height: 100vh;      /* Mindestens so hoch wie der Bildschirm */
+            flex-direction: column; 
+            min-height: 100vh;      
         }
 
         /* ================================================================= */
-        /* --- 1. HEADER (Oben) --- */
+        /* --- 1. HEADER (Oben Rechts) --- */
         /* ================================================================= */
         .header-container {
             width: 100%;
-            padding: 30px 40px; /* Etwas Abstand vom Rand */
+            padding: 30px 40px; 
             display: flex;
             justify-content: flex-end; /* Menü nach rechts */
             
-            /* Startzustand (Unsichtbar) */
+            /* Animation Startzustand (Unsichtbar) */
             opacity: 0;
             transform: translateY(-20px);
             transition: opacity 1s ease-out, transform 1s ease-out;
@@ -71,20 +85,19 @@
         /* --- 2. MAIN CONTENT (Mitte - Logo) --- */
         /* ================================================================= */
         .main-content {
-            /* HIER IST DER TRICK: */
-            flex: 1;  /* Nimm allen verfügbaren Platz ein! */
+            flex: 1;  /* Füllt den freien Platz aus */
             display: flex;
-            justify-content: center; /* Horizontal mittig */
-            align-items: center;     /* Vertikal mittig */
+            justify-content: center; 
+            align-items: center;    
             width: 100%;
         }
 
         .center-logo {
-            width: 80%;
+            width: 80%;       /* Breite responsive */
             height: auto;
-            max-width: 1200px;
+            max-width: 1200px; /* Maximale Breite */
             
-            /* Animation */
+            /* Logo Animation */
             opacity: 0;
             animation: subtleFadeIn 1.5s ease-in-out forwards;
         }
@@ -99,12 +112,12 @@
         /* ================================================================= */
         .footer-container {
             width: 100%;
-            padding: 20px;       /* Ein bisschen Luft zum Rand sieht edler aus */
-            padding-bottom: 30px; /* Abstand nach unten zum Bildschirmrand */
+            padding: 20px;       
+            padding-bottom: 30px; 
             display: flex;
-            justify-content: center; /* Mittig */
+            justify-content: center; 
             
-            /* Startzustand (Unsichtbar) */
+            /* Animation Startzustand (Unsichtbar) */
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 1s ease-out, transform 1s ease-out;
@@ -116,7 +129,7 @@
         }
 
         /* ================================================================= */
-        /* --- LINKS (Global) --- */
+        /* --- LINKS --- */
         /* ================================================================= */
         a {
             text-decoration: none;
@@ -135,11 +148,11 @@
             color: var(--accent-color);
             transform: translateY(-2px);
             opacity: 1;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5); /* Leichter Glow Effekt */
+            text-shadow: 0 0 10px rgba(255,255,255,0.5); 
         }
 
         /* ================================================================= */
-        /* --- MOBILE --- */
+        /* --- MOBILE ANPASSUNG --- */
         /* ================================================================= */
         @media (max-width: 600px) {
             .header-container { padding: 15px 20px; }
@@ -148,7 +161,7 @@
             .footer-container { padding-bottom: 20px; }
 
             a {
-                font-size: 10px; /* Etwas lesbarer auf Mobile */
+                font-size: 10px; 
                 letter-spacing: 0.05em;
             }
         }
@@ -167,7 +180,7 @@
     </header>
 
     <main class="main-content">
-        <img src="https://static.wixstatic.com/shapes/9627cc_0209b2a1c6064535820c93c7dfb3a187.svg" alt="SRSC Bach Logo" class="center-logo">
+        <img src="https://srscbach.github.io/mywebsite/images/DeineCrewlang.svg" alt="SRSC Bach Crew Logo" class="center-logo">
     </main>
 
     <footer class="footer-container" id="bottomMenu">
@@ -180,11 +193,9 @@
     <script>
         window.addEventListener('load', function() {
             setTimeout(function() {
-                // Elemente holen
                 var top = document.getElementById('topMenu');
                 var bottom = document.getElementById('bottomMenu');
 
-                // Einblenden
                 if (top) {
                     top.style.opacity = '1';
                     top.style.transform = 'translateY(0)';
@@ -194,7 +205,7 @@
                     bottom.style.transform = 'translateY(0)';
                 }
 
-            }, 3000); // 3 Sekunden warten
+            }, 3000); // 3000ms = 3 Sekunden
         });
     </script>
 

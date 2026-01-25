@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* --- LOKALES DESIGN FÜR DAS FORMULAR & FAQ --- */
+        /* --- LOKALES DESIGN FÜR DAS FORMULAR & FRAGEN --- */
         
         html { height: 100%; overflow-y: scroll; }
         body {
@@ -48,13 +48,13 @@
 
         .card-title {
             font-family: var(--font-heading);
-            font-size: 2.2rem;
+            font-size: 2.0rem; /* Leicht angepasst, damit der lange Titel passt */
             color: #ffffff;
-            /* Margin angepasst, da Subtitle weg ist */
             margin-bottom: 30px; 
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            line-height: 1.3;
         }
 
         .card-subtitle {
@@ -142,20 +142,26 @@
             padding-bottom: 0;
         }
 
+        /* Wenn aktiv */
         .faq-item.active .faq-toggle {
             transform: rotate(45deg); 
             color: #0055ff;
         }
-
         .faq-item.active .faq-answer {
-            max-height: 200px; 
+            max-height: 500px; /* Erhöht, da manche Antworten länger sind */
             opacity: 1;
             padding-bottom: 20px; 
+        }
+        
+        /* Fettgedrucktes in den Antworten hervorheben */
+        .faq-answer strong {
+            color: #ffffff;
+            font-weight: 600;
         }
 
         @media (max-width: 600px) {
             .content-card { padding: 20px; margin: 0 10px; width: auto;}
-            .card-title { font-size: 1.8rem; }
+            .card-title { font-size: 1.5rem; }
             .faq-question { font-size: 1rem; }
         }
     </style>
@@ -169,50 +175,60 @@
     <main class="main-content">
         
         <div class="content-card">
-            <h2 class="card-title" style="font-size: 1.8rem;">Fragen & Antworten</h2>
+            <h2 class="card-title">FAQ – Alles, was du über unseren Verein wissen musst</h2>
+            
             <div class="faq-item">
                 <div class="faq-question">
-                    Brauche ich ein Rennrad?
+                    Wie groß ist euer Verein?
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    Ja, grundsätzlich fahren wir mit Rennrädern. Für das erste "Reinschnuppern" ist ein sportliches Gravel- oder Fitnessbike oft auch okay, solange du das Tempo halten kannst. Ein Mountainbike ist für unsere Straßen-Touren eher ungeeignet.
+                    Aktuell sind wir eine eingeschworene Gemeinschaft von rund 100 Mitgliedern. Das ist für uns die perfekte Größe: Groß genug, um immer eine motivierte Gruppe für die Straße zu finden, aber klein genug, dass man sich untereinander noch persönlich kennt und schätzt.
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question">
-                    Gibt es eine Helmpflicht?
+                    Wie fit muss ich sein, um bei euch mitzufahren?
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    Absolut. Sicherheit steht bei uns an erster Stelle. Ohne Helm keine Mitfahrt – da machen wir keine Ausnahmen.
+                    Wir sehen uns sportlich im oberen Mittelfeld. Bei uns wird zügig gefahren, und wir lieben die sportliche Herausforderung.
+                    <br><br>
+                    <strong>Der Richtwert:</strong> Wenn du bereits einen FTP-Test gemacht hast, solltest du etwa 3,5 Watt/kg (oder mehr) auf die Pedale bringen.
+                    <br>
+                    <strong>Das Ziel:</strong> Wir wollen gemeinsam trainieren, ohne dass die Gruppe ständig auseinanderfällt. Wenn du diesen Leistungsbereich mitbringst, wirst du bei unseren Ausfahrten definitiv deinen Spaß haben!
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question">
-                    Wie schnell fahrt ihr?
+                    Wie alt sind eure Fahrer?
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    Das kommt auf die Gruppe an. Wir versuchen oft, verschiedene Leistungsgruppen zu bilden, damit niemand zurückgelassen wird. Beim Probetraining nehmen wir natürlich Rücksicht auf dich!
+                    Unsere aktive Crew ist bunt gemischt und deckt eine breite Altersspanne ab. Die meisten unserer Fahrer bewegen sich im Alter zwischen 18 und 50 Jahren. Was uns eint, ist nicht das Geburtsdatum auf dem Papier, sondern die Leidenschaft für den Radsport und das Tempo auf dem Asphalt.
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question">
-                    Kostet das Probetraining etwas?
+                    Fahrt ihr in einheitlicher Teamkleidung?
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    Nein, das Probetraining ist natürlich kostenlos und unverbindlich. Komm einfach vorbei und schau, ob es dir bei uns gefällt.
+                    Definitiv – und darauf sind wir stolz! Wir setzen auf Premium-Bekleidung von Kalas, dem Ausstatter, dem auch Profi-Teams wie Alpecin-Deceuninck vertrauen.
+                    <br><br>
+                    <strong>Bestellung:</strong> Einmal im Jahr öffnen wir unser Bestellfenster für die neue Kollektion.
+                    <br>
+                    <strong>Bonus:</strong> Da uns der Team-Auftritt wichtig ist, wird die Erstbestellung vom Verein bezuschusst, damit du in Profi-Qualität unterwegs sein kannst, ohne dein Budget zu sprengen.
                 </div>
             </div>
+
         </div>
 
         <div class="content-card">
-            <h1 class="card-title">Probetraining</h1>
+            <h1 class="card-title" style="font-size: 2.2rem; margin-bottom: 10px;">Probetraining</h1>
             <p class="card-subtitle">Lust bekommen mitzufahren? Melde dich unverbindlich an. Wir freuen uns auf dich!</p>
 
             <form action="https://formspree.io/f/xkornnjj" method="POST">

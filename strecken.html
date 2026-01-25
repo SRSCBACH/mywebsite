@@ -11,7 +11,7 @@
 
     <style>
         /* ================================================================= */
-        /* --- LOKALE STYLES FÜR STRECKEN (FINAL) --- */
+        /* --- LOKALE STYLES FÜR STRECKEN (ROBUST) --- */
         /* ================================================================= */
         :root {
             --bg-card-route: rgba(15, 34, 51, 0.5); 
@@ -119,7 +119,7 @@
             .data-label { font-size: 0.85rem; flex: 0 0 45%; } 
             .data-value { font-size: 1.0rem; padding-left: 8px; } 
 
-            .button-group { margin-top: 0; flex-direction: column; width: 85px; height: auto; gap: 4px; justify-content: space-between; flex-shrink: 0; }
+            .button-group { margin-top: 0; flex-direction: column; width: 85px; height: auto; gap: 5px; justify-content: center; flex-shrink: 0; }
             .btn { font-size: 0.6rem; width: 100%; flex: 1; padding: 0; line-height: 1.2; margin: 0; }
         }
     </style>
@@ -147,41 +147,42 @@
     
     <script>
         // #####################################################################
-        //        AUTO-CALC LOGIK
+        //        AUTO-CALC LOGIK (OHNE FONT BLOCKING)
         // #####################################################################
 
-        document.fonts.ready.then(function () {
-            
-            const customFont = "'Eloquia Text ExtLt', sans-serif";
-            
-            Chart.defaults.font.family = customFont;
-            Chart.defaults.color = '#cbd5e1';
+        // Font Settings direkt setzen (nicht warten)
+        const customFont = "'Eloquia Text ExtLt', sans-serif";
+        Chart.defaults.font.family = customFont;
+        Chart.defaults.color = '#cbd5e1';
 
-            fetch('strecken.json')
-                .then(response => {
-                    if (!response.ok) { throw new Error("strecken.json konnte nicht geladen werden"); }
-                    return response.json();
-                })
-                .then(touren => {
-                    const container = document.getElementById('app-container');
-                    touren.forEach(tour => {
-                        if(tour.active !== false) {
-                            createCardHTML(container, tour.id);
-                            setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
-                        }
-                    });
-                })
-                .catch(err => {
-                    console.error("Fehler beim Laden der Touren:", err);
-                    document.getElementById('app-container').innerText = "Fehler: Touren konnten nicht geladen werden.";
+        console.log("Starte Strecken-Laden...");
+
+        fetch('strecken.json')
+            .then(response => {
+                if (!response.ok) { throw new Error("strecken.json konnte nicht geladen werden"); }
+                return response.json();
+            })
+            .then(touren => {
+                console.log("Touren geladen:", touren.length);
+                const container = document.getElementById('app-container');
+                touren.forEach(tour => {
+                    if(tour.active !== false) {
+                        createCardHTML(container, tour.id);
+                        setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
+                    }
                 });
-        });
+            })
+            .catch(err => {
+                console.error("Fehler beim Laden der Touren:", err);
+                document.getElementById('app-container').innerText = "Fehler: Touren konnten nicht geladen werden.";
+            });
+
 
         function createCardHTML(container, id) {
             const html = `
             <div class="card" id="card-${id}">
                 <div class="header">
-                    <h1 class="title" id="title-${id}">Lade Tour ${id}...</h1>
+                    <h1 class="title" id="title-${id}">Tour ${id}</h1>
                     <img src="https://static.wixstatic.com/shapes/9627cc_826a93d178b649dbb134b4376c5e88ee.svg" alt="SRSC Logo" class="brand-logo">
                 </div>
                 <div class="content-grid">
@@ -213,7 +214,9 @@
         }
 
         function initSingleCard(id, data, fontName) {
-            // Buttons prüfen
+            console.log(`Initialisiere Karte ${id}...`);
+
+            // Buttons
             if(data.gpx) document.getElementById(`btn-gpx-${id}`).href = data.gpx;
             else document.getElementById(`btn-gpx-${id}`).classList.add('disabled');
 
@@ -227,11 +230,11 @@
                 btn.innerText = "No Komoot";
             }
 
-            // SCHNITT ANZEIGEN (Kommt aus JSON, da Nutzerpräferenz)
-            const speedValueStr = data.schnitt || "30"; // Fallback 30
+            // Schnitt anzeigen
+            const speedValueStr = data.schnitt || "30"; 
             document.getElementById(`speed-${id}`).innerText = speedValueStr.includes('km/h') ? speedValueStr : speedValueStr + " km/h";
 
-            // KARTEN SETUP
+            // Leaflet Karte Setup
             let mapInstance = L.map(`map-${id}`);
             let positionMarker = null;
             let localTrackPoints = []; 
@@ -246,6 +249,7 @@
             positionMarker.setStyle({ opacity: 0, fillOpacity: 0 });
 
             if(data.gpx) {
+                console.log(`Lade GPX für ${id}: ${data.gpx}`);
                 new L.GPX(data.gpx, {
                     async: true,
                     marker_options: {
@@ -254,48 +258,36 @@
                     },
                     polyline_options: { color: '#0055ff', opacity: 0.9, weight: 4, lineCap: 'round' }
                 }).on('loaded', function(e) {
+                    console.log(`GPX geladen für ${id}`);
                     const gpx = e.target;
                     mapInstance.fitBounds(gpx.getBounds());
                     
-                    // --- 1. TITEL AUS GPX (oder JSON Fallback) ---
                     let gpxName = gpx.get_name(); 
                     if (!gpxName) { gpxName = `Tour ${id}`; } else { gpxName = gpxName.replace(/\.gpx$/i, ''); }
                     const titleEl = document.getElementById(`title-${id}`);
                     titleEl.innerText = gpxName;
                     
-                    // --- 2. BERECHNUNG DER WERTE DIREKT AUS GPX ---
-                    
-                    // Distanz (km)
                     const distKm = (gpx.get_distance() / 1000).toFixed(1);
-                    
-                    // Höhenmeter (hm)
                     const elevHm = gpx.get_elevation_gain().toFixed(0);
                     
-                    // Dauer berechnen (Distanz / Schnitt)
-                    // Schnitt aus JSON extrahieren (z.B. "30 km/h" -> 30)
                     const speedNum = parseFloat(speedValueStr.replace(/[^0-9.]/g, '')) || 30;
                     const durationDec = distKm / speedNum;
                     const hours = Math.floor(durationDec);
                     const minutes = Math.round((durationDec - hours) * 60);
                     const timeStr = `${hours} h ${minutes < 10 ? '0' : ''}${minutes} min`;
 
-                    // Profil automatisch bestimmen (Hm pro km)
-                    // < 8 = Flach, 8-18 = Wellig, > 18 = Bergig
+                    // PROFIL LOGIK
                     const ratio = elevHm / distKm;
                     let profileStr = "Flach";
-                    if(ratio > 18) profileStr = "Bergig";
-                    else if(ratio > 8) profileStr = "Wellig";
+                    if(ratio > 14) profileStr = "Bergig";
+                    else if(ratio >= 8) profileStr = "Wellig";
 
-                    // --- 3. WERTE IN DIE TABELLE SCHREIBEN ---
                     document.getElementById(`dist-${id}`).innerText = Math.round(distKm) + " km";
                     document.getElementById(`elev-${id}`).innerText = elevHm + " hm";
                     document.getElementById(`time-${id}`).innerText = timeStr;
                     document.getElementById(`prof-${id}`).innerText = profileStr;
 
-                    // Hilfsfunktion: Schriftgröße Titel anpassen
                     fitTitle(titleEl);
-
-                    // Pfeile und Chart
                     addArrowsAndExtractPoints(gpx, mapInstance, localTrackPoints);
                     drawDetailedProfile(id, gpx.get_elevation_data(), localTrackPoints, mapInstance, positionMarker, fontName);
 

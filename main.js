@@ -1,13 +1,16 @@
+// main.js
+
 document.addEventListener("DOMContentLoaded", function() {
     
-    // Wir laden die zentrale Konfigurationsdatei
     fetch('config.json')
         .then(response => response.json())
         .then(data => {
-            // 1. Header bauen
-            buildHeader(data.headerLinks);
+            
+            // 1. Design anwenden (Hintergrund & Logo)
+            applySettings(data.settings);
 
-            // 2. Footer bauen
+            // 2. Menüs bauen
+            buildHeader(data.headerLinks);
             buildFooter(data.footerLinks);
         })
         .catch(error => console.error('Fehler beim Laden der config.json:', error));
@@ -15,41 +18,43 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 /**
- * Baut das obere Menü (Struktur: nav > ul > li > a)
+ * Wendet Hintergrundbild und Logos an
  */
+function applySettings(settings) {
+    if (!settings) return;
+
+    // A) Hintergrundbild setzen
+    if (settings.backgroundImage) {
+        document.body.style.backgroundImage = `url('${settings.backgroundImage}')`;
+    }
+
+    // B) Logo auf der Startseite (index.html) aktualisieren
+    // Wir suchen nach dem Bild mit der Klasse 'center-logo'
+    const mainLogo = document.querySelector('.center-logo');
+    if (mainLogo && settings.logoImage) {
+        mainLogo.src = settings.logoImage;
+    }
+}
+
+// ... Hier folgen deine Funktionen buildHeader und buildFooter wie vorher ...
 function buildHeader(links) {
     const container = document.getElementById('header-placeholder');
     if (!container) return;
-
-    // Das HTML-Gerüst erstellen
     let html = '<nav class="header-nav"><ul>';
-
-    // Durch alle Links aus der JSON loopen
     links.forEach(link => {
         html += `<li><a href="${link.url}" class="nav-link">${link.text}</a></li>`;
     });
-
     html += '</ul></nav>';
-    
-    // Ins HTML einfügen
     container.innerHTML = html;
 }
 
-/**
- * Baut das untere Menü (Struktur: nav > a)
- * Footer hat im CSS kein <ul>, daher etwas anders aufgebaut
- */
 function buildFooter(links) {
     const container = document.getElementById('footer-placeholder');
     if (!container) return;
-
     let html = '<nav class="footer-nav">';
-
     links.forEach(link => {
         html += `<a href="${link.url}" class="nav-link">${link.text}</a>`;
     });
-
     html += '</nav>';
-
     container.innerHTML = html;
 }

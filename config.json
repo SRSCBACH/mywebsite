@@ -20,7 +20,7 @@
     "footerLinks": [
         {
             "text": "Startseite",
-            "url": "https://srscbach.github.io/mywebsite/"
+            "url": "index.html"
         },
         {
             "text": "Impressum",

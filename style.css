@@ -2,6 +2,22 @@
 /* style.css - DAS ZENTRALE DESIGN-DOKUMENT */
 /* ================================================================= */
 
+/* ========================================= */
+/* CUSTOM SCROLLBAR (EDEL-LOOK) */
+/* ========================================= */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: #475569 #0f172a;
+}
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb {
+    background-color: #475569;
+    border-radius: 5px;
+    border: 2px solid #0f172a;
+}
+::-webkit-scrollbar-thumb:hover { background-color: #64748b; }
+
 /* --- 1. SCHRIFTEN LADEN (Ordner: schrift/) --- */
 @font-face {
     font-family: 'Eloquia Display ExtBd';
@@ -333,36 +349,4 @@ strong { color: var(--text-primary); font-weight: 600; }
     /* Tabellen Schrift Mobile */
     .data-label { font-size: 0.85rem; } 
     .data-value { font-size: 1.0rem; } 
-}
-
-/* ========================================= */
-/* CUSTOM SCROLLBAR (EDEL-LOOK)         */
-/* ========================================= */
-
-/* Für Firefox */
-html {
-    scrollbar-width: thin;           /* Macht den Balken schmaler */
-    scrollbar-color: #475569 #0f172a; /* Daumen-Farbe | Hintergrund-Farbe */
-}
-
-/* Für Chrome, Edge, Safari (Webkit) */
-::-webkit-scrollbar {
-    width: 10px; /* Breite des Balkens */
-}
-
-/* Der Hintergrund des Balkens (Track) */
-::-webkit-scrollbar-track {
-    background: #0f172a; /* Gleiche Farbe wie dein Website-Hintergrund */
-}
-
-/* Der schiebbare Teil (Thumb) */
-::-webkit-scrollbar-thumb {
-    background-color: #475569; /* Ein mittleres Grau-Blau */
-    border-radius: 5px;        /* Runde Ecken */
-    border: 2px solid #0f172a; /* Kleiner Rand sorgt für "Schwebe-Effekt" */
-}
-
-/* Wenn man mit der Maus drüberfährt */
-::-webkit-scrollbar-thumb:hover {
-    background-color: #64748b; /* Wird etwas heller */
 }

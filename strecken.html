@@ -18,8 +18,6 @@
             --bg-map: #e2e8f0; 
             --border-color: rgba(255, 255, 255, 0.1); 
             --btn-bg: rgba(255, 255, 255, 0.1);
-            
-            /* Standard-Abstand für Symmetrie */
             --spacing-unit: 15px; 
         }
 
@@ -34,10 +32,7 @@
         .card {
             background-color: var(--bg-card-route); border-radius: 16px; 
             border: 1px solid var(--border-color); 
-            
-            /* HIER: Abstand zum Rand unten/oben/links/rechts gleichmäßig */
             padding: var(--spacing-unit); 
-            
             width: 100%; max-width: 950px;
             backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
@@ -45,10 +40,7 @@
         .header {
             position: relative; 
             padding-bottom: 10px; 
-            
-            /* HIER: Abstand Strich -> Karte */
             margin-bottom: var(--spacing-unit); 
-            
             display: flex; justify-content: space-between; align-items: center; 
             border-bottom: 1px solid var(--border-color);
         }
@@ -65,36 +57,41 @@
         .content-grid { 
             display: grid; 
             grid-template-columns: 1.6fr 1fr; 
-            gap: 20px; /* Horizontaler Abstand zwischen Karte und Daten */
+            gap: 20px; 
         }
         
         .left-column { 
-            display: flex; 
-            flex-direction: column; 
-            
-            /* HIER: Abstand Karte -> Höhenprofil */
-            gap: var(--spacing-unit); 
+            display: flex; flex-direction: column; gap: var(--spacing-unit); 
         } 
         
         .right-column { display: flex; flex-direction: column; } 
 
-        /* MAP & CHART - Gleiche Breite (100% der Spalte) */
+        /* MAP & CHART */
         .map-wrapper {
             height: 260px; 
-            width: 100%; /* Volle Breite */
+            width: 100%; 
             background-color: var(--bg-map); border-radius: 12px; 
             box-shadow: inset 0 0 10px rgba(0,0,0,0.1); z-index: 1;
         }
-        .leaflet-bar a { background-color: #fff !important; color: #333 !important; }
+
+        /* HIER GEÄNDERT: ZOOM BUTTONS 50% KLEINER */
+        .leaflet-bar a { 
+            background-color: #fff !important; 
+            color: #333 !important; 
+            width: 15px !important; 
+            height: 15px !important; 
+            line-height: 15px !important;
+            font-size: 10px !important;
+        }
         .leaflet-control-attribution { background: rgba(255,255,255,0.8) !important; }
 
         .profile-container {
             height: 130px; 
-            width: 100%; /* Volle Breite */
+            width: 100%; 
             background-color: rgba(0,0,0,0.2); border-radius: 12px; 
             padding: 5px 10px; 
             overflow: hidden; position: relative;
-            box-sizing: border-box; /* Wichtig, damit Padding nicht die Breite sprengt */
+            box-sizing: border-box; 
         }
         canvas { width: 100% !important; height: 100% !important; }
 
@@ -112,7 +109,7 @@
         .data-label { flex: 0 0 45%; color: var(--text-secondary); font-size: 1.1rem; font-weight: 200; border-right: 1px solid var(--border-color); height: 100%; display: flex; align-items: center; }
         .data-value { flex: 1; font-size: 1.4rem; font-family: var(--font-heading); font-weight: 800; padding-left: 15px; display: flex; align-items: center; color: var(--accent-color); }
 
-        /* BUTTONS (Desktop) */
+        /* BUTTONS */
         .button-group { display: flex; flex-direction: row; height: 45px; gap: 10px; width: 100%; margin-top: 10px; }
         .btn {
             background-color: var(--btn-bg); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px;
@@ -135,14 +132,14 @@
 
         /* MOBILE ANPASSUNG */
         @media (max-width: 850px) {
-            .card { padding: 12px; } /* Mobiles Padding etwas kleiner */
+            .card { padding: 12px; }
             .header { padding-bottom: 8px; margin-bottom: 10px; }
             .title { font-size: 1.3rem; line-height: 1.4; padding-top: 3px; }
             .brand-logo { display: none; } 
             
             .content-grid { grid-template-columns: 1fr; gap: 10px; }
             
-            .left-column { gap: 10px; } /* Mobile Gap auch 10px */
+            .left-column { gap: 10px; } 
 
             .map-wrapper { height: 220px; } 
             .profile-container { height: 100px; }

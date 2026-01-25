@@ -213,6 +213,7 @@
         }
 
         function initSingleCard(id, data, fontName) {
+            // Buttons prüfen
             if(data.gpx) document.getElementById(`btn-gpx-${id}`).href = data.gpx;
             else document.getElementById(`btn-gpx-${id}`).classList.add('disabled');
 
@@ -226,9 +227,11 @@
                 btn.innerText = "No Komoot";
             }
 
-            const speedValueStr = data.schnitt || "30"; 
+            // SCHNITT ANZEIGEN (Kommt aus JSON, da Nutzerpräferenz)
+            const speedValueStr = data.schnitt || "30"; // Fallback 30
             document.getElementById(`speed-${id}`).innerText = speedValueStr.includes('km/h') ? speedValueStr : speedValueStr + " km/h";
 
+            // KARTEN SETUP
             let mapInstance = L.map(`map-${id}`);
             let positionMarker = null;
             let localTrackPoints = []; 
@@ -254,40 +257,45 @@
                     const gpx = e.target;
                     mapInstance.fitBounds(gpx.getBounds());
                     
+                    // --- 1. TITEL AUS GPX (oder JSON Fallback) ---
                     let gpxName = gpx.get_name(); 
                     if (!gpxName) { gpxName = `Tour ${id}`; } else { gpxName = gpxName.replace(/\.gpx$/i, ''); }
                     const titleEl = document.getElementById(`title-${id}`);
                     titleEl.innerText = gpxName;
                     
+                    // --- 2. BERECHNUNG DER WERTE DIREKT AUS GPX ---
+                    
+                    // Distanz (km)
                     const distKm = (gpx.get_distance() / 1000).toFixed(1);
+                    
+                    // Höhenmeter (hm)
                     const elevHm = gpx.get_elevation_gain().toFixed(0);
                     
+                    // Dauer berechnen (Distanz / Schnitt)
+                    // Schnitt aus JSON extrahieren (z.B. "30 km/h" -> 30)
                     const speedNum = parseFloat(speedValueStr.replace(/[^0-9.]/g, '')) || 30;
                     const durationDec = distKm / speedNum;
                     const hours = Math.floor(durationDec);
                     const minutes = Math.round((durationDec - hours) * 60);
                     const timeStr = `${hours} h ${minutes < 10 ? '0' : ''}${minutes} min`;
 
-                    // --- HIER IST DIE NEUE PROFIL-LOGIK ---
+                    // Profil automatisch bestimmen (Hm pro km)
+                    // < 8 = Flach, 8-18 = Wellig, > 18 = Bergig
                     const ratio = elevHm / distKm;
                     let profileStr = "Flach";
-                    
-                    // Ratio > 14 = Bergig
-                    if(ratio > 14) {
-                        profileStr = "Bergig";
-                    } 
-                    // Ratio zwischen 8 und 14 = Wellig
-                    else if(ratio >= 8) {
-                        profileStr = "Wellig";
-                    }
-                    // Alles unter 8 bleibt "Flach"
+                    if(ratio > 18) profileStr = "Bergig";
+                    else if(ratio > 8) profileStr = "Wellig";
 
+                    // --- 3. WERTE IN DIE TABELLE SCHREIBEN ---
                     document.getElementById(`dist-${id}`).innerText = Math.round(distKm) + " km";
                     document.getElementById(`elev-${id}`).innerText = elevHm + " hm";
                     document.getElementById(`time-${id}`).innerText = timeStr;
                     document.getElementById(`prof-${id}`).innerText = profileStr;
 
+                    // Hilfsfunktion: Schriftgröße Titel anpassen
                     fitTitle(titleEl);
+
+                    // Pfeile und Chart
                     addArrowsAndExtractPoints(gpx, mapInstance, localTrackPoints);
                     drawDetailedProfile(id, gpx.get_elevation_data(), localTrackPoints, mapInstance, positionMarker, fontName);
 

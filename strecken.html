@@ -11,13 +11,16 @@
 
     <style>
         /* ================================================================= */
-        /* --- LOKALE STYLES FÜR STRECKEN --- */
+        /* --- LOKALE STYLES FÜR STRECKEN (SYMMETRISCHE VERSION) --- */
         /* ================================================================= */
         :root {
             --bg-card-route: rgba(15, 34, 51, 0.5); 
             --bg-map: #e2e8f0; 
             --border-color: rgba(255, 255, 255, 0.1); 
             --btn-bg: rgba(255, 255, 255, 0.1);
+            
+            /* Standard-Abstand für Symmetrie */
+            --spacing-unit: 15px; 
         }
 
         /* CONTAINER */
@@ -31,7 +34,10 @@
         .card {
             background-color: var(--bg-card-route); border-radius: 16px; 
             border: 1px solid var(--border-color); 
-            padding: 20px; 
+            
+            /* HIER: Abstand zum Rand unten/oben/links/rechts gleichmäßig */
+            padding: var(--spacing-unit); 
+            
             width: 100%; max-width: 950px;
             backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
@@ -39,22 +45,44 @@
         .header {
             position: relative; 
             padding-bottom: 10px; 
-            margin-bottom: 15px; 
+            
+            /* HIER: Abstand Strich -> Karte */
+            margin-bottom: var(--spacing-unit); 
+            
             display: flex; justify-content: space-between; align-items: center; 
             border-bottom: 1px solid var(--border-color);
         }
-        .title { font-size: 1.8rem; padding-top: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .title { 
+            font-size: 1.8rem; 
+            padding-top: 5px; 
+            padding-bottom: 2px;
+            line-height: 1.4; 
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+        }
         .brand-logo { height: 22px; width: auto; opacity: 0.7; display: block; flex-shrink: 0; margin-left: 15px; }
 
         /* GRID */
-        .content-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; }
-        .left-column { display: flex; flex-direction: column; gap: 10px; } 
+        .content-grid { 
+            display: grid; 
+            grid-template-columns: 1.6fr 1fr; 
+            gap: 20px; /* Horizontaler Abstand zwischen Karte und Daten */
+        }
+        
+        .left-column { 
+            display: flex; 
+            flex-direction: column; 
+            
+            /* HIER: Abstand Karte -> Höhenprofil */
+            gap: var(--spacing-unit); 
+        } 
+        
         .right-column { display: flex; flex-direction: column; } 
 
-        /* MAP & CHART */
+        /* MAP & CHART - Gleiche Breite (100% der Spalte) */
         .map-wrapper {
             height: 260px; 
-            width: 100%; background-color: var(--bg-map); border-radius: 12px; 
+            width: 100%; /* Volle Breite */
+            background-color: var(--bg-map); border-radius: 12px; 
             box-shadow: inset 0 0 10px rgba(0,0,0,0.1); z-index: 1;
         }
         .leaflet-bar a { background-color: #fff !important; color: #333 !important; }
@@ -62,9 +90,11 @@
 
         .profile-container {
             height: 130px; 
+            width: 100%; /* Volle Breite */
             background-color: rgba(0,0,0,0.2); border-radius: 12px; 
             padding: 5px 10px; 
             overflow: hidden; position: relative;
+            box-sizing: border-box; /* Wichtig, damit Padding nicht die Breite sprengt */
         }
         canvas { width: 100% !important; height: 100% !important; }
 
@@ -103,47 +133,31 @@
         .loading-text { font-size: 1rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.5; } }
 
-        /* ================================================================= */
-        /* --- MOBILE OPTIMIERUNG --- */
-        /* ================================================================= */
+        /* MOBILE ANPASSUNG */
         @media (max-width: 850px) {
-            .card { padding: 12px; }
+            .card { padding: 12px; } /* Mobiles Padding etwas kleiner */
             .header { padding-bottom: 8px; margin-bottom: 10px; }
-            .title { font-size: 1.3rem; }
+            .title { font-size: 1.3rem; line-height: 1.4; padding-top: 3px; }
             .brand-logo { display: none; } 
             
             .content-grid { grid-template-columns: 1fr; gap: 10px; }
             
+            .left-column { gap: 10px; } /* Mobile Gap auch 10px */
+
             .map-wrapper { height: 220px; } 
             .profile-container { height: 100px; }
 
-            /* Mobile: Buttons rechts neben Tabelle */
-            .stats-wrapper { 
-                flex-direction: row; 
-                gap: 8px; 
-                align-items: stretch; /* WICHTIG: Zwingt beide Spalten auf gleiche Höhe */
-            }
+            .stats-wrapper { flex-direction: row; gap: 8px; align-items: stretch; }
             .data-table { flex: 1; border-top: none; }
             .data-row { min-height: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); }
             .data-label { font-size: 0.75rem; flex: 0 0 45%; } 
             .data-value { font-size: 0.9rem; padding-left: 8px; } 
 
             .button-group { 
-                margin-top: 0; 
-                flex-direction: column; /* Untereinander */
-                width: 85px; 
-                height: auto; /* Höhe passt sich Wrapper an */
-                gap: 4px; 
-                justify-content: space-between; /* Verteilt Buttons gleichmäßig */
-                flex-shrink: 0;
+                margin-top: 0; flex-direction: column; width: 85px; height: auto; gap: 4px; justify-content: space-between; flex-shrink: 0;
             }
             .btn { 
-                font-size: 0.6rem; 
-                width: 100%; 
-                flex: 1; /* Jeder Button nimmt exakt 1/3 der Höhe */
-                padding: 0; 
-                line-height: 1.2;
-                margin: 0;
+                font-size: 0.6rem; width: 100%; flex: 1; padding: 0; line-height: 1.2; margin: 0;
             }
         }
     </style>
@@ -174,10 +188,8 @@
         //        LOGIK
         // #####################################################################
 
-        // Warte bis Schriften geladen sind - WICHTIG FÜR CANVAS
         document.fonts.ready.then(function () {
             
-            // Schriftart explizit als String mit Fallback definieren
             const customFont = "'Eloquia Text ExtLt', sans-serif";
             
             Chart.defaults.font.family = customFont;
@@ -255,7 +267,6 @@
             document.getElementById(`speed-${id}`).innerText = data.schnitt || "-";
             document.getElementById(`prof-${id}`).innerText = data.profil || "-";
 
-            // Leaflet
             let mapInstance = L.map(`map-${id}`);
             let positionMarker = null;
             let localTrackPoints = []; 
@@ -443,6 +454,8 @@
             });
         }
     </script>
+</body>
+</html>
 </body>
 </html>
 </body>

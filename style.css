@@ -170,16 +170,25 @@ a.text-link:hover {
 
 /* --- 6. ELEMENTE: STARTSEITE (LOGO) --- */
 .center-logo {
-    width: 80%;       
+    /* HIER GEÄNDERT: Exakt 70% der Bildschirmbreite */
+    width: 70vw; 
+    
+    /* Damit es bei sehr breiten Monitoren nicht höher als der Bildschirm wird: */
+    max-height: 80vh; 
+    object-fit: contain;
+
     height: auto;
-    max-width: 1200px; 
+    
+    /* Wir entfernen max-width, damit es wirklich immer 70% sind, auch auf riesigen Screens */
+    max-width: none; 
+    
     opacity: 0;
     animation: fadeInDesktop 1.5s ease-in-out forwards;
 }
 
 @keyframes fadeInDesktop {
-    from { opacity: 0; transform: scale(1.4); }
-    to   { opacity: 1; transform: scale(1.5); }
+    from { opacity: 0; transform: scale(1.1); } /* Leichter Zoom-Effekt beim Laden */
+    to   { opacity: 1; transform: scale(1.0); }
 }
 
 /* --- 7. ELEMENTE: IMPRESSUM & STANDARDS --- */

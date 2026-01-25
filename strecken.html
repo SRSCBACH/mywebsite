@@ -1,1 +1,557 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streckenkatalog - SRSC Bach</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ================================================================= */
+        /* --- LOKALE STYLES FÜR STRECKEN (Spezifisch für diese Seite) --- */
+        /* ================================================================= */
+        
+        :root {
+            /* Lokale Variablen passend zum Dark-Theme der style.css */
+            --bg-card-route: rgba(15, 34, 51, 0.5); /* Glas-Effekt */
+            --bg-map: #e2e8f0; 
+            --border-color: rgba(255, 255, 255, 0.1); 
+            --btn-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        /* CONTAINER */
+        #app-container {
+            display: flex; 
+            flex-direction: column; 
+            gap: 30px; 
+            align-items: center; 
+            width: 100%;
+            /* Animation beim Laden der Container */
+            opacity: 0;
+            animation: fadeInContent 1.0s ease-in-out forwards;
+        }
+
+        @keyframes fadeInContent { to { opacity: 1; } }
+
+        /* --- GLOBAL LOADER (Overlay während Daten laden) --- */
+        #global-loader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            /* Hintergrund nehmen wir vom Body, damit es nahtlos wirkt */
+            background-image: url('https://srscbach.github.io/mywebsite/images/NewBlueDrawing2.png');
+            background-size: cover;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 100px;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .loader-content {
+            display: flex; flex-direction: column; width: fit-content; 
+        }
+
+        .loader-text {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            color: var(--text-primary);
+            opacity: 0.8;
+            font-size: min(1.25rem, 2vw); 
+            white-space: nowrap; 
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-align: center;
+        }
+
+        .loader-line {
+            width: 100%; margin-top: 15px; height: 3px; 
+            background-color: rgba(255,255,255,0.2); 
+            border-radius: 2px; overflow: hidden; position: relative; opacity: 0.8;
+        }
+
+        .loader-line::after {
+            content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 100%;
+            background-color: var(--accent-blue); 
+            animation: loadLine 1.5s ease-in-out infinite;
+            transform-origin: left;
+        }
+
+        @keyframes loadLine {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
+        }
+
+        /* --- KARTEN DESIGN --- */
+        .card {
+            background-color: var(--bg-card-route);
+            border-radius: 16px; 
+            border: 1px solid var(--border-color); /* Feinerer Rahmen */
+            padding: 30px; 
+            width: 100%; 
+            max-width: 950px;
+            backdrop-filter: blur(10px); /* Schöner Unschärfe-Effekt */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            position: relative; padding-bottom: 20px; margin-bottom: 25px;
+            display: flex; justify-content: space-between; align-items: center; 
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .title {
+            /* Überschreibt style.css .title nur leicht für Layout */
+            font-size: 2.0rem; padding-top: 0;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .brand-logo { height: 25px; width: auto; opacity: 0.7; display: block; flex-shrink: 0; margin-left: 15px; }
+
+        /* GRID LAYOUT */
+        .content-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 30px; }
+        .left-column { display: flex; flex-direction: column; gap: 20px; }
+        .right-column { display: flex; flex-direction: column; } 
+
+        /* MAP & CHART */
+        .map-wrapper {
+            height: 350px; width: 100%;
+            background-color: var(--bg-map);
+            border-radius: 12px; 
+            /* Karten brauchen keinen Rahmen mehr, wirken moderner ohne */
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+        
+        /* Leaflet Anpassungen */
+        .leaflet-bar a { background-color: #fff !important; color: #333 !important; }
+        .leaflet-control-attribution { background: rgba(255,255,255,0.8) !important; }
+
+        .profile-container {
+            height: 180px; 
+            background-color: rgba(0,0,0,0.2); /* Leicht abgedunkelt für Kontrast */
+            border-radius: 12px; 
+            padding: 10px; 
+            overflow: hidden; position: relative;
+        }
+        canvas { width: 100% !important; height: 100% !important; }
+
+        .stats-wrapper {
+            display: flex; flex-direction: column; gap: 20px; height: 100%; justify-content: space-between;
+        }
+
+        /* TABELLE */
+        .data-table {
+            width: 100%; 
+            display: flex; flex-direction: column; flex: 1; 
+        }
+        .data-row { 
+            display: flex; 
+            border-bottom: 1px solid var(--border-color); 
+            align-items: center; 
+            flex: 1; 
+            min-height: 40px; 
+        }
+        .data-row:last-child { border-bottom: none; }
+        
+        .data-label {
+            flex: 0 0 45%; 
+            color: var(--text-secondary); 
+            font-size: 1.1rem; 
+            font-weight: 200; 
+            border-right: 1px solid var(--border-color); 
+            height: 100%; display: flex; align-items: center;
+        }
+        .data-value {
+            flex: 1; 
+            font-size: 1.3rem; 
+            font-family: var(--font-heading); 
+            font-weight: 800; 
+            padding-left: 20px; 
+            display: flex; align-items: center; 
+            color: var(--accent-color);
+        }
+
+        /* BUTTONS */
+        .button-group { 
+            display: flex; flex-direction: row; height: 50px; gap: 10px; width: 100%; margin-top: 20px;
+        }
+        .btn {
+            background-color: var(--btn-bg); 
+            color: var(--text-primary); 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px;
+            flex: 1; 
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; font-family: var(--font-heading); font-weight: 800; text-transform: uppercase;
+            cursor: pointer; text-decoration: none; transition: all 0.2s;
+            letter-spacing: 0.05em; padding: 0; 
+        }
+        .btn:hover { 
+            background-color: var(--accent-blue); 
+            color: #000;
+            transform: translateY(-2px); 
+            border-color: var(--accent-blue);
+        }
+        .btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+
+        .loading-text { font-size: 1rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; } }
+
+        /* ================= MOBILE OPTIMIERUNG ================= */
+        @media (max-width: 850px) {
+            .card { padding: 15px; }
+            .header { padding-bottom: 10px; margin-bottom: 15px; }
+            
+            .title { font-size: 1.4rem; }
+            .brand-logo { display: none; } 
+
+            #global-loader { padding-top: 150px; }
+
+            .content-grid { grid-template-columns: 1fr; gap: 15px; }
+            .map-wrapper { height: 250px; }
+            .profile-container { height: 120px; }
+
+            .stats-wrapper { gap: 15px; }
+
+            /* Tabelle Mobile */
+            .data-row { min-height: 30px; }
+            .data-label { font-size: 0.8rem; } 
+            .data-value { font-size: 0.9rem; padding-left: 10px; } 
+
+            .button-group { height: 40px; }
+            .btn { font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-container" id="header-container">
+        <div id="header-placeholder" style="width: 100%; display: flex; justify-content: flex-end;"></div>
+    </header>
+
+    <main class="main-content top-aligned">
+        
+        <div id="global-loader">
+            <div class="loader-content">
+                <div class="loader-text">
+                    DEIN RENNRAD - DEINE CREW - DEIN VEREIN
+                </div>
+                <div class="loader-line"></div>
+            </div>
+        </div>
+
+        <div id="app-container"></div>
+
+    </main>
+
+    <footer class="footer-container" id="footer-container">
+        <div id="footer-placeholder" style="width: 100%; display: flex; justify-content: center;"></div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script src="main.js"></script>
+    
+    <script>
+        // #####################################################################
+        //        KONFIGURATION (TOUREN 00 BIS 17)
+        // #####################################################################
+        
+        const TOUR_IDS = [
+            "00", "01", "02", "03", "04", "05", "06", "07", "08", 
+            "09", "10", "11", "12", "13", "14", "15", "16", "17"
+        ];
+
+        const SHEET_ID = "1H4pe_we8f9TD3OhEt2z-8kU2dRgUuq6ii3sDzoV0d3U"; 
+        const SHEET_URL = `https://opensheet.elk.sh/${SHEET_ID}/1`;
+
+        // #####################################################################
+        //        LOGIK
+        // #####################################################################
+
+        Chart.defaults.font.family = 'Eloquia Text ExtLt';
+        Chart.defaults.color = '#cbd5e1'; // Helles Grau für Dark Mode
+
+        // Daten laden
+        fetch(SHEET_URL)
+            .then(response => response.json())
+            .then(rows => {
+                const container = document.getElementById('app-container');
+                
+                TOUR_IDS.forEach(id => {
+                    const rowData = rows.find(r => r.id == id);
+                    if(rowData) {
+                        createCardHTML(container, id);
+                        setTimeout(() => initSingleCard(id, rowData), 0);
+                    }
+                });
+
+                removeLoader();
+            })
+            .catch(err => {
+                console.error("Fehler beim Laden der Tabelle:", err);
+                removeLoader();
+                document.getElementById('app-container').innerText = "Fehler: Daten konnten nicht geladen werden.";
+            });
+
+        function removeLoader() {
+            const loader = document.getElementById('global-loader');
+            if(loader) {
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    loader.style.visibility = 'hidden';
+                    setTimeout(() => { loader.remove(); }, 500); 
+                }, 1200);
+            }
+        }
+
+        function createCardHTML(container, id) {
+            const html = `
+            <div class="card" id="card-${id}">
+                <div class="header">
+                    <h1 class="title" id="title-${id}">Lade Tour ${id}...</h1>
+                    <img src="https://static.wixstatic.com/shapes/9627cc_826a93d178b649dbb134b4376c5e88ee.svg" alt="SRSC Logo" class="brand-logo">
+                </div>
+
+                <div class="content-grid">
+                    <div class="left-column">
+                        <div id="map-${id}" class="map-wrapper"></div> 
+                        <div class="profile-container"> 
+                            <canvas id="chart-${id}"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="right-column">
+                        <div class="stats-wrapper">
+                            
+                            <div class="data-table">
+                                <div class="data-row"><div class="data-label">Distanz</div><div class="data-value" id="dist-${id}"><span class="loading-text">...</span></div></div>
+                                <div class="data-row"><div class="data-label">Höhenmeter</div><div class="data-value" id="elev-${id}"><span class="loading-text">...</span></div></div>
+                                <div class="data-row"><div class="data-label">Schnitt</div><div class="data-value" id="speed-${id}"><span class="loading-text">...</span></div></div>
+                                <div class="data-row"><div class="data-label">Dauer</div><div class="data-value" id="time-${id}"><span class="loading-text">...</span></div></div>
+                                <div class="data-row"><div class="data-label">Profil</div><div class="data-value" id="prof-${id}"><span class="loading-text">...</span></div></div>
+                            </div>
+
+                            <div class="button-group">
+                                <a id="btn-gpx-${id}" href="#" class="btn" target="_blank">GPX File</a>
+                                <a id="btn-garmin-${id}" href="#" class="btn" target="_blank">Garmin</a>
+                                <a id="btn-komoot-${id}" href="#" class="btn" target="_blank">Komoot</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+            container.insertAdjacentHTML('beforeend', html);
+        }
+
+        function initSingleCard(id, data) {
+            // Buttons prüfen
+            if(data.gpx) document.getElementById(`btn-gpx-${id}`).href = data.gpx;
+            else document.getElementById(`btn-gpx-${id}`).classList.add('disabled');
+
+            if(data.garmin) document.getElementById(`btn-garmin-${id}`).href = data.garmin;
+            else document.getElementById(`btn-garmin-${id}`).classList.add('disabled');
+
+            if(data.komoot && data.komoot.trim() !== "") document.getElementById(`btn-komoot-${id}`).href = data.komoot;
+            else {
+                const btn = document.getElementById(`btn-komoot-${id}`);
+                btn.classList.add('disabled');
+                btn.innerText = "No Komoot";
+            }
+
+            // Statische Daten füllen
+            document.getElementById(`speed-${id}`).innerText = data.schnitt;
+            document.getElementById(`prof-${id}`).innerText = data.profil;
+
+            // Karte initialisieren
+            let mapInstance = L.map(`map-${id}`);
+            let positionMarker = null;
+            let localTrackPoints = []; 
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap', opacity: 1.0
+            }).addTo(mapInstance);
+
+            positionMarker = L.circleMarker([0, 0], {
+                radius: 6, fillColor: "#38bdf8", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 1, zIndexOffset: 1000
+            }).addTo(mapInstance);
+            positionMarker.setStyle({ opacity: 0, fillOpacity: 0 });
+
+            // GPX laden
+            new L.GPX(data.gpx, {
+                async: true,
+                marker_options: {
+                    startIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-start.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
+                    endIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-end.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
+                },
+                polyline_options: { color: '#38bdf8', opacity: 0.9, weight: 4, lineCap: 'round' } // Blau angepasst
+            }).on('loaded', function(e) {
+                const gpx = e.target;
+                mapInstance.fitBounds(gpx.getBounds());
+                
+                // Titel setzen
+                let gpxName = gpx.get_name(); 
+                if (!gpxName) { gpxName = `Tour ${id}`; } else { gpxName = gpxName.replace(/\.gpx$/i, ''); }
+                const titleEl = document.getElementById(`title-${id}`);
+                titleEl.innerText = gpxName;
+                fitTitle(titleEl);
+
+                // Werte berechnen
+                let finalDist = (data.distanz && data.distanz !== "") ? data.distanz : (gpx.get_distance() / 1000).toFixed(1);
+                let finalElev = (data.hoehenmeter && data.hoehenmeter !== "") ? data.hoehenmeter : gpx.get_elevation_gain().toFixed(0);
+                
+                let finalTime;
+                if (data.dauer && data.dauer !== "") {
+                    finalTime = data.dauer;
+                } else {
+                    const numericDist = parseFloat(finalDist);
+                    let speedStr = data.schnitt || "30";
+                    let speed = parseFloat(speedStr.replace(/[^0-9.]/g, '')) || 30;
+                    const decimalHours = numericDist / speed;
+                    const hours = Math.floor(decimalHours);
+                    const minutes = Math.round((decimalHours - hours) * 60);
+                    finalTime = `${hours} h ${minutes < 10 ? '0' : ''}${minutes} min`;
+                }
+
+                document.getElementById(`dist-${id}`).innerText = finalDist + " km";
+                document.getElementById(`elev-${id}`).innerText = finalElev + " hm";
+                document.getElementById(`time-${id}`).innerText = finalTime;
+
+                // Pfeile und Profil
+                addArrowsAndExtractPoints(gpx, mapInstance, localTrackPoints);
+                drawDetailedProfile(id, gpx.get_elevation_data(), localTrackPoints, mapInstance, positionMarker);
+
+            }).on('error', function(e) {
+                console.error(`GPX Fehler Tour ${id}:`, e);
+                document.getElementById(`title-${id}`).innerText = "GPX Fehler";
+            }).addTo(mapInstance);
+        }
+
+        // Hilfsfunktion: Schriftgröße anpassen
+        function fitTitle(el) {
+            const computedStyle = window.getComputedStyle(el);
+            let fontSize = parseFloat(computedStyle.fontSize);
+            while (el.scrollWidth > el.clientWidth && fontSize > 10) {
+                fontSize -= 1; 
+                el.style.fontSize = fontSize + 'px';
+            }
+        }
+
+        // Hilfsfunktion: Pfeile auf Karte
+        function addArrowsAndExtractPoints(layer, mapRef, pointsRef) {
+            function processLayer(l) {
+                if (l instanceof L.Polyline && !(l instanceof L.Polygon)) {
+                    L.polylineDecorator(l, {
+                        patterns: [{ 
+                            offset: '100px', repeat: '200px', 
+                            symbol: L.Symbol.arrowHead({ pixelSize: 8, polygon: false, pathOptions: { stroke: true, color: '#38bdf8', weight: 2, opacity: 1 } })
+                        }]
+                    }).addTo(mapRef);
+
+                    const latlngs = l.getLatLngs();
+                    if (Array.isArray(latlngs) && latlngs.length > 0 && Array.isArray(latlngs[0])) {
+                        latlngs.forEach(arr => {
+                            if(Array.isArray(arr)) pointsRef.push(...arr);
+                            else pointsRef.push(arr);
+                        });
+                    } else {
+                        latlngs.forEach(p => pointsRef.push(p));
+                    }
+                } else if (l.eachLayer) { l.eachLayer(processLayer); }
+            }
+            processLayer(layer);
+        }
+
+        // Hilfsfunktion: Profil zeichnen (Chart.js)
+        function drawDetailedProfile(id, data, trackPoints, mapRef, markerRef) {
+            const labels = [];
+            const points = [];
+            const slopes = []; 
+            const step = Math.ceil(data.length / 100); 
+
+            for (let i = 0; i < data.length; i += step) {
+                const dist = data[i][0].toFixed(1);
+                const elev = data[i][1];
+                let slopeVal = 0;
+                if (i > 0 && points.length > 0) {
+                    const prevDist = parseFloat(labels[labels.length-1]);
+                    const prevElev = points[points.length-1];
+                    const distDiff = (parseFloat(dist) - prevDist) * 1000; 
+                    const elevDiff = elev - prevElev; 
+                    if(distDiff > 0) { slopeVal = Math.round((elevDiff / distDiff) * 100); }
+                }
+                slopes.push(slopeVal);
+                labels.push(dist);
+                points.push(elev);
+            }
+
+            const ctx = document.getElementById(`chart-${id}`).getContext('2d');
+            // Farben an Dark Mode angepasst
+            const gradientGreen = ctx.createLinearGradient(0, 0, 0, 160); gradientGreen.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); gradientGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)'); 
+            const gradientOrange = ctx.createLinearGradient(0, 0, 0, 160); gradientOrange.addColorStop(0, 'rgba(249, 115, 22, 0.8)'); gradientOrange.addColorStop(1, 'rgba(249, 115, 22, 0.0)');
+            const gradientRed = ctx.createLinearGradient(0, 0, 0, 160); gradientRed.addColorStop(0, 'rgba(239, 68, 68, 0.8)'); gradientRed.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
+            
+            const isMobile = window.innerWidth < 850;
+            const chartFontSize = isMobile ? 8 : 10;
+            const chartBorderWidth = isMobile ? 1.5 : 2;
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: points, borderColor: '#38bdf8', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
+                        segment: {
+                            borderColor: ctx => {
+                                if (ctx.p0DataIndex === undefined) return undefined;
+                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? '#ef4444' : (s >= 4 ? '#f97316' : '#38bdf8');
+                            },
+                            backgroundColor: ctx => {
+                                if (ctx.p0DataIndex === undefined) return undefined;
+                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? gradientRed : (s >= 4 ? gradientOrange : gradientGreen);
+                            }
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: { 
+                        legend: { display: false }, 
+                        tooltip: { enabled: false } 
+                    },
+                    onHover: function(e, activeElements) {
+                        if (activeElements && activeElements.length > 0) {
+                            const index = activeElements[0].index;
+                            const totalChartPoints = this.data.datasets[0].data.length;
+                            
+                            if (trackPoints.length > 0 && mapRef && markerRef) {
+                                const percent = index / (totalChartPoints - 1);
+                                const mapIndex = Math.floor(percent * (trackPoints.length - 1));
+                                const latlng = trackPoints[mapIndex];
+                                
+                                if(latlng) {
+                                    markerRef.setLatLng(latlng);
+                                    markerRef.setStyle({ opacity: 1, fillOpacity: 1 });
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { display: true, grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, ticks: { maxTicksLimit: 8, color: '#94a3b8', font: { size: chartFontSize } } },
+                        y: { display: true, grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, ticks: { stepSize: 50, maxTicksLimit: 5, color: '#94a3b8', font: { size: chartFontSize }, callback: v => v + ' m' } }
+                    },
+                    layout: { padding: { left: 5, right: 10, top: 5, bottom: 0 } }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

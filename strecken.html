@@ -31,29 +31,29 @@
         .card {
             background-color: var(--bg-card-route); border-radius: 16px; 
             border: 1px solid var(--border-color); 
-            padding: 20px; /* Weniger Innenabstand (vorher 30) */
+            padding: 20px; 
             width: 100%; max-width: 950px;
             backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
         
         .header {
             position: relative; 
-            padding-bottom: 10px; /* Vorher 20 */
-            margin-bottom: 15px; /* Vorher 25 */
+            padding-bottom: 10px; 
+            margin-bottom: 15px; 
             display: flex; justify-content: space-between; align-items: center; 
             border-bottom: 1px solid var(--border-color);
         }
         .title { font-size: 1.8rem; padding-top: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .brand-logo { height: 22px; width: auto; opacity: 0.7; display: block; flex-shrink: 0; margin-left: 15px; }
 
-        /* GRID - Enger zusammen */
+        /* GRID */
         .content-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; }
-        .left-column { display: flex; flex-direction: column; gap: 10px; } /* Vorher 20 */
+        .left-column { display: flex; flex-direction: column; gap: 10px; } 
         .right-column { display: flex; flex-direction: column; } 
 
         /* MAP & CHART - Deutlich flacher */
         .map-wrapper {
-            height: 260px; /* Vorher 350px */
+            height: 260px; 
             width: 100%; background-color: var(--bg-map); border-radius: 12px; 
             box-shadow: inset 0 0 10px rgba(0,0,0,0.1); z-index: 1;
         }
@@ -61,9 +61,9 @@
         .leaflet-control-attribution { background: rgba(255,255,255,0.8) !important; }
 
         .profile-container {
-            height: 130px; /* Vorher 180px */
+            height: 130px; 
             background-color: rgba(0,0,0,0.2); border-radius: 12px; 
-            padding: 5px 10px; /* Weniger Padding oben/unten */
+            padding: 5px 10px; 
             overflow: hidden; position: relative;
         }
         canvas { width: 100% !important; height: 100% !important; }
@@ -71,11 +71,11 @@
         /* STATS WRAPPER */
         .stats-wrapper { display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: space-between; }
 
-        /* TABELLE - Kompakter */
+        /* TABELLE */
         .data-table { width: 100%; display: flex; flex-direction: column; flex: 1; }
         .data-row { 
             display: flex; border-bottom: 1px solid var(--border-color); align-items: center; flex: 1; 
-            min-height: 32px; /* Vorher 40px - Zeilen enger zusammen */
+            min-height: 32px; 
         }
         .data-row:last-child { border-bottom: none; }
         
@@ -112,11 +112,9 @@
             
             .content-grid { grid-template-columns: 1fr; gap: 10px; }
             
-            /* Mobile Höhe auch angepasst */
             .map-wrapper { height: 220px; } 
             .profile-container { height: 100px; }
 
-            /* Mobile: Buttons rechts neben Tabelle */
             .stats-wrapper { flex-direction: row; gap: 8px; align-items: stretch; }
             .data-table { flex: 1; border-top: none; }
             .data-row { min-height: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -155,30 +153,36 @@
     
     <script>
         // #####################################################################
-        //        LOGIK
+        //        LOGIK MIT FONT-LOADING WAIT
         // #####################################################################
 
-        Chart.defaults.font.family = 'Eloquia Text ExtLt';
-        Chart.defaults.color = '#cbd5e1';
+        // Wir warten, bis der Browser die Schriften fertig geladen hat
+        document.fonts.ready.then(function () {
+            
+            // Erst JETZT starten wir die Logik
+            
+            Chart.defaults.font.family = 'Eloquia Text ExtLt';
+            Chart.defaults.color = '#cbd5e1';
 
-        fetch('strecken.json')
-            .then(response => {
-                if (!response.ok) { throw new Error("strecken.json konnte nicht geladen werden"); }
-                return response.json();
-            })
-            .then(touren => {
-                const container = document.getElementById('app-container');
-                touren.forEach(tour => {
-                    if(tour.active !== false) {
-                        createCardHTML(container, tour.id);
-                        setTimeout(() => initSingleCard(tour.id, tour), 0);
-                    }
+            fetch('strecken.json')
+                .then(response => {
+                    if (!response.ok) { throw new Error("strecken.json konnte nicht geladen werden"); }
+                    return response.json();
+                })
+                .then(touren => {
+                    const container = document.getElementById('app-container');
+                    touren.forEach(tour => {
+                        if(tour.active !== false) {
+                            createCardHTML(container, tour.id);
+                            setTimeout(() => initSingleCard(tour.id, tour), 0);
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error("Fehler beim Laden der Touren:", err);
+                    document.getElementById('app-container').innerText = "Fehler: Touren konnten nicht geladen werden.";
                 });
-            })
-            .catch(err => {
-                console.error("Fehler beim Laden der Touren:", err);
-                document.getElementById('app-container').innerText = "Fehler: Touren konnten nicht geladen werden.";
-            });
+        });
 
         function createCardHTML(container, id) {
             const html = `
@@ -338,7 +342,6 @@
 
             const ctx = document.getElementById(`chart-${id}`).getContext('2d');
             
-            // GRÜNE VERLÄUFE
             const gradientGreen = ctx.createLinearGradient(0, 0, 0, 160); 
             gradientGreen.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); 
             gradientGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)'); 
@@ -360,7 +363,6 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        // Farbe wieder GRÜN (#10b981)
                         data: points, borderColor: '#10b981', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
                         segment: {
                             borderColor: ctx => {
@@ -398,7 +400,6 @@
                                 maxTicksLimit: 8, 
                                 color: '#94a3b8', 
                                 font: { family: 'Eloquia Text ExtLt', size: chartFontSize },
-                                // Ganze Zahlen für X-Achse
                                 callback: function(value, index, values) {
                                     const label = this.getLabelForValue(value);
                                     return Math.round(label) + ' km';

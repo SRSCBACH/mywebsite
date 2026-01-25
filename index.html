@@ -8,12 +8,26 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
+        /* Spezifisches Layout nur für die Startseite */
+        
+        /* 1. Hauptcontainer zwingen, den ganzen Platz zu nutzen */
+        .main-content {
+            display: flex;          /* Flexbox aktivieren */
+            justify-content: center;/* Horizontal mittig */
+            align-items: center;    /* Vertikal mittig */
+            flex: 1;                /* Wächst, um den Platz zwischen Header/Footer zu füllen */
+            width: 100%;
+            padding: 0 !important;  /* WICHTIG: Kein Padding, das die Mitte verschiebt */
+            margin: 0 !important;
+        }
+
+        /* 2. Link-Container */
         .logo-link {
-            display: contents; /* Verhindert Layout-Probleme durch den Link-Container */
+            display: contents; /* Link stört das Layout nicht */
             cursor: pointer;
         }
         
-        /* Optional: Leichter Zoom-Effekt beim Drüberfahren */
+        /* 3. Logo Animation */
         .center-logo:hover {
             transform: scale(1.02);
             transition: transform 0.3s ease;

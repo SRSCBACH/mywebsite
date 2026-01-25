@@ -1,1 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probetraining - SRSC Bach</title>
+    
+    <link rel="stylesheet" href="style.css">
 
+    <style>
+        /* --- LOKALES DESIGN FÜR DAS FORMULAR --- */
+        
+        /* Hintergrund & Layout (Parallax & Fix für weißen Balken) */
+        html { height: 100%; overflow-y: scroll; }
+        body {
+            background-color: #0f172a;
+            background-attachment: fixed; /* Parallax Effekt */
+            background-size: cover;
+            background-position: center;
+            margin: 0; padding: 0; min-height: 100vh; width: 100%; overflow-x: hidden;
+            display: flex; flex-direction: column;
+        }
+
+        /* Hauptcontainer zentrieren */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Oben ausgerichtet mit etwas Abstand */
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        /* Die Formular-Karte (Glas-Effekt) */
+        .form-card {
+            background-color: rgba(15, 34, 51, 0.7); 
+            border-radius: 16px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 40px; 
+            width: 100%; 
+            max-width: 600px;
+            backdrop-filter: blur(10px); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            margin: 0 20px;
+            opacity: 0; 
+            animation: fadeInContent 0.8s ease-in-out forwards;
+        }
+        @keyframes fadeInContent { to { opacity: 1; } }
+
+        /* Überschrift */
+        .form-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-subtitle {
+            font-family: var(--font-body);
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* Formular Felder */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #ffffff;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box; 
+        }
+
+        /* Fokus-Effekt in Royal Blue */
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #0055ff;
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 85, 255, 0.2);
+        }
+
+        /* Dropdown Optionen dunkel machen (für Lesbarkeit) */
+        select option {
+            background-color: #0f172a;
+            color: white;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Button Design */
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #0055ff; /* Royal Blue */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            letter-spacing: 0.1em;
+        }
+
+        .submit-btn:hover {
+            background-color: #334155;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Mobile Anpassung */
+        @media (max-width: 600px) {
+            .form-card { padding: 20px; }
+            .form-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-container" id="header-container">
+        <div id="header-placeholder" style="width: 100%; display: flex; justify-content: flex-end;"></div>
+    </header>
+
+    <main class="main-content">
+        <div class="form-card">
+            <h1 class="form-title">Probetraining</h1>
+            <p class="form-subtitle">Lust bekommen mitzufahren? Melde dich unverbindlich an. Wir freuen uns auf dich!</p>
+
+            <form action="https://formspree.io/f/xkornnjj" method="POST">
+                
+                <div class="form-group">
+                    <label for="name">Dein Name</label>
+                    <input type="text" id="name" name="name" placeholder="Max Mustermann" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Deine E-Mail</label>
+                    <input type="email" id="email" name="email" placeholder="max@beispiel.de" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Telefon (für Rückfragen)</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+49 ...">
+                </div>
+
+                <div class="form-group">
+                    <label for="experience">Deine Erfahrung</label>
+                    <select id="experience" name="experience">
+                        <option value="anfaenger">Ich fange gerade erst an</option>
+                        <option value="hobby" selected>Hobbyfahrer (Gelegentlich)</option>
+                        <option value="ambitioniert">Ambitioniert (Regelmäßig)</option>
+                        <option value="profi">Profi / Rennfahrer</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Nachricht / Fragen</label>
+                    <textarea id="message" name="message" placeholder="Erzähl uns kurz etwas über dich oder stell deine Fragen..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Anmeldung Absenden</button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer-container" id="footer-container">
+        <div id="footer-placeholder" style="width: 100%; display: flex; justify-content: center;"></div>
+    </footer>
+
+    <script src="main.js"></script>
+
+</body>
+</html>

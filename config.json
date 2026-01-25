@@ -1,26 +1,30 @@
 {
-    "headerLinks": [
-        { "text": "Verein", "url": "https://srscbach.github.io/mywebsite/" },
-        { "text": "Strecken", "url": "strecken.html" },
-        { "text": "Kalender", "url": "kalender.html" }
-    ],
-    "footerLinks": [
-        { "text": "Startseite", "url": "https://srscbach.github.io/mywebsite/" },
-        { "text": "Impressum", "url": "impressum.html" }
-    ]
-}
-{
     "settings": {
         "backgroundImage": "https://srscbach.github.io/mywebsite/images/NewBlueDrawing2.png",
         "logoImage": "https://srscbach.github.io/mywebsite/images/DeineCrewlang.svg"
     },
     "headerLinks": [
-        { "text": "Verein", "url": "https://srscbach.github.io/mywebsite/" },
-        { "text": "Strecken", "url": "strecken.html" },
-        { "text": "Kalender", "url": "kalender.html" }
+        {
+            "text": "Verein",
+            "url": "https://srscbach.github.io/mywebsite/"
+        },
+        {
+            "text": "Strecken",
+            "url": "strecken.html"
+        },
+        {
+            "text": "Kalender",
+            "url": "kalender.html"
+        }
     ],
     "footerLinks": [
-        { "text": "Startseite", "url": "https://srscbach.github.io/mywebsite/" },
-        { "text": "Impressum", "url": "impressum.html" }
+        {
+            "text": "Startseite",
+            "url": "https://srscbach.github.io/mywebsite/"
+        },
+        {
+            "text": "Impressum",
+            "url": "impressum.html"
+        }
     ]
 }

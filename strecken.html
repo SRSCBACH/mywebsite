@@ -192,15 +192,15 @@
     
     <script src="main.js"></script>
     
-    <script>
+   <script>
         // #####################################################################
         //        LOGIK
         // #####################################################################
 
+        // Globaler Font-Default für Chart.js setzen
         Chart.defaults.font.family = 'Eloquia Text ExtLt';
         Chart.defaults.color = '#cbd5e1';
 
-        // Wir laden jetzt direkt die strecken.json
         fetch('strecken.json')
             .then(response => {
                 if (!response.ok) { throw new Error("strecken.json konnte nicht geladen werden"); }
@@ -208,14 +208,12 @@
             })
             .then(touren => {
                 const container = document.getElementById('app-container');
-                
                 touren.forEach(tour => {
                     if(tour.active !== false) {
                         createCardHTML(container, tour.id);
                         setTimeout(() => initSingleCard(tour.id, tour), 0);
                     }
                 });
-
                 removeLoader();
             })
             .catch(err => {
@@ -271,7 +269,6 @@
         }
 
         function initSingleCard(id, data) {
-            // Buttons prüfen
             if(data.gpx) document.getElementById(`btn-gpx-${id}`).href = data.gpx;
             else document.getElementById(`btn-gpx-${id}`).classList.add('disabled');
 
@@ -285,11 +282,10 @@
                 btn.innerText = "No Komoot";
             }
 
-            // Statische Daten füllen
             document.getElementById(`speed-${id}`).innerText = data.schnitt || "-";
             document.getElementById(`prof-${id}`).innerText = data.profil || "-";
 
-            // Karte initialisieren
+            // Leaflet Karte
             let mapInstance = L.map(`map-${id}`);
             let positionMarker = null;
             let localTrackPoints = []; 
@@ -298,15 +294,11 @@
                 attribution: '© OpenStreetMap', opacity: 1.0
             }).addTo(mapInstance);
 
-            // Roter Punkt für Position auf der Karte (bleibt rot oder soll der auch blau?)
-            // Ich lasse ihn rot (#ef4444) damit man ihn sieht, aber den Füllkreis blau?
-            // Hier ist der blaue Marker auf der Karte:
             positionMarker = L.circleMarker([0, 0], {
                 radius: 6, fillColor: "#0055ff", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 1, zIndexOffset: 1000
             }).addTo(mapInstance);
             positionMarker.setStyle({ opacity: 0, fillOpacity: 0 });
 
-            // GPX laden
             if(data.gpx) {
                 new L.GPX(data.gpx, {
                     async: true,
@@ -314,7 +306,6 @@
                         startIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-start.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
                         endIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-end.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
                     },
-                    // HIER GEÄNDERT: Linie auf der Karte ist jetzt #0055ff
                     polyline_options: { color: '#0055ff', opacity: 0.9, weight: 4, lineCap: 'round' }
                 }).on('loaded', function(e) {
                     const gpx = e.target;
@@ -372,7 +363,6 @@
                     L.polylineDecorator(l, {
                         patterns: [{ 
                             offset: '100px', repeat: '200px', 
-                            // HIER GEÄNDERT: Pfeile auf der Karte sind jetzt #0055ff
                             symbol: L.Symbol.arrowHead({ pixelSize: 8, polygon: false, pathOptions: { stroke: true, color: '#0055ff', weight: 2, opacity: 1 } })
                         }]
                     }).addTo(mapRef);
@@ -401,9 +391,19 @@
             }
 
             const ctx = document.getElementById(`chart-${id}`).getContext('2d');
-            const gradientGreen = ctx.createLinearGradient(0, 0, 0, 160); gradientGreen.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); gradientGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)'); 
-            const gradientOrange = ctx.createLinearGradient(0, 0, 0, 160); gradientOrange.addColorStop(0, 'rgba(249, 115, 22, 0.8)'); gradientOrange.addColorStop(1, 'rgba(249, 115, 22, 0.0)');
-            const gradientRed = ctx.createLinearGradient(0, 0, 0, 160); gradientRed.addColorStop(0, 'rgba(239, 68, 68, 0.8)'); gradientRed.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
+            
+            // GRÜNE VERLÄUFE (Original)
+            const gradientGreen = ctx.createLinearGradient(0, 0, 0, 160); 
+            gradientGreen.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); 
+            gradientGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)'); 
+            
+            const gradientOrange = ctx.createLinearGradient(0, 0, 0, 160); 
+            gradientOrange.addColorStop(0, 'rgba(249, 115, 22, 0.8)'); 
+            gradientOrange.addColorStop(1, 'rgba(249, 115, 22, 0.0)');
+            
+            const gradientRed = ctx.createLinearGradient(0, 0, 0, 160); 
+            gradientRed.addColorStop(0, 'rgba(239, 68, 68, 0.8)'); 
+            gradientRed.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
             
             const isMobile = window.innerWidth < 850;
             const chartFontSize = isMobile ? 8 : 10;
@@ -414,13 +414,13 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        // HIER GEÄNDERT: Standardlinie ist jetzt #0055ff
-                        data: points, borderColor: '#0055ff', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
+                        // Farbe wieder GRÜN (#10b981)
+                        data: points, borderColor: '#10b981', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
                         segment: {
                             borderColor: ctx => {
                                 if (ctx.p0DataIndex === undefined) return undefined;
-                                // HIER GEÄNDERT: Die flachen Stücke (letzter Wert) sind jetzt #0055ff
-                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? '#ef4444' : (s >= 4 ? '#f97316' : '#0055ff');
+                                // Standard (flach) = Grün
+                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? '#ef4444' : (s >= 4 ? '#f97316' : '#10b981');
                             },
                             backgroundColor: ctx => {
                                 if (ctx.p0DataIndex === undefined) return undefined;
@@ -446,8 +446,31 @@
                         }
                     },
                     scales: {
-                        x: { display: true, grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, ticks: { maxTicksLimit: 8, color: '#94a3b8', font: { size: chartFontSize } } },
-                        y: { display: true, grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, ticks: { stepSize: 50, maxTicksLimit: 5, color: '#94a3b8', font: { size: chartFontSize }, callback: v => v + ' m' } }
+                        x: { 
+                            display: true, 
+                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, 
+                            ticks: { 
+                                maxTicksLimit: 8, 
+                                color: '#94a3b8', 
+                                font: { family: 'Eloquia Text ExtLt', size: chartFontSize },
+                                // HIER: Callback für ganze Zahlen
+                                callback: function(value, index, values) {
+                                    const label = this.getLabelForValue(value);
+                                    return Math.round(label) + ' km';
+                                }
+                            } 
+                        },
+                        y: { 
+                            display: true, 
+                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, 
+                            ticks: { 
+                                stepSize: 50, 
+                                maxTicksLimit: 5, 
+                                color: '#94a3b8', 
+                                font: { family: 'Eloquia Text ExtLt', size: chartFontSize }, 
+                                callback: v => v + ' m' 
+                            } 
+                        }
                     },
                     layout: { padding: { left: 5, right: 10, top: 5, bottom: 0 } }
                 }

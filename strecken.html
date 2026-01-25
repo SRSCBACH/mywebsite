@@ -337,4 +337,100 @@
         function drawDetailedProfile(id, data, trackPoints, mapRef, markerRef, fontName) {
             const labels = []; const points = []; const slopes = []; const step = Math.ceil(data.length / 100); 
             for (let i = 0; i < data.length; i += step) {
-                const dist = data[i][0].toFixed(1); const elev = data
+                const dist = data[i][0].toFixed(1); const elev = data[i][1];
+                let slopeVal = 0;
+                if (i > 0 && points.length > 0) {
+                    const prevDist = parseFloat(labels[labels.length-1]);
+                    const prevElev = points[points.length-1];
+                    const distDiff = (parseFloat(dist) - prevDist) * 1000; 
+                    const elevDiff = elev - prevElev; 
+                    if(distDiff > 0) { slopeVal = Math.round((elevDiff / distDiff) * 100); }
+                }
+                slopes.push(slopeVal); labels.push(dist); points.push(elev);
+            }
+
+            const ctx = document.getElementById(`chart-${id}`).getContext('2d');
+            
+            const gradientGreen = ctx.createLinearGradient(0, 0, 0, 160); 
+            gradientGreen.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); 
+            gradientGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)'); 
+            
+            const gradientOrange = ctx.createLinearGradient(0, 0, 0, 160); 
+            gradientOrange.addColorStop(0, 'rgba(249, 115, 22, 0.8)'); 
+            gradientOrange.addColorStop(1, 'rgba(249, 115, 22, 0.0)');
+            
+            const gradientRed = ctx.createLinearGradient(0, 0, 0, 160); 
+            gradientRed.addColorStop(0, 'rgba(239, 68, 68, 0.8)'); 
+            gradientRed.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
+            
+            const isMobile = window.innerWidth < 850;
+            const chartFontSize = isMobile ? 8 : 10;
+            const chartBorderWidth = isMobile ? 1.5 : 2;
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: points, borderColor: '#10b981', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
+                        segment: {
+                            borderColor: ctx => {
+                                if (ctx.p0DataIndex === undefined) return undefined;
+                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? '#ef4444' : (s >= 4 ? '#f97316' : '#10b981');
+                            },
+                            backgroundColor: ctx => {
+                                if (ctx.p0DataIndex === undefined) return undefined;
+                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? gradientRed : (s >= 4 ? gradientOrange : gradientGreen);
+                            }
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                    onHover: function(e, activeElements) {
+                        if (activeElements && activeElements.length > 0) {
+                            const index = activeElements[0].index;
+                            const totalChartPoints = this.data.datasets[0].data.length;
+                            if (trackPoints.length > 0 && mapRef && markerRef) {
+                                const percent = index / (totalChartPoints - 1);
+                                const mapIndex = Math.floor(percent * (trackPoints.length - 1));
+                                const latlng = trackPoints[mapIndex];
+                                if(latlng) { markerRef.setLatLng(latlng); markerRef.setStyle({ opacity: 1, fillOpacity: 1 }); }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            display: true, 
+                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, 
+                            ticks: { 
+                                maxTicksLimit: 8, 
+                                color: '#94a3b8', 
+                                font: { family: fontName, size: chartFontSize },
+                                callback: function(value, index, values) {
+                                    const label = this.getLabelForValue(value);
+                                    return Math.round(label) + ' km';
+                                }
+                            } 
+                        },
+                        y: { 
+                            display: true, 
+                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, 
+                            ticks: { 
+                                stepSize: 50, 
+                                maxTicksLimit: 5, 
+                                color: '#94a3b8', 
+                                font: { family: fontName, size: chartFontSize }, 
+                                callback: v => v + ' m' 
+                            } 
+                        }
+                    },
+                    layout: { padding: { left: 5, right: 10, top: 5, bottom: 0 } }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

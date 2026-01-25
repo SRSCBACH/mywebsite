@@ -11,7 +11,7 @@
 
     <style>
         /* ================================================================= */
-        /* --- LOKALE STYLES FÜR STRECKEN (FINAL OPTIMIZED) --- */
+        /* --- LOKALE STYLES FÜR STRECKEN (FINAL) --- */
         /* ================================================================= */
         :root {
             --bg-card-route: rgba(15, 34, 51, 0.5); 
@@ -21,23 +21,13 @@
             --spacing-unit: 15px; 
         }
 
-        /* --- FIX FÜR WEISSEN BALKEN & SCROLLING --- */
-        html {
-            height: 100%;
-            overflow-y: scroll; 
-        }
-
+        /* FIX FÜR WEISSEN BALKEN & SCROLLING */
+        html { height: 100%; overflow-y: scroll; }
         body {
-            /* Fallback Farbe dunkel setzen, falls Bild kurz weg ist */
             background-color: #0f172a; 
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            width: 100%;
-            overflow-x: hidden;
+            margin: 0; padding: 0; min-height: 100vh; width: 100%; overflow-x: hidden;
         }
 
-        /* CONTAINER */
         #app-container {
             display: flex; flex-direction: column; gap: 20px; align-items: center; width: 100%;
             opacity: 0; animation: fadeInContent 0.8s ease-in-out forwards;
@@ -54,77 +44,45 @@
         }
         
         .header {
-            position: relative; 
-            padding-bottom: 10px; 
-            margin-bottom: var(--spacing-unit); 
+            position: relative; padding-bottom: 10px; margin-bottom: var(--spacing-unit); 
             display: flex; justify-content: space-between; align-items: center; 
             border-bottom: 1px solid var(--border-color);
         }
-        
-        /* Fix für abgeschnittene Umlaute (Ä, Ö, Ü) */
         .title { 
-            font-size: 1.8rem; 
-            padding-top: 5px; 
-            padding-bottom: 3px; /* Etwas Platz unten */
-            line-height: 1.4;    /* Mehr Höhe für die Zeile */
+            font-size: 1.8rem; padding-top: 5px; padding-bottom: 3px; line-height: 1.4;    
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
         }
         .brand-logo { height: 22px; width: auto; opacity: 0.7; display: block; flex-shrink: 0; margin-left: 15px; }
 
         /* GRID */
-        .content-grid { 
-            display: grid; 
-            grid-template-columns: 1.6fr 1fr; 
-            gap: 20px; 
-        }
-        
-        .left-column { 
-            display: flex; flex-direction: column; gap: var(--spacing-unit); 
-        } 
-        
+        .content-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; }
+        .left-column { display: flex; flex-direction: column; gap: var(--spacing-unit); } 
         .right-column { display: flex; flex-direction: column; } 
 
         /* MAP & CHART */
         .map-wrapper {
-            height: 260px; 
-            width: 100%; 
-            background-color: var(--bg-map); border-radius: 12px; 
+            height: 260px; width: 100%; background-color: var(--bg-map); border-radius: 12px; 
             box-shadow: inset 0 0 10px rgba(0,0,0,0.1); z-index: 1;
         }
 
-        /* ZOOM BUTTONS 50% KLEINER */
         .leaflet-bar a { 
-            background-color: #fff !important; 
-            color: #333 !important; 
-            width: 15px !important; 
-            height: 15px !important; 
-            line-height: 15px !important;
-            font-size: 10px !important;
+            background-color: #fff !important; color: #333 !important; 
+            width: 15px !important; height: 15px !important; line-height: 15px !important; font-size: 10px !important;
         }
         .leaflet-control-attribution { background: rgba(255,255,255,0.8) !important; }
 
         .profile-container {
-            height: 130px; 
-            width: 100%; 
-            background-color: rgba(0,0,0,0.2); border-radius: 12px; 
-            padding: 5px 10px; 
-            overflow: hidden; position: relative;
-            box-sizing: border-box; 
+            height: 130px; width: 100%; background-color: rgba(0,0,0,0.2); border-radius: 12px; 
+            padding: 5px 10px; overflow: hidden; position: relative; box-sizing: border-box; 
         }
         canvas { width: 100% !important; height: 100% !important; }
 
-        /* STATS WRAPPER */
+        /* STATS */
         .stats-wrapper { display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: space-between; }
-
-        /* TABELLE */
         .data-table { width: 100%; display: flex; flex-direction: column; flex: 1; }
-        .data-row { 
-            display: flex; border-bottom: 1px solid var(--border-color); align-items: center; flex: 1; 
-            min-height: 32px; 
-        }
+        .data-row { display: flex; border-bottom: 1px solid var(--border-color); align-items: center; flex: 1; min-height: 32px; }
         .data-row:last-child { border-bottom: none; }
         
-        /* Schriftgrößen Tabelle */
         .data-label { flex: 0 0 45%; color: var(--text-secondary); font-size: 1.2rem; font-weight: 200; border-right: 1px solid var(--border-color); height: 100%; display: flex; align-items: center; }
         .data-value { flex: 1; font-size: 1.5rem; font-family: var(--font-heading); font-weight: 800; padding-left: 15px; display: flex; align-items: center; color: var(--accent-color); }
 
@@ -136,18 +94,13 @@
             font-size: 0.85rem; font-family: var(--font-heading); font-weight: 800; text-transform: uppercase;
             cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.05em; padding: 0; 
         }
-        
-        /* HOVER: DUNKELGRAU */
-        .btn:hover { 
-            background-color: #334155; 
-            color: #ffffff; 
-            transform: translateY(-2px); 
-            border-color: #334155; 
-        }
-        
+        .btn:hover { background-color: #334155; color: #ffffff; transform: translateY(-2px); border-color: #334155; }
         .btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
 
-        /* MOBILE ANPASSUNG */
+        .loading-text { font-size: 1rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; } }
+
+        /* MOBILE */
         @media (max-width: 850px) {
             .card { padding: 12px; }
             .header { padding-bottom: 8px; margin-bottom: 10px; }
@@ -160,21 +113,14 @@
             .map-wrapper { height: 220px; } 
             .profile-container { height: 100px; }
 
-            /* Mobile: Buttons rechts neben Tabelle */
             .stats-wrapper { flex-direction: row; gap: 8px; align-items: stretch; }
             .data-table { flex: 1; border-top: none; }
             .data-row { min-height: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-            
-            /* Mobile Schriftgrößen */
             .data-label { font-size: 0.85rem; flex: 0 0 45%; } 
             .data-value { font-size: 1.0rem; padding-left: 8px; } 
 
-            .button-group { 
-                margin-top: 0; flex-direction: column; width: 85px; height: auto; gap: 4px; justify-content: space-between; flex-shrink: 0;
-            }
-            .btn { 
-                font-size: 0.6rem; width: 100%; flex: 1; padding: 0; line-height: 1.2; margin: 0;
-            }
+            .button-group { margin-top: 0; flex-direction: column; width: 85px; height: auto; gap: 4px; justify-content: space-between; flex-shrink: 0; }
+            .btn { font-size: 0.6rem; width: 100%; flex: 1; padding: 0; line-height: 1.2; margin: 0; }
         }
     </style>
 </head>
@@ -201,13 +147,11 @@
     
     <script>
         // #####################################################################
-        //        LOGIK
+        //        AUTO-CALC LOGIK
         // #####################################################################
 
-        // 1. Warten bis Schriften wirklich geladen sind (Chart-Fix)
         document.fonts.ready.then(function () {
             
-            // Name der Schriftart definieren
             const customFont = "'Eloquia Text ExtLt', sans-serif";
             
             Chart.defaults.font.family = customFont;
@@ -223,7 +167,6 @@
                     touren.forEach(tour => {
                         if(tour.active !== false) {
                             createCardHTML(container, tour.id);
-                            // Font-Name an die Funktion übergeben
                             setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
                         }
                     });
@@ -270,6 +213,7 @@
         }
 
         function initSingleCard(id, data, fontName) {
+            // Buttons prüfen
             if(data.gpx) document.getElementById(`btn-gpx-${id}`).href = data.gpx;
             else document.getElementById(`btn-gpx-${id}`).classList.add('disabled');
 
@@ -283,9 +227,11 @@
                 btn.innerText = "No Komoot";
             }
 
-            document.getElementById(`speed-${id}`).innerText = data.schnitt || "-";
-            document.getElementById(`prof-${id}`).innerText = data.profil || "-";
+            // SCHNITT ANZEIGEN (Kommt aus JSON, da Nutzerpräferenz)
+            const speedValueStr = data.schnitt || "30"; // Fallback 30
+            document.getElementById(`speed-${id}`).innerText = speedValueStr.includes('km/h') ? speedValueStr : speedValueStr + " km/h";
 
+            // KARTEN SETUP
             let mapInstance = L.map(`map-${id}`);
             let positionMarker = null;
             let localTrackPoints = []; 
@@ -294,7 +240,6 @@
                 attribution: '© OpenStreetMap', opacity: 1.0
             }).addTo(mapInstance);
 
-            // Marker in Royal Blue (#0055ff)
             positionMarker = L.circleMarker([0, 0], {
                 radius: 6, fillColor: "#0055ff", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 1, zIndexOffset: 1000
             }).addTo(mapInstance);
@@ -307,38 +252,50 @@
                         startIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-start.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
                         endIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-end.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
                     },
-                    // GPX Linie in Royal Blue (#0055ff)
                     polyline_options: { color: '#0055ff', opacity: 0.9, weight: 4, lineCap: 'round' }
                 }).on('loaded', function(e) {
                     const gpx = e.target;
                     mapInstance.fitBounds(gpx.getBounds());
                     
+                    // --- 1. TITEL AUS GPX (oder JSON Fallback) ---
                     let gpxName = gpx.get_name(); 
                     if (!gpxName) { gpxName = `Tour ${id}`; } else { gpxName = gpxName.replace(/\.gpx$/i, ''); }
                     const titleEl = document.getElementById(`title-${id}`);
                     titleEl.innerText = gpxName;
+                    
+                    // --- 2. BERECHNUNG DER WERTE DIREKT AUS GPX ---
+                    
+                    // Distanz (km)
+                    const distKm = (gpx.get_distance() / 1000).toFixed(1);
+                    
+                    // Höhenmeter (hm)
+                    const elevHm = gpx.get_elevation_gain().toFixed(0);
+                    
+                    // Dauer berechnen (Distanz / Schnitt)
+                    // Schnitt aus JSON extrahieren (z.B. "30 km/h" -> 30)
+                    const speedNum = parseFloat(speedValueStr.replace(/[^0-9.]/g, '')) || 30;
+                    const durationDec = distKm / speedNum;
+                    const hours = Math.floor(durationDec);
+                    const minutes = Math.round((durationDec - hours) * 60);
+                    const timeStr = `${hours} h ${minutes < 10 ? '0' : ''}${minutes} min`;
+
+                    // Profil automatisch bestimmen (Hm pro km)
+                    // < 8 = Flach, 8-18 = Wellig, > 18 = Bergig
+                    const ratio = elevHm / distKm;
+                    let profileStr = "Flach";
+                    if(ratio > 18) profileStr = "Bergig";
+                    else if(ratio > 8) profileStr = "Wellig";
+
+                    // --- 3. WERTE IN DIE TABELLE SCHREIBEN ---
+                    document.getElementById(`dist-${id}`).innerText = Math.round(distKm) + " km";
+                    document.getElementById(`elev-${id}`).innerText = elevHm + " hm";
+                    document.getElementById(`time-${id}`).innerText = timeStr;
+                    document.getElementById(`prof-${id}`).innerText = profileStr;
+
+                    // Hilfsfunktion: Schriftgröße Titel anpassen
                     fitTitle(titleEl);
 
-                    let finalDist = (data.distanz && data.distanz !== "") ? data.distanz : (gpx.get_distance() / 1000).toFixed(1);
-                    let finalElev = (data.hoehenmeter && data.hoehenmeter !== "") ? data.hoehenmeter : gpx.get_elevation_gain().toFixed(0);
-                    
-                    let finalTime;
-                    if (data.dauer && data.dauer !== "") {
-                        finalTime = data.dauer;
-                    } else {
-                        const numericDist = parseFloat(finalDist);
-                        let speedStr = data.schnitt || "30";
-                        let speed = parseFloat(speedStr.replace(/[^0-9.]/g, '')) || 30;
-                        const decimalHours = numericDist / speed;
-                        const hours = Math.floor(decimalHours);
-                        const minutes = Math.round((decimalHours - hours) * 60);
-                        finalTime = `${hours} h ${minutes < 10 ? '0' : ''}${minutes} min`;
-                    }
-
-                    document.getElementById(`dist-${id}`).innerText = finalDist + " km";
-                    document.getElementById(`elev-${id}`).innerText = finalElev + " hm";
-                    document.getElementById(`time-${id}`).innerText = finalTime;
-
+                    // Pfeile und Chart
                     addArrowsAndExtractPoints(gpx, mapInstance, localTrackPoints);
                     drawDetailedProfile(id, gpx.get_elevation_data(), localTrackPoints, mapInstance, positionMarker, fontName);
 
@@ -365,7 +322,6 @@
                     L.polylineDecorator(l, {
                         patterns: [{ 
                             offset: '100px', repeat: '200px', 
-                            // Pfeile in Royal Blue (#0055ff)
                             symbol: L.Symbol.arrowHead({ pixelSize: 8, polygon: false, pathOptions: { stroke: true, color: '#0055ff', weight: 2, opacity: 1 } })
                         }]
                     }).addTo(mapRef);
@@ -381,104 +337,4 @@
         function drawDetailedProfile(id, data, trackPoints, mapRef, markerRef, fontName) {
             const labels = []; const points = []; const slopes = []; const step = Math.ceil(data.length / 100); 
             for (let i = 0; i < data.length; i += step) {
-                const dist = data[i][0].toFixed(1); const elev = data[i][1];
-                let slopeVal = 0;
-                if (i > 0 && points.length > 0) {
-                    const prevDist = parseFloat(labels[labels.length-1]);
-                    const prevElev = points[points.length-1];
-                    const distDiff = (parseFloat(dist) - prevDist) * 1000; 
-                    const elevDiff = elev - prevElev; 
-                    if(distDiff > 0) { slopeVal = Math.round((elevDiff / distDiff) * 100); }
-                }
-                slopes.push(slopeVal); labels.push(dist); points.push(elev);
-            }
-
-            const ctx = document.getElementById(`chart-${id}`).getContext('2d');
-            
-            // GRÜN (#10b981) als Hauptfarbe
-            const gradientGreen = ctx.createLinearGradient(0, 0, 0, 160); 
-            gradientGreen.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); 
-            gradientGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)'); 
-            
-            const gradientOrange = ctx.createLinearGradient(0, 0, 0, 160); 
-            gradientOrange.addColorStop(0, 'rgba(249, 115, 22, 0.8)'); 
-            gradientOrange.addColorStop(1, 'rgba(249, 115, 22, 0.0)');
-            
-            const gradientRed = ctx.createLinearGradient(0, 0, 0, 160); 
-            gradientRed.addColorStop(0, 'rgba(239, 68, 68, 0.8)'); 
-            gradientRed.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
-            
-            const isMobile = window.innerWidth < 850;
-            const chartFontSize = isMobile ? 8 : 10;
-            const chartBorderWidth = isMobile ? 1.5 : 2;
-
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        // Grüne Linie
-                        data: points, borderColor: '#10b981', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
-                        segment: {
-                            borderColor: ctx => {
-                                if (ctx.p0DataIndex === undefined) return undefined;
-                                // Standard Flach = Grün
-                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? '#ef4444' : (s >= 4 ? '#f97316' : '#10b981');
-                            },
-                            backgroundColor: ctx => {
-                                if (ctx.p0DataIndex === undefined) return undefined;
-                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? gradientRed : (s >= 4 ? gradientOrange : gradientGreen);
-                            }
-                        }
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
-                    plugins: { legend: { display: false }, tooltip: { enabled: false } },
-                    onHover: function(e, activeElements) {
-                        if (activeElements && activeElements.length > 0) {
-                            const index = activeElements[0].index;
-                            const totalChartPoints = this.data.datasets[0].data.length;
-                            if (trackPoints.length > 0 && mapRef && markerRef) {
-                                const percent = index / (totalChartPoints - 1);
-                                const mapIndex = Math.floor(percent * (trackPoints.length - 1));
-                                const latlng = trackPoints[mapIndex];
-                                if(latlng) { markerRef.setLatLng(latlng); markerRef.setStyle({ opacity: 1, fillOpacity: 1 }); }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: { 
-                            display: true, 
-                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, 
-                            ticks: { 
-                                maxTicksLimit: 8, 
-                                color: '#94a3b8', 
-                                font: { family: fontName, size: chartFontSize },
-                                callback: function(value, index, values) {
-                                    const label = this.getLabelForValue(value);
-                                    // Ganze Zahlen
-                                    return Math.round(label) + ' km';
-                                }
-                            } 
-                        },
-                        y: { 
-                            display: true, 
-                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, 
-                            ticks: { 
-                                stepSize: 50, 
-                                maxTicksLimit: 5, 
-                                color: '#94a3b8', 
-                                font: { family: fontName, size: chartFontSize }, 
-                                callback: v => v + ' m' 
-                            } 
-                        }
-                    },
-                    layout: { padding: { left: 5, right: 10, top: 5, bottom: 0 } }
-                }
-            });
-        }
-    </script>
-</body>
-</html>
+                const dist = data[i][0].toFixed(1); const elev = data

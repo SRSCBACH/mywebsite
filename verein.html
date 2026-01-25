@@ -46,7 +46,7 @@
             padding-top: 40px; padding-bottom: 40px; gap: 40px; 
         }
 
-        /* KARTE (Glas-Look) */
+        /* KARTE (Glas-Look - Standard für alle) */
         .content-card {
             background-color: rgba(15, 34, 51, 0.5); 
             border-radius: 16px; 
@@ -59,6 +59,24 @@
             opacity: 0; animation: fadeInContent 0.8s ease-in-out forwards;
             box-sizing: border-box; color: #ffffff;
         }
+        
+        /* --- NEU: HIER WIRD DIE ERSTE BOX TRANSPARENT GEMACHT --- */
+        /* Wählt das erste Kind-Element (.content-card) im Hauptcontainer aus */
+        .main-content > .content-card:first-child {
+            background-color: transparent; /* Kein Hintergrund */
+            border: none;                  /* Kein Rahmen */
+            box-shadow: none;              /* Kein Schatten */
+            backdrop-filter: none;         /* Kein Blur-Effekt */
+            padding-top: 0;                /* Weniger Abstand nach oben */
+            padding-bottom: 10px;          /* Weniger Abstand nach unten */
+        }
+        
+        /* Den Titel der ersten, freien Box etwas größer machen */
+        .main-content > .content-card:first-child .card-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
         @keyframes fadeInContent { to { opacity: 1; } }
 
         .card-title {
@@ -161,7 +179,7 @@
             font-size: 0.95rem; line-height: 1.6; max-height: 0; overflow: hidden;
             transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
             opacity: 0; padding-bottom: 0;
-            text-align: justify; /* Blocksatz für lange Texte */
+            text-align: justify;
         }
         .faq-item.active .faq-toggle { transform: rotate(45deg); color: #94a3b8; }
         /* HIER ERHÖHT: 2000px damit lange Rechtstexte reinpassen */
@@ -175,6 +193,8 @@
             .content-card { padding: 20px; margin: 0 10px; width: auto;}
             .card-title { font-size: 1.5rem; }
             .form-row { flex-direction: column; gap: 0; }
+            /* Auf Handy den Titel der ersten Box auch anpassen */
+            .main-content > .content-card:first-child .card-title { font-size: 2rem; }
         }
     </style>
 </head>

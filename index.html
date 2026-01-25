@@ -3,71 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SRSC Homepage Complete</title>
+    <title>SRSC Bach</title>
 
     <link href="https://db.onlinewebfonts.com/c/321e53022d0a33d76e1b4791d82b7314?family=Eloquia+Display+ExtBd" rel="stylesheet">
     <link href="https://db.onlinewebfonts.com/c/43bcf95cd1b2e5e6ba33de34ba10ba10?family=Eloquia+Text+ExtLt" rel="stylesheet">
 
     <style>
         /* ================================================================= */
-        /* --- DESIGN VARIABLEN --- */
+        /* --- GRUNDLEGENDE EINSTELLUNGEN --- */
         /* ================================================================= */
         :root {
-            /* Hintergrundvariable wird nicht mehr benötigt, da wir ein Bild nutzen */
-            /* --bg-body: transparent; */
             --text-primary: #ffffff;
-            --accent-color: #ffffff;   
-            
+            --accent-color: #ffffff;
             --font-heading: 'Eloquia Display ExtBd', sans-serif;
             --font-body: 'Eloquia Text ExtLt', sans-serif;
         }
 
-        /* ================================================================= */
-        /* --- GRUNDLAYOUT (Flexbox Column) & HINTERGRUND --- */
-        /* ================================================================= */
         * { box-sizing: border-box; }
 
-        html {
-            height: 100%;
+        html, body {
+            margin: 0;
+            padding: 0;
             width: 100%;
-            margin: 0; padding: 0;
+            height: 100%; /* Wichtig für die Höhe */
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden; 
             font-family: var(--font-body);
             
-            /* Wir teilen den Bildschirm in 3 Bereiche: Oben, Mitte (füllend), Unten */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; 
-
-            /* --- NEU: HINTERGRUNDBILD --- */
+            /* HINTERGRUNDBILD */
             background-image: url('https://srscbach.github.io/mywebsite/images/NewBlueDrawing2.png');
-            /* 'cover' sorgt dafür, dass das Bild immer den ganzen Bereich füllt */
-            background-size: cover; 
-            /* Zentriert das Bild horizontal und vertikal */
+            background-size: cover;
             background-position: center center;
-            /* Verhindert, dass das Bild gekachelt wird */
             background-repeat: no-repeat;
+            background-attachment: fixed; /* Fixiert den Hintergrund beim Scrollen */
+
+            /* FLEXBOX LAYOUT - Das Geheimnis für den Footer unten */
+            display: flex;
+            flex-direction: column; /* Elemente untereinander anordnen */
+            min-height: 100vh;      /* Mindestens so hoch wie der Bildschirm */
         }
 
         /* ================================================================= */
-        /* --- 1. HEADER (Oben Rechts) --- */
+        /* --- 1. HEADER (Oben) --- */
         /* ================================================================= */
         .header-container {
             width: 100%;
-            height: 80px; /* Feste Höhe für den Kopfbereich */
-            padding: 0 30px;
+            padding: 30px 40px; /* Etwas Abstand vom Rand */
             display: flex;
-            justify-content: flex-end; /* Menü nach rechts schieben */
-            align-items: center;
-
-            /* Startzustand für JS-Animation */
+            justify-content: flex-end; /* Menü nach rechts */
+            
+            /* Startzustand (Unsichtbar) */
             opacity: 0;
             transform: translateY(-20px);
             transition: opacity 1s ease-out, transform 1s ease-out;
@@ -78,49 +64,47 @@
             margin: 0;
             padding: 0;
             display: flex;
-            gap: 40px; 
+            gap: 40px;
         }
 
         /* ================================================================= */
-        /* --- 2. MAIN CONTENT (Logo Mitte) --- */
+        /* --- 2. MAIN CONTENT (Mitte - Logo) --- */
         /* ================================================================= */
         .main-content {
-            flex-grow: 1; /* Nimmt den gesamten verfügbaren Platz in der Mitte ein */
+            /* HIER IST DER TRICK: */
+            flex: 1;  /* Nimm allen verfügbaren Platz ein! */
             display: flex;
             justify-content: center; /* Horizontal mittig */
             align-items: center;     /* Vertikal mittig */
             width: 100%;
         }
 
-        /* Animation für das Logo */
-        @keyframes subtleFadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-        }
-
         .center-logo {
-            width: 80%;       
-            height: auto;     
-            max-width: 1200px; 
+            width: 80%;
+            height: auto;
+            max-width: 1200px;
             
-            /* Logo Animation (Startet sofort) */
-            opacity: 0; 
+            /* Animation */
+            opacity: 0;
             animation: subtleFadeIn 1.5s ease-in-out forwards;
         }
 
+        @keyframes subtleFadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
         /* ================================================================= */
-        /* --- 3. FOOTER (Unten Mitte) --- */
+        /* --- 3. FOOTER (Ganz unten) --- */
         /* ================================================================= */
         .footer-container {
             width: 100%;
-            height: 80px; /* Feste Höhe für den Fußbereich */
-            padding: 10px;
+            padding: 20px;       /* Ein bisschen Luft zum Rand sieht edler aus */
+            padding-bottom: 30px; /* Abstand nach unten zum Bildschirmrand */
             display: flex;
-            justify-content: center; /* Menü mittig */
-            align-items: flex-end;   /* Unten im Container sitzen */
-            padding-bottom: 30px;
-
-            /* Startzustand für JS-Animation */
+            justify-content: center; /* Mittig */
+            
+            /* Startzustand (Unsichtbar) */
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 1s ease-out, transform 1s ease-out;
@@ -128,44 +112,43 @@
 
         .footer-nav {
             display: flex;
-            gap: 50px; 
+            gap: 50px;
         }
 
         /* ================================================================= */
-        /* --- LINKS STYLE (Gültig für Header & Footer) --- */
+        /* --- LINKS (Global) --- */
         /* ================================================================= */
         a {
             text-decoration: none;
-            color: var(--text-primary); 
+            color: var(--text-primary);
             font-family: var(--font-heading);
-            font-weight: 800; 
+            font-weight: 800;
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            padding-bottom: 5px; 
-            opacity: 0.7; 
-            transition: color 0.3s ease, transform 0.2s, opacity 0.3s ease;
-            display: inline-block;
+            padding-bottom: 5px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
         }
 
         a:hover {
             color: var(--accent-color);
-            transform: translateY(-2px); 
-            opacity: 1; 
+            transform: translateY(-2px);
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5); /* Leichter Glow Effekt */
         }
 
         /* ================================================================= */
-        /* --- MOBILE ANPASSUNG --- */
+        /* --- MOBILE --- */
         /* ================================================================= */
         @media (max-width: 600px) {
-            .header-container { padding: 0 10px; height: 50px; }
-            .footer-container { padding-bottom: 20px; height: 50px; }
-            
-            .header-nav ul { gap: 12px; }
-            .footer-nav { gap: 30px; }
+            .header-container { padding: 15px 20px; }
+            .header-nav ul { gap: 15px; }
+            .footer-nav { gap: 20px; }
+            .footer-container { padding-bottom: 20px; }
 
             a {
-                font-size: 8px;           
+                font-size: 10px; /* Etwas lesbarer auf Mobile */
                 letter-spacing: 0.05em;
             }
         }
@@ -176,42 +159,42 @@
     <header class="header-container" id="topMenu">
         <nav class="header-nav">
             <ul>
-                <li><a href="https://www.srsc-bach.de/verein" target="_top">Verein</a></li>
-                <li><a href="https://www.srsc-bach.de/streckenkatalog" target="_top">Strecken</a></li> 
-                <li><a href="https://www.srsc-bach.de/kalender" target="_top">Kalender</a></li>
+                <li><a href="https://www.srsc-bach.de/verein">Verein</a></li>
+                <li><a href="https://www.srsc-bach.de/streckenkatalog">Strecken</a></li>
+                <li><a href="https://www.srsc-bach.de/kalender">Kalender</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="main-content">
-        <img src="https://static.wixstatic.com/shapes/9627cc_0209b2a1c6064535820c93c7dfb3a187.svg" alt="SRSC Logo" class="center-logo">
+        <img src="https://static.wixstatic.com/shapes/9627cc_0209b2a1c6064535820c93c7dfb3a187.svg" alt="SRSC Bach Logo" class="center-logo">
     </main>
 
     <footer class="footer-container" id="bottomMenu">
         <nav class="footer-nav">
-            <a href="https://www.srsc-bach.de/landingpage" target="_top">Startseite</a>
-            <a href="https://www.srsc-bach.de/impressumneu" target="_top">Impressum</a>
+            <a href="https://www.srsc-bach.de/landingpage">Startseite</a>
+            <a href="https://www.srsc-bach.de/impressumneu">Impressum</a>
         </nav>
     </footer>
 
     <script>
         window.addEventListener('load', function() {
             setTimeout(function() {
-                // Header holen und einblenden
+                // Elemente holen
                 var top = document.getElementById('topMenu');
+                var bottom = document.getElementById('bottomMenu');
+
+                // Einblenden
                 if (top) {
                     top.style.opacity = '1';
                     top.style.transform = 'translateY(0)';
                 }
-
-                // Footer holen und einblenden
-                var bottom = document.getElementById('bottomMenu');
                 if (bottom) {
                     bottom.style.opacity = '1';
                     bottom.style.transform = 'translateY(0)';
                 }
 
-            }, 3000); // 3000ms = 3 Sekunden Wartezeit
+            }, 3000); // 3 Sekunden warten
         });
     </script>
 

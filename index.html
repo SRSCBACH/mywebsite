@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SRSC Bach - Home</title>
+    <title>Startseite - SRSC Bach</title>
     
     <link rel="stylesheet" href="style.css">
     
@@ -29,43 +29,49 @@
         /* 2. LAYOUT: ZENTRIERUNG                   */
         /* ========================================= */
         body {
-            background-color: #0f172a; /* Fallback Farbe */
+            background-color: #0f172a; 
             margin: 0; padding: 0; 
             min-height: 100vh; width: 100%; 
             display: flex; flex-direction: column;
             overflow-x: hidden;
         }
 
-        /* Zwingt den Main-Container, den Platz zu füllen und mittig auszurichten */
         .main-content {
             display: flex;          
             justify-content: center; /* Horizontal mittig */
             align-items: center;     /* Vertikal mittig */
-            flex: 1;                 /* Füllt den Platz zwischen Header & Footer */
+            flex: 1;                 /* Füllt den Platz */
             width: 100%;
             padding: 0 !important;   
             margin: 0 !important;
         }
 
         .logo-link {
-            display: contents; /* Link stört das Flex-Layout nicht */
+            /* HIER GEÄNDERT: Block statt contents, sicherer für Layout */
+            display: block; 
             cursor: pointer;
-            perspective: 1000px; /* Vorbereitung für 3D Effekte */
         }
 
         /* ========================================= */
-        /* 3. LOGO ANIMATION (HERZSCHLAG)           */
+        /* 3. LOGO ANIMATION & GRÖSSE               */
         /* ========================================= */
         .center-logo {
-            /* Das Logo atmet (4 Sekunden Loop) */
+            /* HIER GEÄNDERT: Feste Breite definiert, damit es nicht verschwindet */
+            width: 300px;        /* Standardgröße für Desktop */
+            max-width: 60vw;     /* Auf Handys maximal 60% der Breite */
+            height: auto;        /* Höhe passt sich automatisch an */
+            
+            /* Animation */
             animation: atmen 4s infinite ease-in-out;
             transition: all 0.5s ease;
-            /* Leichter Schein am Anfang */
             filter: drop-shadow(0 0 5px rgba(255,255,255,0.1));
-            
-            /* Sicherheitshalber max-width, damit es auf Handys nicht explodiert */
-            max-width: 80%; 
-            height: auto;
+        }
+
+        /* Auf großen Bildschirmen darf es etwas größer sein */
+        @media (min-width: 1000px) {
+            .center-logo {
+                width: 400px;
+            }
         }
 
         @keyframes atmen {
@@ -74,8 +80,8 @@
                 filter: drop-shadow(0 0 5px rgba(255,255,255,0.1)); 
             }
             50% { 
-                transform: scale(1.04); /* Wird sanft größer */
-                filter: drop-shadow(0 0 25px rgba(255,255,255,0.3)); /* Leuchtet auf */
+                transform: scale(1.05); 
+                filter: drop-shadow(0 0 30px rgba(255,255,255,0.3)); 
             }
             100% { 
                 transform: scale(1); 
@@ -83,18 +89,15 @@
             }
         }
 
-        /* Hover Effekt (Maus drüber) */
         .center-logo:hover {
-            animation: none; /* Stoppt das Atmen */
-            transform: scale(1.1); /* Wird noch größer */
-            /* Kräftigerer, bläulicher Schein */
-            filter: drop-shadow(0 0 40px rgba(100, 149, 237, 0.6));
+            animation: none; 
+            transform: scale(1.15); 
+            filter: drop-shadow(0 0 50px rgba(100, 149, 237, 0.7));
         }
 
         /* ========================================= */
         /* 4. ORB SPEED OVERRIDE (SCHNELLER)        */
         /* ========================================= */
-        /* Überschreibt die Werte aus der style.css für mehr Tempo */
         .orb-1 { animation-duration: 15s !important; }
         .orb-2 { animation-duration: 20s !important; }
         .orb-3 { animation-duration: 12s !important; }

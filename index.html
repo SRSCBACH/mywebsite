@@ -13,7 +13,8 @@
         /* --- DESIGN VARIABLEN --- */
         /* ================================================================= */
         :root {
-            --bg-body: transparent;      
+            /* Hintergrundvariable wird nicht mehr benötigt, da wir ein Bild nutzen */
+            /* --bg-body: transparent; */
             --text-primary: #ffffff;
             --accent-color: #ffffff;   
             
@@ -22,25 +23,37 @@
         }
 
         /* ================================================================= */
-        /* --- GRUNDLAYOUT (Flexbox Column) --- */
+        /* --- GRUNDLAYOUT (Flexbox Column) & HINTERGRUND --- */
         /* ================================================================= */
         * { box-sizing: border-box; }
 
-        html, body {
+        html {
+            height: 100%;
+            width: 100%;
+            margin: 0; padding: 0;
+        }
+
+        body {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
             overflow: hidden; 
             font-family: var(--font-body);
-            background-color: var(--bg-body);
-        }
-
-        body {
+            
             /* Wir teilen den Bildschirm in 3 Bereiche: Oben, Mitte (füllend), Unten */
             display: flex;
             flex-direction: column;
             justify-content: space-between; 
+
+            /* --- NEU: HINTERGRUNDBILD --- */
+            background-image: url('https://srscbach.github.io/mywebsite/images/NewBlueDrawing2.png');
+            /* 'cover' sorgt dafür, dass das Bild immer den ganzen Bereich füllt */
+            background-size: cover; 
+            /* Zentriert das Bild horizontal und vertikal */
+            background-position: center center;
+            /* Verhindert, dass das Bild gekachelt wird */
+            background-repeat: no-repeat;
         }
 
         /* ================================================================= */

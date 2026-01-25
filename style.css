@@ -385,7 +385,7 @@ strong { color: var(--text-primary); font-weight: 600; }
     height: 60vw;
     /* Ein mittleres Schiefergrau (passt zu deinen Buttons) */
     background: #64748b;
-    animation-duration: 35s;
+    animation-duration: 25s;
 }
 
 /* ORB 2: Mittleres Grau (Unten Rechts) */
@@ -396,7 +396,7 @@ strong { color: var(--text-primary); font-weight: 600; }
     height: 70vw;
     /* Ein etwas dunkleres Grau */
     background: #475569;
-    animation-duration: 40s;
+    animation-duration: 20s;
     animation-direction: alternate-reverse;
 }
 
@@ -410,7 +410,7 @@ strong { color: var(--text-primary); font-weight: 600; }
     background: #1e293b;
     /* HIER GEÄNDERT: Noch weniger Deckkraft */
     opacity: 0.1;
-    animation-duration: 30s;
+    animation-duration: 10s;
 }
 
 /* Die sanfte Bewegung */

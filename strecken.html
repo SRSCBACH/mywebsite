@@ -86,8 +86,16 @@
         .data-label { flex: 0 0 45%; color: var(--text-secondary); font-size: 1.2rem; font-weight: 200; border-right: 1px solid var(--border-color); height: 100%; display: flex; align-items: center; }
         .data-value { flex: 1; font-size: 1.5rem; font-family: var(--font-heading); font-weight: 800; padding-left: 15px; display: flex; align-items: center; color: var(--accent-color); }
 
-        /* BUTTONS */
-        .button-group { display: flex; flex-direction: row; height: 45px; gap: 10px; width: 100%; margin-top: 10px; }
+        /* BUTTONS (DESKTOP) */
+        .button-group { 
+            display: flex; 
+            flex-direction: row; 
+            height: 45px; 
+            /* HIER: Identischer Abstand horizontal */
+            gap: 10px; 
+            width: 100%; 
+            margin-top: 10px; 
+        }
         .btn {
             background-color: var(--btn-bg); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px;
             flex: 1; display: flex; align-items: center; justify-content: center;
@@ -119,7 +127,16 @@
             .data-label { font-size: 0.85rem; flex: 0 0 45%; } 
             .data-value { font-size: 1.0rem; padding-left: 8px; } 
 
-            .button-group { margin-top: 0; flex-direction: column; width: 85px; height: auto; gap: 4px; justify-content: space-between; flex-shrink: 0; }
+            .button-group { 
+                margin-top: 0; 
+                flex-direction: column; 
+                width: 85px; 
+                height: auto; 
+                /* HIER: Identischer Abstand vertikal (5px) */
+                gap: 5px; 
+                justify-content: center; /* Zentriert, kein "space-between" mehr */
+                flex-shrink: 0; 
+            }
             .btn { font-size: 0.6rem; width: 100%; flex: 1; padding: 0; line-height: 1.2; margin: 0; }
         }
     </style>
@@ -268,19 +285,15 @@
                     const minutes = Math.round((durationDec - hours) * 60);
                     const timeStr = `${hours} h ${minutes < 10 ? '0' : ''}${minutes} min`;
 
-                    // --- HIER IST DIE NEUE PROFIL-LOGIK ---
+                    // --- PROFIL LOGIK ---
                     const ratio = elevHm / distKm;
                     let profileStr = "Flach";
                     
-                    // Ratio > 14 = Bergig
                     if(ratio > 14) {
                         profileStr = "Bergig";
-                    } 
-                    // Ratio zwischen 8 und 14 = Wellig
-                    else if(ratio >= 8) {
+                    } else if(ratio >= 8) {
                         profileStr = "Wellig";
                     }
-                    // Alles unter 8 bleibt "Flach"
 
                     document.getElementById(`dist-${id}`).innerText = Math.round(distKm) + " km";
                     document.getElementById(`elev-${id}`).innerText = elevHm + " hm";

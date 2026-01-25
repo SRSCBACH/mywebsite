@@ -11,7 +11,7 @@
 
     <style>
         /* ================================================================= */
-        /* --- LOKALE STYLES FÜR STRECKEN (KOMPAKTE VERSION) --- */
+        /* --- LOKALE STYLES FÜR STRECKEN --- */
         /* ================================================================= */
         :root {
             --bg-card-route: rgba(15, 34, 51, 0.5); 
@@ -27,7 +27,7 @@
         }
         @keyframes fadeInContent { to { opacity: 1; } }
 
-        /* KARTEN DESIGN - KOMPAKTER */
+        /* KARTEN DESIGN */
         .card {
             background-color: var(--bg-card-route); border-radius: 16px; 
             border: 1px solid var(--border-color); 
@@ -51,7 +51,7 @@
         .left-column { display: flex; flex-direction: column; gap: 10px; } 
         .right-column { display: flex; flex-direction: column; } 
 
-        /* MAP & CHART - Deutlich flacher */
+        /* MAP & CHART */
         .map-wrapper {
             height: 260px; 
             width: 100%; background-color: var(--bg-map); border-radius: 12px; 
@@ -82,7 +82,7 @@
         .data-label { flex: 0 0 45%; color: var(--text-secondary); font-size: 1.1rem; font-weight: 200; border-right: 1px solid var(--border-color); height: 100%; display: flex; align-items: center; }
         .data-value { flex: 1; font-size: 1.4rem; font-family: var(--font-heading); font-weight: 800; padding-left: 15px; display: flex; align-items: center; color: var(--accent-color); }
 
-        /* BUTTONS */
+        /* BUTTONS (Desktop) */
         .button-group { display: flex; flex-direction: row; height: 45px; gap: 10px; width: 100%; margin-top: 10px; }
         .btn {
             background-color: var(--btn-bg); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px;
@@ -103,7 +103,9 @@
         .loading-text { font-size: 1rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.5; } }
 
-        /* MOBILE ANPASSUNG */
+        /* ================================================================= */
+        /* --- MOBILE OPTIMIERUNG --- */
+        /* ================================================================= */
         @media (max-width: 850px) {
             .card { padding: 12px; }
             .header { padding-bottom: 8px; margin-bottom: 10px; }
@@ -115,17 +117,33 @@
             .map-wrapper { height: 220px; } 
             .profile-container { height: 100px; }
 
-            .stats-wrapper { flex-direction: row; gap: 8px; align-items: stretch; }
+            /* Mobile: Buttons rechts neben Tabelle */
+            .stats-wrapper { 
+                flex-direction: row; 
+                gap: 8px; 
+                align-items: stretch; /* WICHTIG: Zwingt beide Spalten auf gleiche Höhe */
+            }
             .data-table { flex: 1; border-top: none; }
             .data-row { min-height: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); }
             .data-label { font-size: 0.75rem; flex: 0 0 45%; } 
             .data-value { font-size: 0.9rem; padding-left: 8px; } 
 
             .button-group { 
-                margin-top: 0; flex-direction: column; width: 85px; height: auto; gap: 4px; justify-content: center; flex-shrink: 0;
+                margin-top: 0; 
+                flex-direction: column; /* Untereinander */
+                width: 85px; 
+                height: auto; /* Höhe passt sich Wrapper an */
+                gap: 4px; 
+                justify-content: space-between; /* Verteilt Buttons gleichmäßig */
+                flex-shrink: 0;
             }
             .btn { 
-                font-size: 0.6rem; width: 100%; height: auto; padding: 0; flex: 1; line-height: 1.2;
+                font-size: 0.6rem; 
+                width: 100%; 
+                flex: 1; /* Jeder Button nimmt exakt 1/3 der Höhe */
+                padding: 0; 
+                line-height: 1.2;
+                margin: 0;
             }
         }
     </style>
@@ -153,15 +171,16 @@
     
     <script>
         // #####################################################################
-        //        LOGIK MIT FONT-LOADING WAIT
+        //        LOGIK
         // #####################################################################
 
-        // Wir warten, bis der Browser die Schriften fertig geladen hat
+        // Warte bis Schriften geladen sind - WICHTIG FÜR CANVAS
         document.fonts.ready.then(function () {
             
-            // Erst JETZT starten wir die Logik
+            // Schriftart explizit als String mit Fallback definieren
+            const customFont = "'Eloquia Text ExtLt', sans-serif";
             
-            Chart.defaults.font.family = 'Eloquia Text ExtLt';
+            Chart.defaults.font.family = customFont;
             Chart.defaults.color = '#cbd5e1';
 
             fetch('strecken.json')
@@ -174,7 +193,7 @@
                     touren.forEach(tour => {
                         if(tour.active !== false) {
                             createCardHTML(container, tour.id);
-                            setTimeout(() => initSingleCard(tour.id, tour), 0);
+                            setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
                         }
                     });
                 })
@@ -219,7 +238,7 @@
             container.insertAdjacentHTML('beforeend', html);
         }
 
-        function initSingleCard(id, data) {
+        function initSingleCard(id, data, fontName) {
             if(data.gpx) document.getElementById(`btn-gpx-${id}`).href = data.gpx;
             else document.getElementById(`btn-gpx-${id}`).classList.add('disabled');
 
@@ -236,6 +255,7 @@
             document.getElementById(`speed-${id}`).innerText = data.schnitt || "-";
             document.getElementById(`prof-${id}`).innerText = data.profil || "-";
 
+            // Leaflet
             let mapInstance = L.map(`map-${id}`);
             let positionMarker = null;
             let localTrackPoints = []; 
@@ -288,7 +308,7 @@
                     document.getElementById(`time-${id}`).innerText = finalTime;
 
                     addArrowsAndExtractPoints(gpx, mapInstance, localTrackPoints);
-                    drawDetailedProfile(id, gpx.get_elevation_data(), localTrackPoints, mapInstance, positionMarker);
+                    drawDetailedProfile(id, gpx.get_elevation_data(), localTrackPoints, mapInstance, positionMarker, fontName);
 
                 }).on('error', function(e) {
                     console.error(`GPX Fehler Tour ${id}:`, e);
@@ -325,7 +345,7 @@
             processLayer(layer);
         }
 
-        function drawDetailedProfile(id, data, trackPoints, mapRef, markerRef) {
+        function drawDetailedProfile(id, data, trackPoints, mapRef, markerRef, fontName) {
             const labels = []; const points = []; const slopes = []; const step = Math.ceil(data.length / 100); 
             for (let i = 0; i < data.length; i += step) {
                 const dist = data[i][0].toFixed(1); const elev = data[i][1];
@@ -399,7 +419,7 @@
                             ticks: { 
                                 maxTicksLimit: 8, 
                                 color: '#94a3b8', 
-                                font: { family: 'Eloquia Text ExtLt', size: chartFontSize },
+                                font: { family: fontName, size: chartFontSize },
                                 callback: function(value, index, values) {
                                     const label = this.getLabelForValue(value);
                                     return Math.round(label) + ' km';
@@ -413,7 +433,7 @@
                                 stepSize: 50, 
                                 maxTicksLimit: 5, 
                                 color: '#94a3b8', 
-                                font: { family: 'Eloquia Text ExtLt', size: chartFontSize }, 
+                                font: { family: fontName, size: chartFontSize }, 
                                 callback: v => v + ' m' 
                             } 
                         }
@@ -423,5 +443,7 @@
             });
         }
     </script>
+</body>
+</html>
 </body>
 </html>

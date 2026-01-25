@@ -125,7 +125,6 @@ body {
     /* Leichter blauer Schein */
     text-shadow: 0 0 15px rgba(0, 85, 255, 0.5); 
 }
-
 .nav-link:hover, .header-nav a:hover, .footer-nav a:hover {
     color: var(--accent-color);
     transform: translateY(-3px);

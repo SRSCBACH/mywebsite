@@ -60,20 +60,23 @@
             box-sizing: border-box; color: #ffffff;
         }
         
-        /* HIER WIRD DIE ERSTE BOX (VEREIN) TRANSPARENT GEMACHT */
-        .main-content > .content-card:first-child {
+        /* --- HIER GEÄNDERT: Transparenz für Box 1 (Verein) UND Box 2 (FAQ) --- */
+        .main-content > .content-card:nth-child(1),
+        .main-content > .content-card:nth-child(2) {
             background-color: transparent; 
             border: none;                 
             box-shadow: none;             
             backdrop-filter: none;        
             padding-top: 0;               
-            padding-bottom: 10px;         
+            padding-bottom: 10px;
+            margin-bottom: -20px; /* Zieht die nachfolgenden Elemente etwas hoch */
         }
         
-        /* Den Titel der ersten, freien Box etwas größer machen */
-        .main-content > .content-card:first-child .card-title {
+        /* Den Titel der beiden transparenten Boxen größer machen */
+        .main-content > .content-card:nth-child(1) .card-title,
+        .main-content > .content-card:nth-child(2) .card-title {
             font-size: 2.5rem;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         @keyframes fadeInContent { to { opacity: 1; } }
@@ -191,7 +194,9 @@
             .content-card { padding: 20px; margin: 0 10px; width: auto;}
             .card-title { font-size: 1.5rem; }
             .form-row { flex-direction: column; gap: 0; }
-            .main-content > .content-card:first-child .card-title { font-size: 2rem; }
+            /* Mobile Anpassung für die großen Titel */
+            .main-content > .content-card:nth-child(1) .card-title,
+            .main-content > .content-card:nth-child(2) .card-title { font-size: 2rem; }
         }
     </style>
 </head>

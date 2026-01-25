@@ -23,33 +23,10 @@
         /* CONTAINER */
         #app-container {
             display: flex; flex-direction: column; gap: 30px; align-items: center; width: 100%;
-            opacity: 0; animation: fadeInContent 1.0s ease-in-out forwards;
+            /* Sanftes Einblenden der Inhalte */
+            opacity: 0; animation: fadeInContent 0.8s ease-in-out forwards;
         }
         @keyframes fadeInContent { to { opacity: 1; } }
-
-        /* LOADER */
-        #global-loader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-image: url('https://srscbach.github.io/mywebsite/images/NewBlueDrawing2.png');
-            background-size: cover; z-index: 9999;
-            display: flex; justify-content: center; align-items: flex-start; padding-top: 100px;
-            transition: opacity 0.5s ease, visibility 0.5s;
-        }
-        .loader-content { display: flex; flex-direction: column; width: fit-content; }
-        .loader-text {
-            font-family: var(--font-heading); font-weight: 800; color: var(--text-primary); opacity: 0.8;
-            font-size: min(1.25rem, 2vw); white-space: nowrap; text-transform: uppercase;
-            letter-spacing: 0.05em; text-align: center;
-        }
-        .loader-line {
-            width: 100%; margin-top: 15px; height: 3px; background-color: rgba(255,255,255,0.2); 
-            border-radius: 2px; overflow: hidden; position: relative; opacity: 0.8;
-        }
-        .loader-line::after {
-            content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 100%;
-            background-color: var(--accent-blue); animation: loadLine 1.5s ease-in-out infinite; transform-origin: left;
-        }
-        @keyframes loadLine { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
 
         /* KARTEN DESIGN */
         .card {
@@ -120,8 +97,6 @@
             .title { font-size: 1.4rem; }
             .brand-logo { display: none; } 
             
-            #global-loader { padding-top: 150px; }
-            
             .content-grid { grid-template-columns: 1fr; gap: 15px; }
             .map-wrapper { height: 250px; }
             .profile-container { height: 120px; }
@@ -149,16 +124,7 @@
     </header>
 
     <main class="main-content top-aligned">
-        
-        <div id="global-loader">
-            <div class="loader-content">
-                <div class="loader-text">DEIN RENNRAD - DEINE CREW - DEIN VEREIN</div>
-                <div class="loader-line"></div>
-            </div>
-        </div>
-
         <div id="app-container"></div>
-
     </main>
 
     <footer class="footer-container" id="footer-container">
@@ -177,7 +143,6 @@
         //        LOGIK
         // #####################################################################
 
-        // Hier setzen wir Eloquia als Standard für alle Charts
         Chart.defaults.font.family = 'Eloquia Text ExtLt';
         Chart.defaults.color = '#cbd5e1';
 
@@ -194,24 +159,12 @@
                         setTimeout(() => initSingleCard(tour.id, tour), 0);
                     }
                 });
-                removeLoader();
+                // removeLoader() wird nicht mehr benötigt
             })
             .catch(err => {
                 console.error("Fehler beim Laden der Touren:", err);
-                removeLoader();
                 document.getElementById('app-container').innerText = "Fehler: Touren konnten nicht geladen werden.";
             });
-
-        function removeLoader() {
-            const loader = document.getElementById('global-loader');
-            if(loader) {
-                setTimeout(() => {
-                    loader.style.opacity = '0';
-                    loader.style.visibility = 'hidden';
-                    setTimeout(() => { loader.remove(); }, 500); 
-                }, 1200);
-            }
-        }
 
         function createCardHTML(container, id) {
             const html = `
@@ -394,7 +347,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        // Farbe wieder GRÜN (#10b981)
+                        // Farbe GRÜN (#10b981)
                         data: points, borderColor: '#10b981', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
                         segment: {
                             borderColor: ctx => {

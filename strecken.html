@@ -83,6 +83,7 @@
         }
         canvas { width: 100% !important; height: 100% !important; }
 
+        /* STATS WRAPPER (Desktop: Alles untereinander in der rechten Spalte) */
         .stats-wrapper { display: flex; flex-direction: column; gap: 20px; height: 100%; justify-content: space-between; }
 
         .data-table { width: 100%; display: flex; flex-direction: column; flex: 1; }
@@ -105,21 +106,59 @@
         .loading-text { font-size: 1rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.5; } }
 
+        /* ================================================================= */
+        /* --- MOBILE OPTIMIERUNG --- */
+        /* ================================================================= */
         @media (max-width: 850px) {
             .card { padding: 15px; }
             .header { padding-bottom: 10px; margin-bottom: 15px; }
             .title { font-size: 1.4rem; }
             .brand-logo { display: none; } 
+            
             #global-loader { padding-top: 150px; }
+            
             .content-grid { grid-template-columns: 1fr; gap: 15px; }
             .map-wrapper { height: 250px; }
             .profile-container { height: 120px; }
-            .stats-wrapper { gap: 15px; }
-            .data-row { min-height: 30px; }
-            .data-label { font-size: 0.8rem; } 
-            .data-value { font-size: 0.9rem; padding-left: 10px; } 
-            .button-group { height: 40px; }
-            .btn { font-size: 0.7rem; }
+
+            /* --- HIER IST DIE ANPASSUNG FÜR BUTTONS RECHTS --- */
+            
+            /* 1. Wrapper auf ROW setzen (Nebeneinander) */
+            .stats-wrapper { 
+                flex-direction: row; 
+                gap: 10px; 
+                align-items: stretch; /* Damit Buttons gleich hoch wie Tabelle werden */
+            }
+
+            /* 2. Tabelle nimmt den Platz links */
+            .data-table { 
+                flex: 1; 
+                border-top: none; /* Sieht mobiler besser aus */
+            }
+            .data-row { min-height: 28px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .data-label { font-size: 0.75rem; flex: 0 0 45%; } 
+            .data-value { font-size: 0.85rem; padding-left: 8px; } 
+
+            /* 3. Buttons nach RECHTS in eine Spalte */
+            .button-group { 
+                margin-top: 0; 
+                flex-direction: column; /* Buttons untereinander */
+                width: 90px; /* Feste schmale Breite */
+                height: auto; /* Höhe passt sich an */
+                gap: 5px;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            
+            /* Buttons kompakter machen */
+            .btn { 
+                font-size: 0.65rem; 
+                width: 100%; /* Volle Breite der kleinen Spalte */
+                height: auto;
+                padding: 10px 0;
+                flex: 1; /* Verteilen sich gleichmäßig */
+                line-height: 1.2;
+            }
         }
     </style>
 </head>
@@ -223,7 +262,7 @@
                                 <div class="data-row"><div class="data-label">Profil</div><div class="data-value" id="prof-${id}"><span class="loading-text">...</span></div></div>
                             </div>
                             <div class="button-group">
-                                <a id="btn-gpx-${id}" href="#" class="btn" target="_blank">GPX File</a>
+                                <a id="btn-gpx-${id}" href="#" class="btn" target="_blank">GPX</a>
                                 <a id="btn-garmin-${id}" href="#" class="btn" target="_blank">Garmin</a>
                                 <a id="btn-komoot-${id}" href="#" class="btn" target="_blank">Komoot</a>
                             </div>

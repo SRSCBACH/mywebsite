@@ -1,0 +1,26 @@
+[
+    {
+        "id": "00",
+        "active": true,
+        "gpx": "https://www.srsc-bach.de/gpx/tour00.gpx",
+        "komoot": "https://www.komoot.de/tour/...",
+        "garmin": "https://connect.garmin.com/...",
+        "schnitt": "28",
+        "profil": "Flach",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "01",
+        "active": true,
+        "gpx": "https://www.srsc-bach.de/gpx/tour01.gpx",
+        "komoot": "",
+        "garmin": "",
+        "schnitt": "30",
+        "profil": "Wellig",
+        "distanz": "55.5",
+        "hoehenmeter": "450",
+        "dauer": "1 h 50 min"
+    }
+]

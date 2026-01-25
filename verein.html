@@ -10,7 +10,6 @@
     <style>
         /* --- LOKALES DESIGN FÜR DAS FORMULAR & FAQ --- */
         
-        /* Hintergrund & Layout */
         html { height: 100%; overflow-y: scroll; }
         body {
             background-color: #0f172a;
@@ -21,35 +20,32 @@
             display: flex; flex-direction: column;
         }
 
-        /* Hauptcontainer: Inhalte untereinander zentrieren */
         .main-content {
             flex: 1;
             display: flex;
-            flex-direction: column; /* WICHTIG: Untereinander */
-            align-items: center;    /* Mittig */
+            flex-direction: column; 
+            align-items: center;    
             padding-top: 40px;
             padding-bottom: 40px;
-            gap: 30px; /* Abstand zwischen Formular und FAQ */
+            gap: 30px; 
         }
 
-        /* Die Karten (Glas-Effekt) */
         .content-card {
             background-color: rgba(15, 34, 51, 0.7); 
             border-radius: 16px; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             padding: 40px; 
             width: 100%; 
-            max-width: 600px; /* Breite begrenzen */
+            max-width: 600px; 
             backdrop-filter: blur(10px); 
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            margin: 0 20px; /* Seitenabstand auf Mobile */
+            margin: 0 20px; 
             opacity: 0; 
             animation: fadeInContent 0.8s ease-in-out forwards;
             box-sizing: border-box;
         }
         @keyframes fadeInContent { to { opacity: 1; } }
 
-        /* Überschriften */
         .card-title {
             font-family: var(--font-heading);
             font-size: 2.2rem;
@@ -104,38 +100,62 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        /* --- FAQ STYLES --- */
+        /* --- FAQ STYLES (ACCORDION) --- */
         .faq-item {
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
-        .faq-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .faq-item:last-child { border-bottom: none; margin-bottom: 0; }
         
         .faq-question {
             font-family: var(--font-heading);
             font-size: 1.1rem;
-            color: #ffffff; /* Weiß */
-            margin-bottom: 5px;
+            color: #ffffff;
+            padding: 15px 0;
             display: flex;
+            justify-content: space-between; /* Text links, Icon rechts */
             align-items: center;
+            cursor: pointer;
+            transition: color 0.3s ease;
         }
         
-        /* Kleiner Pfeil oder Punkt vor der Frage */
-        .faq-question::before {
-            content: "•";
-            color: var(--accent-blue, #0055ff); /* Akzentfarbe */
-            margin-right: 10px;
-            font-size: 1.5rem;
-            line-height: 1;
+        .faq-question:hover {
+            color: #0055ff; /* Hover Effekt in Blau */
         }
 
+        /* Das "+" Icon */
+        .faq-toggle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+            color: #64748b;
+        }
+
+        /* Antwort Bereich (Standardmäßig zu) */
         .faq-answer {
             font-family: var(--font-body);
-            color: var(--text-secondary); /* Hellgrau */
+            color: var(--text-secondary);
             font-size: 0.95rem;
             line-height: 1.6;
-            margin-left: 20px; /* Einrücken */
+            
+            /* Animation Einstellungen */
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
+            opacity: 0;
+            padding-bottom: 0;
+        }
+
+        /* --- ACTIVE STATE (Wenn geöffnet) --- */
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg); /* "+" wird zu "x" */
+            color: #0055ff;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Genug Platz für den Text */
+            opacity: 1;
+            padding-bottom: 20px; /* Abstand nach unten wenn offen */
         }
 
         /* Mobile Anpassung */
@@ -159,22 +179,18 @@
             <p class="card-subtitle">Lust bekommen mitzufahren? Melde dich unverbindlich an. Wir freuen uns auf dich!</p>
 
             <form action="https://formspree.io/f/xkornnjj" method="POST">
-                
                 <div class="form-group">
                     <label for="name">Dein Name</label>
                     <input type="text" id="name" name="name" placeholder="Max Mustermann" required>
                 </div>
-
                 <div class="form-group">
                     <label for="email">Deine E-Mail</label>
                     <input type="email" id="email" name="email" placeholder="max@beispiel.de" required>
                 </div>
-
                 <div class="form-group">
                     <label for="phone">Telefon (für Rückfragen)</label>
                     <input type="tel" id="phone" name="phone" placeholder="+49 ...">
                 </div>
-
                 <div class="form-group">
                     <label for="experience">Deine Erfahrung</label>
                     <select id="experience" name="experience">
@@ -184,42 +200,52 @@
                         <option value="profi">Profi / Rennfahrer</option>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label for="message">Nachricht / Fragen</label>
                     <textarea id="message" name="message" placeholder="Erzähl uns kurz etwas über dich oder stell deine Fragen..."></textarea>
                 </div>
-
                 <button type="submit" class="submit-btn">Anmeldung Absenden</button>
             </form>
         </div>
 
         <div class="content-card">
-            <h2 class="card-title" style="font-size: 1.8rem;">Häufige Fragen</h2>
+            <h2 class="card-title" style="font-size: 1.8rem;">FAQ</h2>
             
             <div class="faq-item">
-                <div class="faq-question">Brauche ich ein Rennrad?</div>
+                <div class="faq-question">
+                    Brauche ich ein Rennrad?
+                    <span class="faq-toggle">+</span>
+                </div>
                 <div class="faq-answer">
                     Ja, grundsätzlich fahren wir mit Rennrädern. Für das erste "Reinschnuppern" ist ein sportliches Gravel- oder Fitnessbike oft auch okay, solange du das Tempo halten kannst. Ein Mountainbike ist für unsere Straßen-Touren eher ungeeignet.
                 </div>
             </div>
 
             <div class="faq-item">
-                <div class="faq-question">Gibt es eine Helmpflicht?</div>
+                <div class="faq-question">
+                    Gibt es eine Helmpflicht?
+                    <span class="faq-toggle">+</span>
+                </div>
                 <div class="faq-answer">
                     Absolut. Sicherheit steht bei uns an erster Stelle. Ohne Helm keine Mitfahrt – da machen wir keine Ausnahmen.
                 </div>
             </div>
 
             <div class="faq-item">
-                <div class="faq-question">Wie schnell fahrt ihr?</div>
+                <div class="faq-question">
+                    Wie schnell fahrt ihr?
+                    <span class="faq-toggle">+</span>
+                </div>
                 <div class="faq-answer">
                     Das kommt auf die Gruppe an. Wir versuchen oft, verschiedene Leistungsgruppen zu bilden, damit niemand zurückgelassen wird. Beim Probetraining nehmen wir natürlich Rücksicht auf dich!
                 </div>
             </div>
 
             <div class="faq-item">
-                <div class="faq-question">Kostet das Probetraining etwas?</div>
+                <div class="faq-question">
+                    Kostet das Probetraining etwas?
+                    <span class="faq-toggle">+</span>
+                </div>
                 <div class="faq-answer">
                     Nein, das Probetraining ist natürlich kostenlos und unverbindlich. Komm einfach vorbei und schau, ob es dir bei uns gefällt.
                 </div>
@@ -234,6 +260,20 @@
     </footer>
 
     <script src="main.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    // Toggle 'active' Klasse
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>

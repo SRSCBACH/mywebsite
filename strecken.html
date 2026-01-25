@@ -83,7 +83,7 @@
         }
         canvas { width: 100% !important; height: 100% !important; }
 
-        /* STATS WRAPPER (Desktop: Alles untereinander in der rechten Spalte) */
+        /* STATS WRAPPER */
         .stats-wrapper { display: flex; flex-direction: column; gap: 20px; height: 100%; justify-content: space-between; }
 
         .data-table { width: 100%; display: flex; flex-direction: column; flex: 1; }
@@ -100,15 +100,20 @@
             font-size: 0.9rem; font-family: var(--font-heading); font-weight: 800; text-transform: uppercase;
             cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.05em; padding: 0; 
         }
-        .btn:hover { background-color: var(--accent-blue); color: #000; transform: translateY(-2px); border-color: var(--accent-blue); }
+        
+        /* HIER GEÄNDERT: Dunkelgrau beim Hover */
+        .btn:hover { 
+            background-color: #334155; 
+            color: #ffffff; 
+            transform: translateY(-2px); 
+            border-color: #334155; 
+        }
+        
         .btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
 
         .loading-text { font-size: 1rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.5; } }
 
-        /* ================================================================= */
-        /* --- MOBILE OPTIMIERUNG --- */
-        /* ================================================================= */
         @media (max-width: 850px) {
             .card { padding: 15px; }
             .header { padding-bottom: 10px; margin-bottom: 15px; }
@@ -121,43 +126,18 @@
             .map-wrapper { height: 250px; }
             .profile-container { height: 120px; }
 
-            /* --- HIER IST DIE ANPASSUNG FÜR BUTTONS RECHTS --- */
-            
-            /* 1. Wrapper auf ROW setzen (Nebeneinander) */
-            .stats-wrapper { 
-                flex-direction: row; 
-                gap: 10px; 
-                align-items: stretch; /* Damit Buttons gleich hoch wie Tabelle werden */
-            }
-
-            /* 2. Tabelle nimmt den Platz links */
-            .data-table { 
-                flex: 1; 
-                border-top: none; /* Sieht mobiler besser aus */
-            }
+            /* Mobile: Buttons rechts neben Tabelle */
+            .stats-wrapper { flex-direction: row; gap: 10px; align-items: stretch; }
+            .data-table { flex: 1; border-top: none; }
             .data-row { min-height: 28px; border-bottom: 1px solid rgba(255,255,255,0.05); }
             .data-label { font-size: 0.75rem; flex: 0 0 45%; } 
             .data-value { font-size: 0.85rem; padding-left: 8px; } 
 
-            /* 3. Buttons nach RECHTS in eine Spalte */
             .button-group { 
-                margin-top: 0; 
-                flex-direction: column; /* Buttons untereinander */
-                width: 90px; /* Feste schmale Breite */
-                height: auto; /* Höhe passt sich an */
-                gap: 5px;
-                justify-content: center;
-                flex-shrink: 0;
+                margin-top: 0; flex-direction: column; width: 90px; height: auto; gap: 5px; justify-content: center; flex-shrink: 0;
             }
-            
-            /* Buttons kompakter machen */
             .btn { 
-                font-size: 0.65rem; 
-                width: 100%; /* Volle Breite der kleinen Spalte */
-                height: auto;
-                padding: 10px 0;
-                flex: 1; /* Verteilen sich gleichmäßig */
-                line-height: 1.2;
+                font-size: 0.65rem; width: 100%; height: auto; padding: 10px 0; flex: 1; line-height: 1.2;
             }
         }
     </style>
@@ -192,12 +172,11 @@
     
     <script src="main.js"></script>
     
-   <script>
+    <script>
         // #####################################################################
         //        LOGIK
         // #####################################################################
 
-        // Globaler Font-Default für Chart.js setzen
         Chart.defaults.font.family = 'Eloquia Text ExtLt';
         Chart.defaults.color = '#cbd5e1';
 
@@ -392,7 +371,7 @@
 
             const ctx = document.getElementById(`chart-${id}`).getContext('2d');
             
-            // GRÜNE VERLÄUFE (Original)
+            // GRÜNE VERLÄUFE
             const gradientGreen = ctx.createLinearGradient(0, 0, 0, 160); 
             gradientGreen.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); 
             gradientGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)'); 
@@ -414,12 +393,11 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        // Farbe wieder GRÜN (#10b981)
+                        // Farbe GRÜN (#10b981)
                         data: points, borderColor: '#10b981', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
                         segment: {
                             borderColor: ctx => {
                                 if (ctx.p0DataIndex === undefined) return undefined;
-                                // Standard (flach) = Grün
                                 const s = slopes[ctx.p1DataIndex]; return s > 6 ? '#ef4444' : (s >= 4 ? '#f97316' : '#10b981');
                             },
                             backgroundColor: ctx => {
@@ -453,7 +431,7 @@
                                 maxTicksLimit: 8, 
                                 color: '#94a3b8', 
                                 font: { family: 'Eloquia Text ExtLt', size: chartFontSize },
-                                // HIER: Callback für ganze Zahlen
+                                // Ganze Zahlen für X-Achse
                                 callback: function(value, index, values) {
                                     const label = this.getLabelForValue(value);
                                     return Math.round(label) + ' km';

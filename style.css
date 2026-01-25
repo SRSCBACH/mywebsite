@@ -5,14 +5,16 @@
 /* --- 1. SCHRIFTEN LADEN --- */
 @font-face {
     font-family: 'Eloquia Display ExtBd';
-    src: url('Schrift/Typekiln - EloquiaDisplay-ExtraBold.otf') format('opentype');
+    /* HIER ÄNDERN: schrift statt Schrift */
+    src: url('schrift/Typekiln - EloquiaDisplay-ExtraBold.otf') format('opentype');
     font-weight: 800;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Eloquia Text ExtLt';
-    src: url('Schrift/Typekiln - EloquiaText-ExtraLight.otf') format('opentype');
+    /* HIER ÄNDERN: schrift statt Schrift */
+    src: url('schrift/Typekiln - EloquiaText-ExtraLight.otf') format('opentype');
     font-weight: 200;
     font-style: normal;
 }

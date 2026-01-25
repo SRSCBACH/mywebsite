@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* --- LOKALES DESIGN FÜR DAS FORMULAR & FRAGEN --- */
+        /* --- LOKALES DESIGN FÜR DAS FORMULAR & FAQ --- */
         
         html { height: 100%; overflow-y: scroll; }
         body {
@@ -50,7 +50,8 @@
             font-family: var(--font-heading);
             font-size: 2.2rem;
             color: #ffffff;
-            margin-bottom: 10px;
+            /* Margin angepasst, da Subtitle weg ist */
+            margin-bottom: 30px; 
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -102,16 +103,15 @@
 
         /* --- FRAGEN & ANTWORTEN STYLES --- */
         .faq-item {
-            /* HIER GEÄNDERT: Strich entfernt */
             border-bottom: none; 
-            margin-bottom: 15px; /* Etwas mehr Abstand zwischen den Fragen */
+            margin-bottom: 15px; 
         }
         
         .faq-question {
             font-family: var(--font-heading);
             font-size: 1.1rem;
             color: #ffffff;
-            padding: 10px 0; /* Padding leicht angepasst */
+            padding: 10px 0; 
             display: flex;
             justify-content: space-between; 
             align-items: center;
@@ -170,8 +170,6 @@
         
         <div class="content-card">
             <h2 class="card-title" style="font-size: 1.8rem;">Fragen & Antworten</h2>
-            <p class="card-subtitle">Wichtige Infos vorab</p>
-            
             <div class="faq-item">
                 <div class="faq-question">
                     Brauche ich ein Rennrad?

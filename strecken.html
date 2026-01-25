@@ -101,7 +101,7 @@
             cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.05em; padding: 0; 
         }
         
-        /* HIER GEÄNDERT: Dunkelgrau beim Hover */
+        /* HOVER DUNKELGRAU */
         .btn:hover { 
             background-color: #334155; 
             color: #ffffff; 
@@ -177,6 +177,7 @@
         //        LOGIK
         // #####################################################################
 
+        // Hier setzen wir Eloquia als Standard für alle Charts
         Chart.defaults.font.family = 'Eloquia Text ExtLt';
         Chart.defaults.color = '#cbd5e1';
 
@@ -393,7 +394,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        // Farbe GRÜN (#10b981)
+                        // Farbe wieder GRÜN (#10b981)
                         data: points, borderColor: '#10b981', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
                         segment: {
                             borderColor: ctx => {

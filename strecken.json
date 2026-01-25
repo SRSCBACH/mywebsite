@@ -2,7 +2,7 @@
     {
         "id": "00",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_12d3fd9af4774cd3a11eacde7351a21f.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/00.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2455911148?share_token=ak3wgKn8o2MaAQLEGyo69KHchwoHAh3IppPykg43OvvQX9uBeg&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386717707",
         "schnitt": "38 km/h",
@@ -14,7 +14,7 @@
     {
         "id": "01",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_84ce295416984661a2917f9f7205f71c.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/01.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2455939345?share_token=aRHJ7mJEsjiHYK8wy07lXCxaohifs5UYESCn3IXed0IXKvZh79&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386723585",
         "schnitt": "28 km/h",
@@ -26,7 +26,7 @@
     {
         "id": "02",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_fb0b5bd6eede4a85970aab3b06c80b6a.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/02.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2455965304?share_token=aH0nwrECvnHyaiXpxwCYHv2sYaNKOhqzb84OQZWH3Qy6V4rwYh&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386724354",
         "schnitt": "30 km/h",
@@ -38,7 +38,7 @@
     {
         "id": "03",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_28a2c2d305534298852dcf62062daf57.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/03.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2455985513?share_token=aF8USlul6kmFvZ8Yh1npfmo3bLHfEvAbsPQETFliLxu687HHrU&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386726257",
         "schnitt": "35 km/h",
@@ -50,7 +50,7 @@
     {
         "id": "04",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_ce85e750ed7342ee8c9b1d67ea352283.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/04.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456098576?share_token=aJSAs9eM74oqA72B1fyGl1PM59fbiCkcW4f2dnSjaWTjnaZwzM&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386741886",
         "schnitt": "39 km/h",
@@ -62,7 +62,7 @@
     {
         "id": "05",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_e6005271a03e4364bbfddd3fceb2e2d7.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/05.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456111925?share_token=amDNsQIueumVSH1d4U9stGy44GWqo2BzJBVTvgAMCPLEgz6ZpI&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386744182",
         "schnitt": "30 km/h",
@@ -74,7 +74,7 @@
     {
         "id": "06",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_9e3720c44ad14c3cac444d671a34a244.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/06.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456125020?share_token=ab7AC2iHJqXTwyTy7VzsP0Yv1kNhIUNqpJEwykYA5Vl2xggAZv&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386745990",
         "schnitt": "28 km/h",
@@ -86,7 +86,7 @@
     {
         "id": "07",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_54d66bca2dcc4ec98e5665acdc6e2b61.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/07.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456138510?share_token=anUe4XOqr6gWznk1fKAagN7Hhfy0eUK8eKhGkZ3GsRwZSV9VXe&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386748207",
         "schnitt": "32 km/h",
@@ -98,7 +98,7 @@
     {
         "id": "08",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_8f2e7f68cf5d4523a05dce73742c182a.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/08.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2455750816?share_token=azhUUEHlSpVJ68jwavuDIZ1nALNuqk3PFVUTU55L4tBxZT6QwD&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386689180",
         "schnitt": "27 km/h",
@@ -110,7 +110,7 @@
     {
         "id": "09",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_55fa7fbbe91f45319d28928741d15856.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/09.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456318151?share_token=aD9MdwxIhxicLiktjN020NjTefQfpV5b4Qe2QYBue4VIeDriXs&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386773535",
         "schnitt": "32 km/h",
@@ -122,7 +122,7 @@
     {
         "id": "10",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_72d7e25863a94a1a8ea5fe06fbc5955b.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/10.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456353767?share_token=aBLMta4XbZxCHo4t42ekI5HvpBmJpwVVdLYgg5gEchozrv637c&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386779242",
         "schnitt": "32 km/h",
@@ -134,7 +134,7 @@
     {
         "id": "11",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_2a90049a815f4e909f87fdfacc7d7589.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/11.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456383581?share_token=aU2vPOthTdldJj4jkzmyMliFJAzTounlYLwgm7XQpB7QZ6Uj0x&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386783291",
         "schnitt": "33 km/h",
@@ -146,7 +146,7 @@
     {
         "id": "12",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_53238ea0ea7d49da9eae55d76f7656c3.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/12.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456399178?share_token=afgn0SlhpRGhmoCFzSijm7oA7z30EoLODBnw1XIat01sbI8o96&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386785693",
         "schnitt": "30 km/h",
@@ -158,7 +158,7 @@
     {
         "id": "13",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_cfed45d7d77a475180349eb11235872b.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/13.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456431338?share_token=a45qmPf3syrY5LJo2JUGdlkRxShChuBuZwS0xy9J8Tfx6nITDh&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386790798",
         "schnitt": "30 km/h",
@@ -170,7 +170,7 @@
     {
         "id": "14",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_8aec00a713494741b504be6084378ea2.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/14.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456884690?share_token=aWTRAgqLzYfrAaSKJkkG98ee12KhmEpFWt0oZH9DprasOlQd8D&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386856486",
         "schnitt": "32 km/h",
@@ -182,7 +182,7 @@
     {
         "id": "15",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_673cba6e44fa483abd4d9243979a19fd.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/15.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456914703?share_token=aZzrdgC1JApg7obRr1YBqGZ42vOVd0V2xf2KNHXCOVHn0wQ6ep&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386861121",
         "schnitt": "33 km/h",
@@ -194,7 +194,7 @@
     {
         "id": "16",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_93b2d821a2e3476a813766f7f69e1035.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/16.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456949845?share_token=aM4I7FMc1EwkWP5CV968lxG9ar34s6CDsA6HOhAuELPwiaX3vg&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386866483",
         "schnitt": "27 km/h",
@@ -206,7 +206,7 @@
     {
         "id": "17",
         "active": true,
-        "gpx": "https://9627ccb9-e2c4-49ac-a2de-14be49d5d366.usrfiles.com/ugd/9627cc_6e758333a6d44b7a9d47190d86b527b7.gpx",
+        "gpx": "https://srscbach.github.io/mywebsite/gpxfiles/17.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456978167?share_token=a6AErPL3MGxrFs0O7dUwrA99aWS4ZAcYEeFhsnXJ5Hm3KSJHNr&ref=wtd",
         "garmin": "https://connect.garmin.com/app/course/386870467",
         "schnitt": "32 km/h",

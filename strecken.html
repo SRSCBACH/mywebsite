@@ -11,7 +11,7 @@
 
     <style>
         /* ================================================================= */
-        /* --- LOKALE STYLES FÜR STRECKEN --- */
+        /* --- LOKALE STYLES FÜR STRECKEN (KOMPAKTE VERSION) --- */
         /* ================================================================= */
         :root {
             --bg-card-route: rgba(15, 34, 51, 0.5); 
@@ -22,63 +22,75 @@
 
         /* CONTAINER */
         #app-container {
-            display: flex; flex-direction: column; gap: 30px; align-items: center; width: 100%;
-            /* Sanftes Einblenden */
+            display: flex; flex-direction: column; gap: 20px; align-items: center; width: 100%;
             opacity: 0; animation: fadeInContent 0.8s ease-in-out forwards;
         }
         @keyframes fadeInContent { to { opacity: 1; } }
 
-        /* KARTEN DESIGN */
+        /* KARTEN DESIGN - KOMPAKTER */
         .card {
             background-color: var(--bg-card-route); border-radius: 16px; 
-            border: 1px solid var(--border-color); padding: 30px; width: 100%; max-width: 950px;
+            border: 1px solid var(--border-color); 
+            padding: 20px; /* Weniger Innenabstand (vorher 30) */
+            width: 100%; max-width: 950px;
             backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
+        
         .header {
-            position: relative; padding-bottom: 20px; margin-bottom: 25px;
+            position: relative; 
+            padding-bottom: 10px; /* Vorher 20 */
+            margin-bottom: 15px; /* Vorher 25 */
             display: flex; justify-content: space-between; align-items: center; 
             border-bottom: 1px solid var(--border-color);
         }
-        .title { font-size: 2.0rem; padding-top: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .brand-logo { height: 25px; width: auto; opacity: 0.7; display: block; flex-shrink: 0; margin-left: 15px; }
+        .title { font-size: 1.8rem; padding-top: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .brand-logo { height: 22px; width: auto; opacity: 0.7; display: block; flex-shrink: 0; margin-left: 15px; }
 
-        /* GRID */
-        .content-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 30px; }
-        .left-column { display: flex; flex-direction: column; gap: 20px; }
+        /* GRID - Enger zusammen */
+        .content-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; }
+        .left-column { display: flex; flex-direction: column; gap: 10px; } /* Vorher 20 */
         .right-column { display: flex; flex-direction: column; } 
 
+        /* MAP & CHART - Deutlich flacher */
         .map-wrapper {
-            height: 350px; width: 100%; background-color: var(--bg-map); border-radius: 12px; 
+            height: 260px; /* Vorher 350px */
+            width: 100%; background-color: var(--bg-map); border-radius: 12px; 
             box-shadow: inset 0 0 10px rgba(0,0,0,0.1); z-index: 1;
         }
         .leaflet-bar a { background-color: #fff !important; color: #333 !important; }
         .leaflet-control-attribution { background: rgba(255,255,255,0.8) !important; }
 
         .profile-container {
-            height: 180px; background-color: rgba(0,0,0,0.2); border-radius: 12px; 
-            padding: 10px; overflow: hidden; position: relative;
+            height: 130px; /* Vorher 180px */
+            background-color: rgba(0,0,0,0.2); border-radius: 12px; 
+            padding: 5px 10px; /* Weniger Padding oben/unten */
+            overflow: hidden; position: relative;
         }
         canvas { width: 100% !important; height: 100% !important; }
 
         /* STATS WRAPPER */
-        .stats-wrapper { display: flex; flex-direction: column; gap: 20px; height: 100%; justify-content: space-between; }
+        .stats-wrapper { display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: space-between; }
 
+        /* TABELLE - Kompakter */
         .data-table { width: 100%; display: flex; flex-direction: column; flex: 1; }
-        .data-row { display: flex; border-bottom: 1px solid var(--border-color); align-items: center; flex: 1; min-height: 40px; }
+        .data-row { 
+            display: flex; border-bottom: 1px solid var(--border-color); align-items: center; flex: 1; 
+            min-height: 32px; /* Vorher 40px - Zeilen enger zusammen */
+        }
         .data-row:last-child { border-bottom: none; }
         
         .data-label { flex: 0 0 45%; color: var(--text-secondary); font-size: 1.1rem; font-weight: 200; border-right: 1px solid var(--border-color); height: 100%; display: flex; align-items: center; }
-        .data-value { flex: 1; font-size: 1.3rem; font-family: var(--font-heading); font-weight: 800; padding-left: 20px; display: flex; align-items: center; color: var(--accent-color); }
+        .data-value { flex: 1; font-size: 1.4rem; font-family: var(--font-heading); font-weight: 800; padding-left: 15px; display: flex; align-items: center; color: var(--accent-color); }
 
-        .button-group { display: flex; flex-direction: row; height: 50px; gap: 10px; width: 100%; margin-top: 20px; }
+        /* BUTTONS */
+        .button-group { display: flex; flex-direction: row; height: 45px; gap: 10px; width: 100%; margin-top: 10px; }
         .btn {
             background-color: var(--btn-bg); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px;
             flex: 1; display: flex; align-items: center; justify-content: center;
-            font-size: 0.9rem; font-family: var(--font-heading); font-weight: 800; text-transform: uppercase;
+            font-size: 0.85rem; font-family: var(--font-heading); font-weight: 800; text-transform: uppercase;
             cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.05em; padding: 0; 
         }
         
-        /* HOVER DUNKELGRAU */
         .btn:hover { 
             background-color: #334155; 
             color: #ffffff; 
@@ -91,28 +103,31 @@
         .loading-text { font-size: 1rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.5; } }
 
+        /* MOBILE ANPASSUNG */
         @media (max-width: 850px) {
-            .card { padding: 15px; }
-            .header { padding-bottom: 10px; margin-bottom: 15px; }
-            .title { font-size: 1.4rem; }
+            .card { padding: 12px; }
+            .header { padding-bottom: 8px; margin-bottom: 10px; }
+            .title { font-size: 1.3rem; }
             .brand-logo { display: none; } 
             
-            .content-grid { grid-template-columns: 1fr; gap: 15px; }
-            .map-wrapper { height: 250px; }
-            .profile-container { height: 120px; }
+            .content-grid { grid-template-columns: 1fr; gap: 10px; }
+            
+            /* Mobile Höhe auch angepasst */
+            .map-wrapper { height: 220px; } 
+            .profile-container { height: 100px; }
 
             /* Mobile: Buttons rechts neben Tabelle */
-            .stats-wrapper { flex-direction: row; gap: 10px; align-items: stretch; }
+            .stats-wrapper { flex-direction: row; gap: 8px; align-items: stretch; }
             .data-table { flex: 1; border-top: none; }
-            .data-row { min-height: 28px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .data-row { min-height: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); }
             .data-label { font-size: 0.75rem; flex: 0 0 45%; } 
-            .data-value { font-size: 0.85rem; padding-left: 8px; } 
+            .data-value { font-size: 0.9rem; padding-left: 8px; } 
 
             .button-group { 
-                margin-top: 0; flex-direction: column; width: 90px; height: auto; gap: 5px; justify-content: center; flex-shrink: 0;
+                margin-top: 0; flex-direction: column; width: 85px; height: auto; gap: 4px; justify-content: center; flex-shrink: 0;
             }
             .btn { 
-                font-size: 0.65rem; width: 100%; height: auto; padding: 10px 0; flex: 1; line-height: 1.2;
+                font-size: 0.6rem; width: 100%; height: auto; padding: 0; flex: 1; line-height: 1.2;
             }
         }
     </style>
@@ -143,7 +158,6 @@
         //        LOGIK
         // #####################################################################
 
-        // GLOBAL: Standardschrift für Chart.js
         Chart.defaults.font.family = 'Eloquia Text ExtLt';
         Chart.defaults.color = '#cbd5e1';
 
@@ -218,7 +232,6 @@
             document.getElementById(`speed-${id}`).innerText = data.schnitt || "-";
             document.getElementById(`prof-${id}`).innerText = data.profil || "-";
 
-            // Leaflet Karte
             let mapInstance = L.map(`map-${id}`);
             let positionMarker = null;
             let localTrackPoints = []; 
@@ -325,7 +338,7 @@
 
             const ctx = document.getElementById(`chart-${id}`).getContext('2d');
             
-            // GRÜNE VERLÄUFE (Original)
+            // GRÜNE VERLÄUFE
             const gradientGreen = ctx.createLinearGradient(0, 0, 0, 160); 
             gradientGreen.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); 
             gradientGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)'); 
@@ -384,9 +397,8 @@
                             ticks: { 
                                 maxTicksLimit: 8, 
                                 color: '#94a3b8', 
-                                // EXPLIZIT: SCHRIFTART SETZEN
                                 font: { family: 'Eloquia Text ExtLt', size: chartFontSize },
-                                // X-Achse: Ganze Zahlen
+                                // Ganze Zahlen für X-Achse
                                 callback: function(value, index, values) {
                                     const label = this.getLabelForValue(value);
                                     return Math.round(label) + ' km';
@@ -400,7 +412,6 @@
                                 stepSize: 50, 
                                 maxTicksLimit: 5, 
                                 color: '#94a3b8', 
-                                // EXPLIZIT: SCHRIFTART SETZEN
                                 font: { family: 'Eloquia Text ExtLt', size: chartFontSize }, 
                                 callback: v => v + ' m' 
                             } 

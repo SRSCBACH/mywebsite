@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SRSC Bach</title>
+    <title>SRSC Bach - Home</title>
     
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .logo-link {
+            display: contents; /* Verhindert Layout-Probleme durch den Link-Container */
+            cursor: pointer;
+        }
+        
+        /* Optional: Leichter Zoom-Effekt beim Drüberfahren */
+        .center-logo:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s ease;
+        }
+    </style>
 </head>
 <body>
 
@@ -14,7 +27,9 @@
     </header>
 
     <main class="main-content">
-        <img src="https://srscbach.github.io/mywebsite/images/DeineCrewlang.svg" alt="SRSC Bach Crew Logo" class="center-logo">
+        <a href="verein.html" class="logo-link" title="Zum Verein">
+            <img src="https://static.wixstatic.com/shapes/9627cc_826a93d178b649dbb134b4376c5e88ee.svg" alt="SRSC Bach Logo" class="center-logo">
+        </a>
     </main>
 
     <footer class="footer-container" id="footer-container">
@@ -22,5 +37,6 @@
     </footer>
 
     <script src="main.js"></script>
+
 </body>
 </html>

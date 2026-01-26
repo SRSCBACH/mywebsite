@@ -396,13 +396,13 @@ strong { color: var(--text-primary); font-weight: 600; }
     animation-direction: alternate-reverse;
 }
 
-/* ORB 3: Ein Grau (Mitte) - Für Tiefe */
+/* ORB 3: Ein Pink (Mitte) - Für Tiefe */
 .orb-3 {
     top: 30%;
     left: 40%;
     width: 40vw;
     height: 40vw;
-    background: #FF4040; /* weiss */
+    background: #FF69B4; /* pink */
     animation-duration:5s;
     opacity: 0.3;
 }

@@ -379,8 +379,8 @@ strong { color: var(--text-primary); font-weight: 600; }
 .orb-1 {
     top: -10%;
     left: -10%;
-    width: 20vw;
-    height: 20vw;
+    width: 30vw;
+    height: 10vw;
     background: #FFFF00;
     animation-duration: 7s;
 }
@@ -389,8 +389,8 @@ strong { color: var(--text-primary); font-weight: 600; }
 .orb-2 {
     bottom: -10%;
     right: -10%;
-    width: 60vw;
-    height: 60vw;
+    width: 20vw;
+    height: 30vw;
     background: #FFFFFF; /* Grau */
     animation-duration: 10s;
     animation-direction: alternate-reverse;

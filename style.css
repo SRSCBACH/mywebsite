@@ -467,3 +467,26 @@ strong { color: var(--text-primary); font-weight: 600; }
     filter: drop-shadow(0 0 50px rgba(100, 149, 237, 0.7));
     cursor: pointer;
 }
+
+/* ========================================= */
+/* HEADER & FOOTER SCHRIFTART ANPASSEN       */
+/* ========================================= */
+
+.header-container, 
+.footer-container,
+#header-placeholder,
+#footer-placeholder {
+    /* Hier stellen wir auf Eloquia Body um */
+    font-family: 'Eloquia Text ExtLt', sans-serif; 
+    
+    /* Falls du eine andere Variante von Eloquia nutzt, 
+       stelle sicher, dass der Name exakt so geschrieben ist 
+       wie oben in deiner @font-face Definition. */
+}
+
+/* Falls du spezifisch die Links im Header/Footer meinst: */
+.header-container a, 
+.footer-container a {
+    font-family: 'Eloquia Text ExtLt', sans-serif;
+    text-decoration: none;
+}

@@ -1,765 +1,287 @@
 <!DOCTYPE html>
-
 <html lang="de">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Kalender - SRSC Bach</title>
-
-
 
     <link rel="stylesheet" href="style.css">
 
-
-
     <style>
-
         /* ================================================================= */
-
         /* --- LOKALE STYLES NUR FÜR DEN KALENDER --- */
-
         /* ================================================================= */
-
         
-
-        /* Wir definieren hier lokale Farben für die Karten, 
-
-           die sich gut vom Hintergrundbild abheben */
-
         :root {
-
-            --bg-card-cal: rgba(15, 34, 51, 0.4); /* Etwas dunkler für Lesbarkeit */
-
+            --bg-card-cal: rgba(15, 34, 51, 0.4); 
             --border-color: rgba(255, 255, 255, 0.1); 
-
             --text-secondary: #cbd5e1;
-
+            --accent-blue: #0055ff;
         }
-
-
 
         .calendar-container {
-
             max-width: 800px;
-
             margin: 0 auto;
-
             width: 100%;
-
-            /* Animation beim Laden */
-
+            padding: 20px;
             opacity: 0;
-
             animation: fadeInContent 1.0s ease-in-out forwards;
-
         }
-
-
 
         @keyframes fadeInContent { to { opacity: 1; } }
 
-
-
         /* --- ÜBERSCHRIFTEN --- */
-
         .section-title {
-
             font-family: var(--font-heading);
-
             font-size: 32px;
-
-            color: var(--text-primary);
-
+            color: white;
             margin-top: 50px;      
-
             margin-bottom: 25px;   
-
             text-transform: uppercase;
-
             letter-spacing: 0.05em;
-
             display: inline-block;
-
             opacity: 0.8;
-
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-
         }
-
         
-
         .section-title:first-child { margin-top: 0; }
 
-
-
-        /* --- TRAINING SEKTION --- */
-
+        /* --- TRAINING SEKTION (OHNE RAHMEN & HG) --- */
         .training-grid {
-
             display: flex;
-
-            gap: 20px;
-
-            margin-bottom: 10px; 
-
+            gap: 40px;
+            margin-bottom: 30px; 
         }
-
-
 
         .training-card {
-
             flex: 1;
-
-            background-color: var(--bg-card-cal);
-
-            border: 1px solid var(--border-color);
-
-            border-radius: 16px;
-
-            padding: 25px;
-
-            text-align: center;
-
-            backdrop-filter: blur(5px); /* Macht den Hintergrund leicht unscharf */
-
+            background: none;
+            border: none;
+            padding: 0;
+            backdrop-filter: none;
         }
-
-
 
         .t-category {
-
             font-family: var(--font-heading);
-
             font-size: 24px;
-
             text-transform: uppercase;
-
             margin-bottom: 5px;
-
-            color: var(--accent-color);
-
+            color: var(--accent-blue);
         }
-
-
 
         .t-season {
-
             font-family: var(--font-body);
-
             font-size: 14px;
-
             color: var(--text-secondary);
-
-            margin-bottom: 20px;
-
+            margin-bottom: 15px;
             font-weight: bold;
-
             text-transform: uppercase;
-
             letter-spacing: 1px;
-
         }
-
-
 
         .t-row {
-
             display: flex;
-
             justify-content: space-between;
-
             align-items: center;
-
             border-bottom: 1px solid var(--border-color);
-
             padding: 10px 0;
-
             font-family: var(--font-heading);
-
             font-size: 18px;
-
+            color: #fff;
         }
-
         .t-row:last-child { border-bottom: none; }
 
-
-
-        /* --- EVENT CARD DESIGN --- */
-
+        /* --- EVENT CARD DESIGN (MIT GLOW) --- */
         .event-card {
-
             background-color: var(--bg-card-cal);
-
             border: 1px solid var(--border-color);
-
             border-radius: 16px;
-
             display: flex;
-
             align-items: stretch;
-
             margin-bottom: 15px; 
-
             overflow: hidden;
-
             min-height: 90px;
-
-            backdrop-filter: blur(5px);
-
-            transition: transform 0.2s ease;
-
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
-
         
-
         .event-card:hover {
-
-            transform: translateY(-2px);
-
-            border-color: rgba(255, 255, 255, 0.3);
-
+            transform: translateY(-3px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 20px rgba(0, 85, 255, 0.3);
+            background-color: rgba(15, 34, 51, 0.6);
         }
-
-
 
         .date-col {
-
             width: 100px;
-
-            background-color: rgba(255, 255, 255, 0.08); 
-
+            background-color: rgba(255, 255, 255, 0.05); 
             border-right: 1px solid var(--border-color);
-
             display: flex;
-
             flex-direction: column;
-
             justify-content: center;
-
             align-items: center;
-
             text-align: center;
-
             padding: 10px;
-
             flex-shrink: 0;
-
-            font-family: var(--font-heading);
-
         }
 
-
-
-        .date-day { font-size: 28px; line-height: 1; margin-bottom: 5px; color: #fff; }
-
+        .date-day { font-family: var(--font-heading); font-size: 28px; line-height: 1; margin-bottom: 5px; color: #fff; }
         .date-month { font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary); }
-
         .date-year { font-size: 10px; margin-top: 5px; color: var(--text-secondary); }
 
-
-
         .content-col {
-
             flex-grow: 1;
-
             padding: 20px;
-
             display: flex;
-
             flex-direction: column;
-
             justify-content: center;
-
-            min-width: 0; 
-
         }
-
-
 
         .event-title {
-
             font-family: var(--font-heading);
-
             font-size: 20px;
-
             margin: 0 0 5px 0;
-
             text-transform: uppercase;
-
-            letter-spacing: 0.02em;
-
             color: white;
-
-            white-space: nowrap;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
-
         }
 
-
-
-        .event-details, .event-location {
-
+        .event-details {
             font-family: var(--font-body);
-
             font-size: 16px; 
-
             color: var(--text-secondary);
-
-            line-height: 1.4;
-
-            margin-top: 4px;
-
-            white-space: nowrap;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
-
         }
 
-
-
-        /* --- MARATHON LISTE --- */
-
+        /* --- MARATHON LISTE (OHNE RAHMEN & HG) --- */
         .marathon-list {
-
-            background-color: var(--bg-card-cal);
-
-            border: 1px solid var(--border-color);
-
-            border-radius: 16px;
-
-            padding: 20px;
-
-            backdrop-filter: blur(5px);
-
+            background: none;
+            border: none;
+            padding: 0;
+            backdrop-filter: none;
         }
-
-
 
         .marathon-row {
-
             display: flex;
-
             justify-content: space-between;
-
             padding: 12px 0;
-
             border-bottom: 1px solid var(--border-color);
-
             font-family: var(--font-body);
-
             font-weight: bold;
-
             font-size: 16px;
-
-            gap: 15px; 
-
+            color: #fff;
         }
-
         .marathon-row:last-child { border-bottom: none; }
-
-        .m-date { font-family: var(--font-heading); color: var(--text-secondary); min-width: 120px; }
-
-
+        .m-date { font-family: var(--font-heading); color: var(--accent-blue); min-width: 120px; }
 
         /* --- MOBILE OPTIMIERUNG --- */
-
         @media (max-width: 600px) {
-
-            .section-title { font-size: 24px; margin-top: 40px; }
-
-            .training-grid { flex-direction: column; gap: 15px; }
-
-            
-
-            .event-card { margin-bottom: 10px; min-height: 65px; }
-
-            .date-col { width: 70px; padding: 5px; }
-
+            .training-grid { flex-direction: column; gap: 25px; }
+            .event-card { min-height: 70px; }
+            .date-col { width: 70px; }
             .date-day { font-size: 20px; }
-
-            .date-month { font-size: 11px; }
-
-            .date-year { display: none; }
-
-            
-
-            .content-col { padding: 10px 15px; }
-
-            .event-title { font-size: 14px; }
-
-            .event-details, .event-location { font-size: 12px; }
-
-
-
-            .marathon-list { padding: 15px; }
-
-            .marathon-row { 
-
-                font-size: 12px; padding: 10px 0; align-items: center; gap: 10px; 
-
-            }
-
-            .m-date { min-width: 80px; font-size: 11px; }
-
+            .event-title { font-size: 16px; }
+            .marathon-row { font-size: 14px; }
+            .m-date { min-width: 90px; }
         }
-
     </style>
-
 </head>
-
 <body>
 
-  <div class="background-animation">
+    <header class="header-container" id="header-container">
+        <div id="header-placeholder" style="width: 100%; display: flex; justify-content: flex-end;"></div>
+    </header>
+
+    <div class="background-animation">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
     </div>
 
-    <header class="header-container" id="header-container">
-
-        <div id="header-placeholder" style="width: 100%; display: flex; justify-content: flex-end;"></div>
-
-    </header>
-
-
-
     <main class="main-content top-aligned">
-
-        
-
         <div class="calendar-container">
 
-
-
             <div class="section-title">Training</div>
-
             <div class="training-grid">
-
                 <div class="training-card">
-
                     <div class="t-category">Rennrad</div>
-
                     <div class="t-season">Sommer (Mai – Sept.)</div>
-
                     <div class="t-row"><span>Dienstag</span><span>17:00 Uhr</span></div>
-
                     <div class="t-row"><span>Sonntag</span><span>09:00 Uhr</span></div>
-
                 </div>
-
                 <div class="training-card">
-
                     <div class="t-category">MTB / Gravel</div>
-
                     <div class="t-season">Winter (Okt. – Apr.)</div>
-
                     <div class="t-row"><span>Samstag</span><span>13:00 Uhr</span></div>
-
                 </div>
-
             </div>
-
-
 
             <div class="section-title">Termine & Events</div>
 
-
-
             <div class="event-card">
-
                 <div class="date-col">
-
                     <span class="date-day">28</span>
-
                     <span class="date-month">FEB</span>
-
                     <span class="date-year">2026</span>
-
                 </div>
-
                 <div class="content-col">
-
                     <h3 class="event-title">Jahresabschlussfeier 2025</h3>
-
                     <div class="event-details">Geser Sarching 19 Uhr</div>
-
                 </div>
-
             </div>
 
-
-
             <div class="event-card">
-
                 <div class="date-col">
-
                     <span class="date-day">28</span>
-
                     <span class="date-month">MÄR</span>
-
                     <span class="date-year">2026</span>
-
                 </div>
-
                 <div class="content-col">
-
                     <h3 class="event-title">Abbiken MTB</h3>
-
                     <div class="event-details">Schiederhof?</div>
-
                 </div>
-
             </div>
 
-
-
             <div class="event-card">
-
                 <div class="date-col">
-
                     <span class="date-day">26</span>
-
                     <span class="date-month">APR</span>
-
                     <span class="date-year">2026</span>
-
                 </div>
-
                 <div class="content-col">
-
                     <h3 class="event-title">Rennrad Anradl’n</h3>
-
                     <div class="event-details">Kindergarten Bach (2 Gr.)</div>
-
                 </div>
-
             </div>
 
-
-
             <div class="event-card">
-
                 <div class="date-col">
-
                     <span class="date-day" style="font-size: 18px;">19-21</span>
-
                     <span class="date-month">JUN</span>
-
                     <span class="date-year">2026</span>
-
                 </div>
-
                 <div class="content-col">
-
                     <h3 class="event-title">Auf den Spuren des Ötztalers</h3>
-
-                    <span class="event-location">Das Kühtai und Timmelsjoch warten auf uns.</span>
-
+                    <div class="event-details">Das Kühtai und Timmelsjoch warten auf uns.</div>
                 </div>
-
             </div>
-
-
-
-            <div class="event-card">
-
-                <div class="date-col">
-
-                    <span class="date-day">18</span>
-
-                    <span class="date-month">JUL</span>
-
-                    <span class="date-year">2026</span>
-
-                </div>
-
-                <div class="content-col">
-
-                    <h3 class="event-title">Sommerfest / TT</h3>
-
-                    <span class="event-location">Bootsanlagestelle Bach</span>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="event-card">
-
-                <div class="date-col">
-
-                    <span class="date-day">06</span>
-
-                    <span class="date-month">SEP</span>
-
-                    <span class="date-year">2026</span>
-
-                </div>
-
-                <div class="content-col">
-
-                    <h3 class="event-title">L’Eroica Dolomiti</h3>
-
-                    <span class="event-location">Dolomiten (IT)</span>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="event-card">
-
-                <div class="date-col">
-
-                    <span class="date-day" style="font-size: 18px;">TBC</span>
-
-                    <span class="date-month">OKT</span>
-
-                    <span class="date-year">2026</span>
-
-                </div>
-
-                <div class="content-col">
-
-                    <h3 class="event-title">Rennrad Abradl’n</h3>
-
-                    <span class="event-location">Kindergarten Bach</span>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="event-card">
-
-                <div class="date-col">
-
-                    <span class="date-day" style="font-size: 18px;">TBC</span>
-
-                    <span class="date-month">NOV</span>
-
-                    <span class="date-year">2026</span>
-
-                </div>
-
-                <div class="content-col">
-
-                    <h3 class="event-title">Anbiken MTB</h3>
-
-                    <div class="event-details">Saisonstart Offroad</div>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="event-card">
-
-                <div class="date-col">
-
-                    <span class="date-day">05</span>
-
-                    <span class="date-month">DEZ</span>
-
-                    <span class="date-year">2026</span>
-
-                </div>
-
-                <div class="content-col">
-
-                    <h3 class="event-title">MTB Waldweihnacht</h3>
-
-                    <span class="event-location">Bauwaagen</span>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="event-card">
-
-                <div class="date-col">
-
-                    <span class="date-day" style="font-size: 18px;">TBC</span>
-
-                    <span class="date-month">JAN</span>
-
-                    <span class="date-year">2027</span>
-
-                </div>
-
-                <div class="content-col">
-
-                    <h3 class="event-title">Jahresabschluss</h3>
-
-                </div>
-
-            </div>
-
-
 
             <div class="section-title">Marathons / RTF</div>
-
             
-
             <div class="marathon-list">
-
                 <div class="marathon-row"><span class="m-date">16.05.2026</span><span>Altmühltal Radmarathon</span></div>
-
                 <div class="marathon-row"><span class="m-date">24.05.2026</span><span>Sternenfahrt Strasskirchen</span></div>
-
                 <div class="marathon-row"><span class="m-date">21.06.2026</span><span>Jura-Radmarathon</span></div>
-
-                <div class="marathon-row"><span class="m-date">28.06.2026</span><span>Rosenheimer Radmarathon</span></div>
-
-                <div class="marathon-row"><span class="m-date">05.07.2026</span><span>Waldmünchen</span></div>
-
                 <div class="marathon-row"><span class="m-date">11.07.2026</span><span>24 h Kelheim</span></div>
-
-                <div class="marathon-row"><span class="m-date">26.07.2026</span><span>Arber</span></div>
-
-                <div class="marathon-row"><span class="m-date">09.08.2026</span><span>Pirker Zoigltour</span></div>
-
-                <div class="marathon-row"><span class="m-date">06.09.2026</span><span>L‘Eroica Dolomiti</span></div>
-
-                <div class="marathon-row"><span class="m-date">03.10.2026</span><span>Istra Marathon (Porec)</span></div>
-
+                <div class="marathon-row"><span class="m-date">26.07.2026</span><span>Arber Radmarathon</span></div>
             </div>
 
-
-
         </div>
-
     </main>
 
-
-
     <footer class="footer-container" id="footer-container">
-
         <div id="footer-placeholder" style="width: 100%; display: flex; justify-content: center;"></div>
-
     </footer>
-
-
 
     <script src="main.js"></script>
 
-
-
 </body>
-
 </html>

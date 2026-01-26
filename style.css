@@ -385,24 +385,24 @@ strong { color: var(--text-primary); font-weight: 600; }
     animation-duration: 7s;
 }
 
-/* ORB 2: Ein Grau (Unten Rechts) - Moderner Kontrast */
+/* ORB 2: Ein Weiss (Unten Rechts) - Moderner Kontrast */
 .orb-2 {
     bottom: -10%;
     right: -10%;
     width: 60vw;
     height: 60vw;
-    background: #A9A9A9; /* Grau */
+    background: #FFFFFF; /* Grau */
     animation-duration: 10s;
     animation-direction: alternate-reverse;
 }
 
-/* ORB 3: Ein weiss (Mitte) - Für Tiefe */
+/* ORB 3: Ein Grau (Mitte) - Für Tiefe */
 .orb-3 {
     top: 30%;
     left: 40%;
     width: 40vw;
     height: 40vw;
-    background: #FFFFFF; /* weiss */
+    background: #A9A9A9; /* weiss */
     animation-duration:5s;
     opacity: 0.3;
 }

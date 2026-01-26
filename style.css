@@ -402,7 +402,7 @@ strong { color: var(--text-primary); font-weight: 600; }
     left: 40%;
     width: 40vw;
     height: 40vw;
-    background: #A9A9A9; /* weiss */
+    background: #FF4040; /* weiss */
     animation-duration:5s;
     opacity: 0.3;
 }

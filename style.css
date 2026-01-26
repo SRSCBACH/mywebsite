@@ -375,23 +375,23 @@ strong { color: var(--text-primary); font-weight: 600; }
     animation: float 20s infinite ease-in-out alternate;
 }
 
-/* ORB 1: Dein Royal Blue (Oben Links) */
+/* ORB 1: Gelb (Oben Links) */
 .orb-1 {
     top: -10%;
     left: -10%;
     width: 50vw;
     height: 50vw;
-    background: #0055ff;
+    background: #FFFF00;
     animation-duration: 7s;
 }
 
-/* ORB 2: Ein helles Cyan/Türkis (Unten Rechts) - Moderner Kontrast */
+/* ORB 2: Ein Grau (Unten Rechts) - Moderner Kontrast */
 .orb-2 {
     bottom: -10%;
     right: -10%;
     width: 60vw;
     height: 60vw;
-    background: #06b6d4; /* Cyan */
+    background: #A9A9A9; /* Grau */
     animation-duration: 10s;
     animation-direction: alternate-reverse;
 }

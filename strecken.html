@@ -10,124 +10,110 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* ================================================================= */
-        /* --- LOKALE STYLES FÜR STRECKEN (ROBUST VERSION) --- */
-        /* ================================================================= */
-        :root {
-            --bg-card-route: rgba(15, 34, 51, 0.5); 
-            --bg-map: #e2e8f0; 
-            --border-color: rgba(255, 255, 255, 0.1); 
-            --btn-bg: rgba(255, 255, 255, 0.1);
-            --spacing-unit: 15px; 
-        }
+    /* ================================================================= */
+    /* --- OPTIMIERTE STRECKEN-STYLES (PREMIUM LOOK) --- */
+    /* ================================================================= */
+    :root {
+        --bg-card-route: rgba(15, 34, 51, 0.4); 
+        --border-color: rgba(255, 255, 255, 0.08); 
+        --accent-blue: #0055ff;
+        --text-dim: #94a3b8;
+    }
 
-        /* FIX FÜR WEISSEN BALKEN & SCROLLING */
-        html { height: 100%; overflow-y: scroll; }
-        body {
-            background-color: #0f172a; 
-            /* PARALLAX FIX */
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            
-            margin: 0; padding: 0; min-height: 100vh; width: 100%; overflow-x: hidden;
-        }
+    html { height: 100%; overflow-y: scroll; scroll-behavior: smooth; }
+    
+    body {
+        background-color: #0f172a; 
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        margin: 0; padding: 0; min-height: 100vh; width: 100%; overflow-x: hidden;
+        font-family: var(--font-body), sans-serif;
+    }
 
-        #app-container {
-            display: flex; flex-direction: column; gap: 20px; align-items: center; width: 100%;
-            opacity: 0; animation: fadeInContent 0.8s ease-in-out forwards;
-        }
-        @keyframes fadeInContent { to { opacity: 1; } }
+    #app-container {
+        display: flex; flex-direction: column; gap: 40px; /* Mehr Abstand zwischen den Touren */
+        align-items: center; width: 100%; padding: 40px 20px;
+        opacity: 0; animation: fadeInContent 0.8s ease-in-out forwards;
+    }
+    @keyframes fadeInContent { to { opacity: 1; } }
 
-        /* KARTEN DESIGN */
-        .card {
-            background-color: var(--bg-card-route); border-radius: 16px; 
-            border: 1px solid var(--border-color); 
-            padding: var(--spacing-unit); 
-            width: 100%; max-width: 950px;
-            backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
-        
-        .header {
-            position: relative; padding-bottom: 10px; margin-bottom: var(--spacing-unit); 
-            display: flex; justify-content: space-between; align-items: center; 
-            border-bottom: 1px solid var(--border-color);
-        }
-        .title { 
-            font-size: 1.8rem; padding-top: 5px; padding-bottom: 3px; line-height: 1.4;    
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
-        }
-        .brand-logo { height: 22px; width: auto; opacity: 0.7; display: block; flex-shrink: 0; margin-left: 15px; }
+    /* KARTEN DESIGN */
+    .card {
+        background-color: var(--bg-card-route); 
+        border-radius: 24px; /* Runder wirkt moderner */
+        border: 1px solid var(--border-color); 
+        padding: 30px; 
+        width: 100%; max-width: 1000px;
+        backdrop-filter: blur(12px); 
+        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        transition: transform 0.3s ease;
+    }
+    .card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.15); }
 
-        /* GRID */
-        .content-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; }
-        .left-column { display: flex; flex-direction: column; gap: var(--spacing-unit); } 
-        .right-column { display: flex; flex-direction: column; } 
+    .header {
+        position: relative; padding-bottom: 20px; margin-bottom: 25px; 
+        display: flex; justify-content: space-between; align-items: center; 
+        border-bottom: 1px solid var(--border-color);
+    }
+    .title { 
+        font-family: var(--font-heading), sans-serif;
+        font-size: 2rem; color: #fff; font-weight: 800;
+        text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .brand-logo { height: 28px; width: auto; opacity: 0.4; }
 
-        /* MAP & CHART */
-        .map-wrapper {
-            height: 260px; width: 100%; background-color: var(--bg-map); border-radius: 12px; 
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.1); z-index: 1;
-        }
+    /* GRID */
+    .content-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
 
-        .leaflet-bar a { 
-            background-color: #fff !important; color: #333 !important; 
-            width: 15px !important; height: 15px !important; line-height: 15px !important; font-size: 10px !important;
-        }
-        .leaflet-control-attribution { background: rgba(255,255,255,0.8) !important; }
+    /* MAP STYLING (DARK MODE FILTER) */
+    .map-wrapper {
+        height: 300px; width: 100%; 
+        background-color: #1e293b; border-radius: 16px; 
+        z-index: 1; overflow: hidden;
+        /* Macht die Karte dunkel/blau-stichig passend zum Design */
+        filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+    }
 
-        .profile-container {
-            height: 130px; width: 100%; background-color: rgba(0,0,0,0.2); border-radius: 12px; 
-            padding: 5px 10px; overflow: hidden; position: relative; box-sizing: border-box; 
-        }
-        canvas { width: 100% !important; height: 100% !important; }
+    .profile-container {
+        height: 140px; width: 100%; 
+        background-color: rgba(0,0,0,0.3); border-radius: 16px; 
+        padding: 15px; margin-top: 20px;
+    }
 
-        /* STATS */
-        .stats-wrapper { display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: space-between; }
-        .data-table { width: 100%; display: flex; flex-direction: column; flex: 1; }
-        .data-row { display: flex; border-bottom: 1px solid var(--border-color); align-items: center; flex: 1; min-height: 32px; }
-        .data-row:last-child { border-bottom: none; }
-        
-        .data-label { flex: 0 0 45%; color: var(--text-secondary); font-size: 1.2rem; font-weight: 200; border-right: 1px solid var(--border-color); height: 100%; display: flex; align-items: center; }
-        .data-value { flex: 1; font-size: 1.5rem; font-family: var(--font-heading); font-weight: 800; padding-left: 15px; display: flex; align-items: center; color: var(--accent-color); }
+    /* STATS & DATA */
+    .data-table { width: 100%; }
+    .data-row { 
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); 
+    }
+    .data-row:last-child { border-bottom: none; }
+    
+    .data-label { color: var(--text-dim); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .data-value { 
+        font-size: 1.6rem; font-family: var(--font-heading); font-weight: 800; 
+        color: #fff; text-align: right;
+    }
 
-        /* BUTTONS */
-        .button-group { display: flex; flex-direction: row; height: 45px; gap: 10px; width: 100%; margin-top: 10px; }
-        .btn {
-            background-color: var(--btn-bg); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px;
-            flex: 1; display: flex; align-items: center; justify-content: center;
-            font-size: 0.85rem; font-family: var(--font-heading); font-weight: 800; text-transform: uppercase;
-            cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.05em; padding: 0; 
-        }
-        .btn:hover { background-color: #334155; color: #ffffff; transform: translateY(-2px); border-color: #334155; }
-        .btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+    /* BUTTONS */
+    .button-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 25px; }
+    .btn {
+        background-color: rgba(255,255,255,0.05); 
+        color: #fff; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+        padding: 12px; font-size: 0.75rem; font-weight: 800; text-align: center;
+        text-transform: uppercase; text-decoration: none; transition: all 0.3s;
+    }
+    .btn:hover { background-color: #fff; color: #0f172a; transform: scale(1.05); }
+    .btn.disabled { opacity: 0.2; pointer-events: none; }
 
-        .loading-text { font-size: 1rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
-        @keyframes blink { 50% { opacity: 0.5; } }
-
-        /* MOBILE */
-        @media (max-width: 850px) {
-            .card { padding: 12px; }
-            .header { padding-bottom: 8px; margin-bottom: 10px; }
-            .title { font-size: 1.3rem; line-height: 1.4; padding-top: 3px; }
-            .brand-logo { display: none; } 
-            
-            .content-grid { grid-template-columns: 1fr; gap: 10px; }
-            .left-column { gap: 10px; } 
-
-            .map-wrapper { height: 220px; } 
-            .profile-container { height: 100px; }
-
-            .stats-wrapper { flex-direction: row; gap: 8px; align-items: stretch; }
-            .data-table { flex: 1; border-top: none; }
-            .data-row { min-height: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-            .data-label { font-size: 0.85rem; flex: 0 0 45%; } 
-            .data-value { font-size: 1.0rem; padding-left: 8px; } 
-
-            .button-group { margin-top: 0; flex-direction: column; width: 85px; height: auto; gap: 5px; justify-content: center; flex-shrink: 0; }
-            .btn { font-size: 0.6rem; width: 100%; flex: 1; padding: 0; line-height: 1.2; margin: 0; }
-        }
-    </style>
+    /* MOBILE */
+    @media (max-width: 850px) {
+        .content-grid { grid-template-columns: 1fr; }
+        .title { font-size: 1.4rem; }
+        .data-value { font-size: 1.3rem; }
+        .card { padding: 20px; }
+    }
+</style>
 </head>
 <body>
 

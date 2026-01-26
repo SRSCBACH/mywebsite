@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitglied werden - SRSC Bach</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        html { height: 100%; }
+        body {
+            background-color: #0f172a;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 100px 20px 60px 20px;
+            position: relative;
+            z-index: 10;
+            flex: 1;
+        }
+        .content-card {
+            background-color: rgba(15, 34, 51, 0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .header-container, .footer-container {
+            flex-shrink: 0;
+        }
+        .card-title { font-family: var(--font-heading), sans-serif; font-size: 2.0rem; color: #ffffff; margin-bottom: 10px; text-align: center; text-transform: uppercase; border: none; }
+        .card-subtitle { font-family: var(--font-body), sans-serif; color: var(--text-secondary); text-align: center; margin-bottom: 30px; font-size: 1.1rem; }
+        .form-section-title { color: #ffffff; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; margin-bottom: 20px; margin-top: 40px; font-family: var(--font-heading), sans-serif; font-size: 1.3rem; }
+        .form-group { margin-bottom: 20px; }
+        .form-row { display: flex; gap: 20px; }
+        .form-row .form-group { flex: 1; }
+        label { display: block; color: #ffffff; font-family: var(--font-heading), sans-serif; font-size: 0.9rem; margin-bottom: 8px; letter-spacing: 0.05em; }
+        input, textarea, select { width: 100%; padding: 12px 15px; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; color: #ffffff; font-family: var(--font-body), sans-serif; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box; appearance: none; }
+        
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            appearance: auto;
+            transform: scale(1.5);
+        }
+
+        select { background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 15px top 50%; background-size: 12px auto; padding-right: 40px; cursor: pointer; }
+        select option { background-color: #0f172a; color: white; }
+        .faq-item { border-bottom: none; margin-bottom: 15px; }
+        .faq-question { font-family: var(--font-heading), sans-serif; font-size: 1.1rem; color: #ffffff; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .faq-toggle { font-size: 1.5rem; font-weight: 300; transition: transform 0.3s ease; color: #64748b; }
+        .faq-answer { font-family: var(--font-body), sans-serif; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.4s ease; opacity: 0; padding-bottom: 0; }
+        .faq-item.active .faq-toggle { transform: rotate(45deg); }
+        .faq-item.active .faq-answer { max-height: 2000px; opacity: 1; padding-bottom: 20px; }
+        .checkbox-container { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .checkbox-label { font-size: 0.9rem; color: #ffffff; line-height: 1.4; cursor: pointer; margin: 0; }
+        .submit-btn { width: 100%; padding: 15px; background-color: #64748b; color: white; border: none; border-radius: 8px; font-family: var(--font-heading), sans-serif; font-size: 1.1rem; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="background-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <header class="header-container" id="header-container"><div id="header-placeholder"></div></header>
+
+    <main class="main-content">
+        <div class="content-card">
+            <h2 class="card-title">Mitglied werden</h2>
+            <p class="card-subtitle">Werde offizielles Teil des Ski- und Radsportclub (SRSC) Bach e.V.</p>
+
+            <form action="https://formspree.io/f/xkornnjj" method="POST">
+                <input type="hidden" name="_next" value="danke.html">
+                <input type="hidden" name="_subject" value="Neuer Mitgliedsantrag SRSC">
+                <h3 class="form-section-title">Persönliche Daten</h3>
+                <div class="form-row"><div class="form-group"><label>Vorname</label><input type="text" name="member_vorname" required></div><div class="form-group"><label>Nachname</label><input type="text" name="member_nachname" required></div></div>
+                <div class="form-group"><label>Geburtsdatum</label><input type="date" name="member_geburtsdatum" required></div>
+                <div class="form-group"><label>Straße & Hausnummer</label><input type="text" name="member_strasse" required></div>
+                <div class="form-row"><div class="form-group"><label>PLZ</label><input type="text" name="member_plz" required></div><div class="form-group"><label>Ort</label><input type="text" name="member_ort" required></div></div>
+                <div class="form-row"><div class="form-group"><label>E-Mail</label><input type="email" name="member_email" required></div><div class="form-group"><label>Mobil</label><input type="tel" name="member_mobil"></div></div>
+
+                <h3 class="form-section-title">Tarifwahl</h3>
+                <div class="form-group"><label>Gewünschte Mitgliedschaft</label><select name="member_beitrag" required><option value="" disabled selected>Bitte wählen...</option><option value="Erwachsene (40€)">Erwachsene (40 €)</option><option value="Jugendliche (16€)">Jugendliche 14–17 J. (16 €)</option><option value="Kinder (10€)">Kinder bis 13 J. (10 €)</option><option value="Familie (60€)">Familien / Lebensgem. (60 €)</option></select></div>
+
+                <h3 class="form-section-title">Rechtliche Hinweise & Datenschutz</h3>
+                <div class="faq-item"><div class="faq-question">Anerkennung der Regularien<span class="faq-toggle">+</span></div><div class="faq-answer">Mit der Aufnahme in den Verein erhalte ich Kenntnis und erkenne ausdrücklich die Satzung des Vereins, sowie die Beitragsordnung und die jeweils gültigen Beitragssätze an.</div></div>
+                <div class="faq-item"><div class="faq-question">Beitragshaftung für Minderjährige<span class="faq-toggle">+</span></div><div class="faq-answer">Ich/wir als der/die gesetzliche/n Vertreter genehmige/n hiermit den Beitritt für mein/unser Kind und übernehme/n bis zum Eintritt der Volljährigkeit (18. Lebensjahr) die persönliche Haftung für die Beitragspflichten meines/unseres Kindes gegenüber dem Verein.</div></div>
+                <div class="faq-item"><div class="faq-question">Datenschutzeinwilligung<span class="faq-toggle">+</span></div><div class="faq-answer">Mit der Speicherung, Übermittlung und Verarbeitung meiner personenbezogenen Daten für Vereinszwecke gemäß den Bestimmungen des Bundesdatenschutzgesetzes (BDSG) bin ich einverstanden. Ich habe jederzeit die Möglichkeit, vom Verein Auskunft über diese Daten von mir zu erhalten. Meine Daten werden nach meinem Austritt aus dem Verein gelöscht.</div></div>
+                <div class="faq-item"><div class="faq-question">Datenschutzerklärung (Details)<span class="faq-toggle">+</span></div><div class="faq-answer">Ich willige ein, dass der SRSC Bach als verantwortliche Stelle, die in der Beitrittserklärung erhobenen personenbezogenen Daten, wie Name, Vorname, Geburtsdatum, Adresse, Emailadresse, Telefonnummer und Bankverbindung ausschließlich zum Zwecke der Mitgliederverwaltung, des Beitragseinzuges und der Übermittlung von Vereinsinformationen durch den Verein verarbeitet und genutzt werden. Eine Übermittlung von Teilen dieser Daten an die jeweiligen Sportfachverbände und den Bayerischen Landes- Sportverband (BLSV) findet nur im Rahmen der in den Satzungen der Fachverbände bzw. des BLSV festgelegten Zwecke statt. Diese Datenübermittlungen sind notwendig zum Zwecke der Organisation eines Spiel- bzw. Wettkampfbetriebes und zum Zwecke des Erhalts von öffentlichen Fördermitteln. Eine Datenübermittlung an Dritte, außerhalb der Fachverbände und des BLSV, findet nicht statt. Eine Datennutzung für Werbezwecke findet ebenfalls nicht statt. Bei Beendigung der Mitgliedschaft werden die personenbezogenen Daten gelöscht, soweit sie nicht entsprechend den steuerrechtlichen Vorgaben aufbewahrt werden müssen. Jedes Mitglied hat im Rahmen der Vorgaben des Bundesdatenschutzgesetzes das Recht auf Auskunft über die personenbezogenen Daten, die zu seiner Person bei der verantwortlichen Stelle gespeichert sind. Außerdem hat das Mitglied, im Falle von fehlerhaften Daten, ein Korrekturrecht.</div></div>
+                <div class="faq-item"><div class="faq-question">Nutzung von Bildern<span class="faq-toggle">+</span></div><div class="faq-answer">Ich willige ein, dass der SRSC Bach Bilder von sportbezogenen oder gesellschaftlichen Veranstaltungen auf der Website des Vereines oder sonstigen Vereinspublikationen veröffentlicht und an die Presse zum Zwecke der Veröffentlichung ohne spezielle Einwilligung weitergibt. Abbildungen von genannten Einzelpersonen oder Kleingruppen hingegen bedürfen einer gesonderten Einwilligung der abgebildeten Personen.</div></div>
+                <div class="checkbox-container" style="margin-top: 20px;"><input type="checkbox" id="satzung" name="satzung_accept" required><label for="satzung" class="checkbox-label"><strong>Ich habe die obenstehenden Regularien und Datenschutzbestimmungen gelesen und akzeptiere sie.</strong></label></div>
+
+                <h3 class="form-section-title">SEPA-Lastschrift</h3>
+                <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 15px;">Gläubiger-ID: DE81 7506 2026 0000 2237 78 (SRSC Bach e.V.)</p>
+                <div class="form-group"><label>Kontoinhaber</label><input type="text" name="bank_inhaber" required></div>
+                <div class="form-group"><label>IBAN</label><input type="text" name="bank_iban" required></div>
+                <div class="form-group"><label>Kreditinstitut</label><input type="text" name="bank_name" required></div>
+                <div class="checkbox-container"><input type="checkbox" id="sepa" name="sepa_accept" required><label for="sepa" class="checkbox-label">Ich erteile hiermit das SEPA-Lastschriftmandat.</label></div>
+
+                <button type="submit" class="submit-btn">Kostenpflichtig Beitreten</button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer-container" id="footer-container"><div id="footer-placeholder"></div></footer>
+
+    <script src="main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.querySelector('.faq-question').addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

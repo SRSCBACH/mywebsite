@@ -8,280 +8,289 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* ================================================================= */
-        /* --- LOKALE STYLES NUR FÜR DEN KALENDER --- */
-        /* ================================================================= */
-        
         :root {
-            --bg-card-cal: rgba(15, 34, 51, 0.4); 
-            --border-color: rgba(255, 255, 255, 0.1); 
+            --border-color: rgba(255, 255, 255, 0.1);
             --text-secondary: #cbd5e1;
-            --accent-blue: #0055ff;
         }
 
-        .calendar-container {
-            max-width: 800px;
-            margin: 0 auto;
-            width: 100%;
-            padding: 20px;
-            opacity: 0;
-            animation: fadeInContent 1.0s ease-in-out forwards;
-        }
-
+        .calendar-container { max-width: 800px; margin: 0 auto; width: 100%; opacity: 0; animation: fadeInContent 1.0s ease-in-out forwards; }
         @keyframes fadeInContent { to { opacity: 1; } }
 
-        /* --- ÜBERSCHRIFTEN --- */
-        .section-title {
-            font-family: var(--font-heading);
-            font-size: 32px;
-            color: white;
-            margin-top: 50px;      
-            margin-bottom: 25px;   
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            display: inline-block;
-            opacity: 0.8;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
+        .section-title { font-family: var(--font-heading); font-size: 32px; color: var(--text-primary); margin-top: 50px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; opacity: 0.8; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .section-title:first-of-type { margin-top: 0; }
+
+        .training-section { display: flex; margin-bottom: 40px; margin-top: 20px; }
+        .training-group { flex: 1; text-align: center; position: relative; }
+        .training-group:first-child::after { display: none; }
+        .training-title { font-family: var(--font-heading); font-size: 24px; text-transform: uppercase; color: var(--accent-color); margin: 0 0 15px 0; letter-spacing: 0.05em; }
+        .training-season { font-family: var(--font-body); font-size: 13px; color: var(--text-secondary); font-weight: normal; text-transform: uppercase; display: block; margin-top: 8px; }
+        .training-time { font-family: var(--font-body); font-weight: bold; font-size: 18px; color: var(--text-primary); margin: 10px 0; }
+
+        .event-card { background-color: rgba(15, 34, 51, 0.4); border: 1px solid var(--border-color); border-radius: 16px; display: flex; align-items: stretch; margin-bottom: 15px; overflow: hidden; min-height: 90px; backdrop-filter: blur(5px); transition: transform 0.2s ease, border-color 0.2s ease; }
         
-        .section-title:first-child { margin-top: 0; }
-
-        /* --- TRAINING SEKTION (OHNE RAHMEN & HG) --- */
-        .training-grid {
-            display: flex;
-            gap: 40px;
-            margin-bottom: 30px; 
+        .event-card.clickable { cursor: pointer; }
+        .event-card.clickable:hover { 
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .event-card.clickable:hover .event-title,
+        .event-card.clickable:hover .event-location,
+        .event-card.clickable:hover .event-details {
+            color: #ffffff;
         }
 
-        .training-card {
-            flex: 1;
-            background: none;
-            border: none;
-            padding: 0;
-            backdrop-filter: none;
-        }
-
-        .t-category {
-            font-family: var(--font-heading);
-            font-size: 24px;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-            color: var(--accent-blue);
-        }
-
-        .t-season {
-            font-family: var(--font-body);
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .t-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding: 10px 0;
-            font-family: var(--font-heading);
-            font-size: 18px;
-            color: #fff;
-        }
-        .t-row:last-child { border-bottom: none; }
-
-        /* --- EVENT CARD DESIGN (MIT GLOW) --- */
-        .event-card {
-            background-color: var(--bg-card-cal);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            display: flex;
-            align-items: stretch;
-            margin-bottom: 15px; 
-            overflow: hidden;
-            min-height: 90px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-        
-        .event-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 20px rgba(0, 85, 255, 0.3);
-            background-color: rgba(15, 34, 51, 0.6);
-        }
-
-        .date-col {
-            width: 100px;
-            background-color: rgba(255, 255, 255, 0.05); 
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 10px;
-            flex-shrink: 0;
-        }
-
-        .date-day { font-family: var(--font-heading); font-size: 28px; line-height: 1; margin-bottom: 5px; color: #fff; }
+        .date-col { width: 100px; background-color: rgba(255, 255, 255, 0.08); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 10px; flex-shrink: 0; font-family: var(--font-heading); }
+        .date-day { font-size: 28px; line-height: 1; margin-bottom: 5px; color: #fff; }
         .date-month { font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary); }
         .date-year { font-size: 10px; margin-top: 5px; color: var(--text-secondary); }
+        .content-col { flex-grow: 1; padding: 20px; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+        .event-title { font-family: var(--font-heading); font-size: 20px; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 0.02em; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.2s ease; }
+        .event-details, .event-location { font-family: var(--font-body); font-size: 16px; color: var(--text-secondary); line-height: 1.4; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.2s ease; }
 
-        .content-col {
-            flex-grow: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .event-title {
-            font-family: var(--font-heading);
-            font-size: 20px;
-            margin: 0 0 5px 0;
-            text-transform: uppercase;
-            color: white;
-        }
-
-        .event-details {
-            font-family: var(--font-body);
-            font-size: 16px; 
-            color: var(--text-secondary);
-        }
-
-        /* --- MARATHON LISTE (OHNE RAHMEN & HG) --- */
-        .marathon-list {
-            background: none;
-            border: none;
-            padding: 0;
-            backdrop-filter: none;
-        }
-
-        .marathon-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-            font-family: var(--font-body);
-            font-weight: bold;
-            font-size: 16px;
-            color: #fff;
-        }
+        .marathon-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-color); font-family: var(--font-body); font-weight: bold; font-size: 16px; gap: 15px; }
         .marathon-row:last-child { border-bottom: none; }
-        .m-date { font-family: var(--font-heading); color: var(--accent-blue); min-width: 120px; }
+        .m-date { font-family: var(--font-heading); color: var(--text-secondary); min-width: 120px; }
 
-        /* --- MOBILE OPTIMIERUNG --- */
+        /* --- MODAL / POPUP STYLES --- */
+        .modal { position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; }
+        .modal-content { position: relative; background-color: transparent; margin: auto; padding: 0; border: none; width: 90%; max-width: 800px; text-align: center; }
+        .close-button { position: absolute; top: -40px; right: 0px; color: #ccc; font-size: 48px; font-weight: bold; cursor: pointer; transition: color 0.3s; z-index: 1010; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .close-button:hover, .close-button:focus { color: #fff; }
+        .slideshow-container { position: relative; }
+        .slideshow-image { max-width: 100%; height: auto; max-height: 80vh; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: auto;
+            padding: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: bold;
+            font-size: 34px;
+            transition: color 0.3s ease;
+            user-select: none;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .prev:hover, .next:hover { 
+            color: #ffffff; 
+        }
+
         @media (max-width: 600px) {
-            .training-grid { flex-direction: column; gap: 25px; }
-            .event-card { min-height: 70px; }
-            .date-col { width: 70px; }
+            .section-title { font-size: 24px; margin-top: 40px; }
+            .training-section { flex-direction: column; gap: 30px; }
+            .training-title { font-size: 20px; }
+            .event-card { min-height: 65px; }
+            .date-col { width: 70px; padding: 5px; }
             .date-day { font-size: 20px; }
-            .event-title { font-size: 16px; }
-            .marathon-row { font-size: 14px; }
-            .m-date { min-width: 90px; }
+            .date-month { font-size: 11px; }
+            .date-year { display: none; }
+            .content-col { padding: 10px 15px; }
+            .event-title { font-size: 14px; }
+            .event-details, .event-location { font-size: 12px; }
+            .marathon-row { font-size: 12px; padding: 10px 0; align-items: center; gap: 10px; }
+            .m-date { min-width: 80px; font-size: 11px; }
+            .modal-content { width: 95%; }
+            .prev, .next { font-size: 24px; padding: 10px;}
+            .close-button { top: -30px; right: 5px; font-size: 40px;}
         }
     </style>
 </head>
 <body>
-
-    <header class="header-container" id="header-container">
-        <div id="header-placeholder" style="width: 100%; display: flex; justify-content: flex-end;"></div>
-    </header>
-
-    <div class="background-animation">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
+    <div class="background-animation"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+    <header class="header-container" id="header-container"><div id="header-placeholder"></div></header>
 
     <main class="main-content top-aligned">
         <div class="calendar-container">
 
             <div class="section-title">Training</div>
-            <div class="training-grid">
-                <div class="training-card">
-                    <div class="t-category">Rennrad</div>
-                    <div class="t-season">Sommer (Mai – Sept.)</div>
-                    <div class="t-row"><span>Dienstag</span><span>17:00 Uhr</span></div>
-                    <div class="t-row"><span>Sonntag</span><span>09:00 Uhr</span></div>
+            <div class="training-section">
+                <div class="training-group">
+                    <h3 class="training-title">Rennrad<span class="training-season">(Mai – Sept.)</span></h3>
+                    <p class="training-time">Dienstag – 17:00 Uhr</p>
+                    <p class="training-time">Sonntag – 09:00 Uhr</p>
                 </div>
-                <div class="training-card">
-                    <div class="t-category">MTB / Gravel</div>
-                    <div class="t-season">Winter (Okt. – Apr.)</div>
-                    <div class="t-row"><span>Samstag</span><span>13:00 Uhr</span></div>
+                <div class="training-group">
+                    <h3 class="training-title">MTB / Gravel<span class="training-season">(Okt. – Apr.)</span></h3>
+                    <p class="training-time">Samstag – 13:00 Uhr</p>
                 </div>
             </div>
 
             <div class="section-title">Termine & Events</div>
 
-            <div class="event-card">
-                <div class="date-col">
-                    <span class="date-day">28</span>
-                    <span class="date-month">FEB</span>
-                    <span class="date-year">2026</span>
-                </div>
-                <div class="content-col">
-                    <h3 class="event-title">Jahresabschlussfeier 2025</h3>
-                    <div class="event-details">Geser Sarching 19 Uhr</div>
-                </div>
-            </div>
-
-            <div class="event-card">
-                <div class="date-col">
-                    <span class="date-day">28</span>
-                    <span class="date-month">MÄR</span>
-                    <span class="date-year">2026</span>
-                </div>
-                <div class="content-col">
-                    <h3 class="event-title">Abbiken MTB</h3>
-                    <div class="event-details">Schiederhof?</div>
-                </div>
-            </div>
-
-            <div class="event-card">
-                <div class="date-col">
-                    <span class="date-day">26</span>
-                    <span class="date-month">APR</span>
-                    <span class="date-year">2026</span>
-                </div>
-                <div class="content-col">
-                    <h3 class="event-title">Rennrad Anradl’n</h3>
-                    <div class="event-details">Kindergarten Bach (2 Gr.)</div>
-                </div>
-            </div>
-
-            <div class="event-card">
-                <div class="date-col">
-                    <span class="date-day" style="font-size: 18px;">19-21</span>
-                    <span class="date-month">JUN</span>
-                    <span class="date-year">2026</span>
-                </div>
-                <div class="content-col">
-                    <h3 class="event-title">Auf den Spuren des Ötztalers</h3>
-                    <div class="event-details">Das Kühtai und Timmelsjoch warten auf uns.</div>
-                </div>
-            </div>
+            <div id="jahresabschluss-event" class="event-card clickable"><div class="date-col"><span class="date-day">28</span><span class="date-month">FEB</span><span class="date-year">2026</span></div><div class="content-col"><h3 class="event-title">Jahresabschlussfeier 2025</h3><div class="event-details">Geser Sarching 19 Uhr</div></div></div>
+            <div class="event-card"><div class="date-col"><span class="date-day">28</span><span class="date-month">MÄR</span><span class="date-year">2026</span></div><div class="content-col"><h3 class="event-title">Abbiken MTB</h3><div class="event-details">Schiederhof?</div></div></div>
+            <div class="event-card"><div class="date-col"><span class="date-day">26</span><span class="date-month">APR</span><span class="date-year">2026</span></div><div class="content-col"><h3 class="event-title">Rennrad Anradl’n</h3><div class="event-details">Kindergarten Bach (2 Gr.)</div></div></div>
+            <div id="oetztaler-event" class="event-card clickable"><div class="date-col"><span class="date-day" style="font-size: 18px;">19-21</span><span class="date-month">JUN</span><span class="date-year">2026</span></div><div class="content-col"><h3 class="event-title">Auf den Spuren des Ötztalers</h3><span class="event-location">Das Kühtai und Timmelsjoch warten auf uns.</span></div></div>
+            <div class="event-card"><div class="date-col"><span class="date-day">18</span><span class="date-month">JUL</span><span class="date-year">2026</span></div><div class="content-col"><h3 class="event-title">Sommerfest / TT</h3><span class="event-location">Bootsanlagestelle Bach</span></div></div>
+            <div class="event-card"><div class="date-col"><span class="date-day">06</span><span class="date-month">SEP</span><span class="date-year">2026</span></div><div class="content-col"><h3 class="event-title">L’Eroica Dolomiti</h3><span class="event-location">Dolomiten (IT)</span></div></div>
+            <div class="event-card"><div class="date-col"><span class="date-day" style="font-size: 18px;">TBC</span><span class="date-month">OKT</span><span class="date-year">2026</span></div><div class="content-col"><h3 class="event-title">Rennrad Abradl’n</h3><span class="event-location">Kindergarten Bach</span></div></div>
+            <div class="event-card"><div class="date-col"><span class="date-day" style="font-size: 18px;">TBC</span><span class="date-month">NOV</span><span class="date-year">2026</span></div><div class="content-col"><h3 class="event-title">Anbiken MTB</h3><div class="event-details">Saisonstart Offroad</div></div></div>
+            <div class="event-card"><div class="date-col"><span class="date-day">05</span><span class="date-month">DEZ</span><span class="date-year">2026</span></div><div class="content-col"><h3 class="event-title">MTB Waldweihnacht</h3><span class="event-location">Bauwaagen</span></div></div>
+            <div class="event-card"><div class="date-col"><span class="date-day" style="font-size: 18px;">TBC</span><span class="date-month">JAN</span><span class="date-year">2027</span></div><div class="content-col"><h3 class="event-title">Jahresabschluss</h3></div></div>
 
             <div class="section-title">Marathons / RTF</div>
-            
             <div class="marathon-list">
                 <div class="marathon-row"><span class="m-date">16.05.2026</span><span>Altmühltal Radmarathon</span></div>
                 <div class="marathon-row"><span class="m-date">24.05.2026</span><span>Sternenfahrt Strasskirchen</span></div>
                 <div class="marathon-row"><span class="m-date">21.06.2026</span><span>Jura-Radmarathon</span></div>
+                <div class="marathon-row"><span class="m-date">28.06.2026</span><span>Rosenheimer Radmarathon</span></div>
+                <div class="marathon-row"><span class="m-date">05.07.2026</span><span>Waldmünchen</span></div>
                 <div class="marathon-row"><span class="m-date">11.07.2026</span><span>24 h Kelheim</span></div>
-                <div class="marathon-row"><span class="m-date">26.07.2026</span><span>Arber Radmarathon</span></div>
+                <div class="marathon-row"><span class="m-date">26.07.2026</span><span>Arber</span></div>
+                <div class="marathon-row"><span class="m-date">09.08.2026</span><span>Pirker Zoigltour</span></div>
+                <div class="marathon-row"><span class="m-date">06.09.2026</span><span>L‘Eroica Dolomiti</span></div>
+                <div class="marathon-row"><span class="m-date">03.10.2026</span><span>Istra Marathon (Porec)</span></div>
             </div>
 
         </div>
     </main>
 
-    <footer class="footer-container" id="footer-container">
-        <div id="footer-placeholder" style="width: 100%; display: flex; justify-content: center;"></div>
-    </footer>
+    <footer class="footer-container" id="footer-container"><div id="footer-placeholder"></div></footer>
+
+    <!-- Oetztaler Modal HTML -->
+    <div id="oetztalerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" data-close-for="oetztalerModal">&times;</span>
+            <div class="slideshow-container">
+                <img class="slideshow-image" data-image-for="oetztalerModal" src="images/otztal1.png">
+                <a class="prev" data-prev-for="oetztalerModal">&#10094;</a>
+                <a class="next" data-next-for="oetztalerModal">&#10095;</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jahresabschluss Modal HTML -->
+    <div id="jahresabschlussModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" data-close-for="jahresabschlussModal">&times;</span>
+            <div class="slideshow-container">
+                <img class="slideshow-image" data-image-for="jahresabschlussModal" src="images/speisekarte1.jpg">
+                <a class="prev" data-prev-for="jahresabschlussModal">&#10094;</a>
+                <a class="next" data-next-for="jahresabschlussModal">&#10095;</a>
+            </div>
+        </div>
+    </div>
 
     <script src="main.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // --- HIDE PAST EVENTS ---
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
 
+            const monthMap = { 'JAN': 0, 'FEB': 1, 'MÄR': 2, 'APR': 3, 'MAI': 4, 'JUN': 5, 'JUL': 6, 'AUG': 7, 'SEP': 8, 'OKT': 9, 'NOV': 10, 'DEZ': 11 };
+
+            document.querySelectorAll('.event-card').forEach(card => {
+                const daySpan = card.querySelector('.date-day');
+                const monthSpan = card.querySelector('.date-month');
+                const yearSpan = card.querySelector('.date-year');
+                if (daySpan && monthSpan && yearSpan) {
+                    const dayText = daySpan.textContent.trim();
+                    const monthText = monthSpan.textContent.trim().toUpperCase();
+                    const yearText = yearSpan.textContent.trim();
+                    if (dayText.includes('-') || dayText.toLowerCase() === 'tbc') return;
+                    const day = parseInt(dayText, 10);
+                    const month = monthMap[monthText];
+                    const year = parseInt(yearText, 10);
+                    if (!isNaN(day) && month !== undefined && !isNaN(year)) {
+                        const eventDate = new Date(year, month, day);
+                        if (eventDate < today) card.style.display = 'none';
+                    }
+                }
+            });
+
+            document.querySelectorAll('.marathon-row').forEach(row => {
+                const dateSpan = row.querySelector('.m-date');
+                if (dateSpan) {
+                    const dateText = dateSpan.textContent.trim();
+                    const parts = dateText.split('.');
+                    if (parts.length === 3) {
+                        const day = parseInt(parts[0], 10);
+                        const month = parseInt(parts[1], 10) - 1;
+                        const year = parseInt(parts[2], 10);
+                        if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
+                            const eventDate = new Date(year, month, day);
+                            if (eventDate < today) row.style.display = 'none';
+                        }
+                    }
+                }
+            });
+
+            // --- MODAL SLIDESHOW SETUP ---
+            function setupModal(modalId, triggerId, images) {
+                const modal = document.getElementById(modalId);
+                const trigger = document.getElementById(triggerId);
+                const closeButton = document.querySelector(`[data-close-for='${modalId}']`);
+                const prevButton = document.querySelector(`[data-prev-for='${modalId}']`);
+                const nextButton = document.querySelector(`[data-next-for='${modalId}']`);
+                const slideshowImage = document.querySelector(`[data-image-for='${modalId}']`);
+                
+                let currentImageIndex = 0;
+
+                function showImage(index) {
+                    slideshowImage.src = images[index];
+                    currentImageIndex = index;
+                }
+
+                if(trigger) {
+                    trigger.onclick = function() {
+                        modal.style.display = "flex";
+                        showImage(0);
+                    }
+                }
+
+                if(closeButton) {
+                    closeButton.onclick = function() {
+                        modal.style.display = "none";
+                    }
+                }
+
+                if(prevButton) {
+                    prevButton.onclick = function() {
+                        let newIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : images.length - 1;
+                        showImage(newIndex);
+                    }
+                }
+
+                if(nextButton) {
+                    nextButton.onclick = function() {
+                        let newIndex = (currentImageIndex < images.length - 1) ? currentImageIndex + 1 : 0;
+                        showImage(newIndex);
+                    }
+                }
+                
+                window.addEventListener('click', function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                });
+            }
+
+            // Oetztaler Modal
+            setupModal(
+                "oetztalerModal",
+                "oetztaler-event",
+                ["images/otztal1.png", "images/otztal2.png", "images/otztal3.png", "images/otztal4.png", "images/otztal5.png", "images/otztal6.png"]
+            );
+
+            // Jahresabschluss Modal
+            setupModal(
+                "jahresabschlussModal",
+                "jahresabschluss-event",
+                ["images/speisekarte1.jpg", "images/speisekarte2.jpg", "images/speisekarte3.jpg"]
+            );
+        });
+    </script>
 </body>
 </html>

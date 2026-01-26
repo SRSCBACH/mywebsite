@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probetraining - SRSC Bach</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        html { height: 100%; }
+        body {
+            background-color: #0f172a;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 100px 20px 60px 20px;
+            position: relative;
+            z-index: 10;
+            flex: 1;
+        }
+        .content-card {
+            background-color: rgba(15, 34, 51, 0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .header-container, .footer-container {
+            flex-shrink: 0;
+        }
+        .card-title { font-family: var(--font-heading), sans-serif; font-size: 2.0rem; color: #ffffff; margin-bottom: 10px; text-align: center; text-transform: uppercase; border: none; }
+        .card-subtitle { font-family: var(--font-body), sans-serif; color: var(--text-secondary); text-align: center; margin-bottom: 30px; font-size: 1.1rem; }
+        .form-group { margin-bottom: 20px; }
+        .form-row { display: flex; gap: 20px; }
+        .form-row .form-group { flex: 1; }
+        label { display: block; color: #ffffff; font-family: var(--font-heading), sans-serif; font-size: 0.9rem; margin-bottom: 8px; letter-spacing: 0.05em; }
+        input, textarea, select { width: 100%; padding: 12px 15px; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; color: #ffffff; font-family: var(--font-body), sans-serif; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box; }
+        textarea { resize: vertical; min-height: 120px; }
+        .submit-btn { width: 100%; padding: 15px; background-color: #64748b; color: white; border: none; border-radius: 8px; font-family: var(--font-heading), sans-serif; font-size: 1.1rem; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="background-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <header class="header-container" id="header-container"><div id="header-placeholder"></div></header>
+    
+    <main class="main-content">
+        <div class="content-card">
+            <h2 class="card-title">Probetraining</h2>
+            <p class="card-subtitle">Lust bekommen mitzufahren? Melde dich unverbindlich an.</p>
+
+            <form action="https://formspree.io/f/xkornnjj" method="POST">
+                <input type="hidden" name="_next" value="danke.html">
+                <input type="hidden" name="_subject" value="Anmeldung zum Probetraining">
+                <div class="form-row">
+                    <div class="form-group"><label for="vorname">Vorname</label><input type="text" id="vorname" name="vorname" required></div>
+                    <div class="form-group"><label for="nachname">Nachname</label><input type="text" id="nachname" name="nachname" required></div>
+                </div>
+                <div class="form-group"><label for="email">E-Mail</label><input type="email" id="email" name="email" required></div>
+                <div class="form-row">
+                    <div class="form-group"><label for="telefon">Telefon (optional)</label><input type="tel" id="telefon" name="telefon"></div>
+                    <div class="form-group"><label for="wohnort">Wo kommst du her? (optional)</label><input type="text" id="wohnort" name="wohnort"></div>
+                </div>
+                <div class="form-group"><label for="nachricht">Deine Nachricht (optional)</label><textarea id="nachricht" name="nachricht" placeholder="Hast du Fragen oder möchtest uns etwas mitteilen?"></textarea></div>
+                <button type="submit" class="submit-btn">Anfrage senden</button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer-container" id="footer-container"><div id="footer-placeholder"></div></footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

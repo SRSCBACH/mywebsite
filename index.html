@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -12,82 +13,141 @@
         /* 1. LAYOUT (Fixed Viewport)               */
         /* ========================================= */
         html {
-            /* Verhindert Scrollen auf der Startseite */
             height: 100%;
-            overflow: hidden; 
         }
 
         body {
             background-color: #0f172a; 
             margin: 0; padding: 0; 
             width: 100%;
-            
-            /* WICHTIG FÜR HANDY: 100dvh passt sich der Adressleiste an */
-            height: 100vh; /* Fallback für alte Browser */
-            height: 100dvh; /* Modern: Zieht Adressleiste ab */
-            
+            height: 100vh; 
+            height: 100dvh; 
             display: flex; 
             flex-direction: column;
-            overflow: hidden; /* Kein Scrollbalken auf Startseite */
         }
 
-        /* Hintergrund (Orbs) */
         .background-animation {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; pointer-events: none;
         }
 
         /* ========================================= */
-        /* 2. ZENTRIERUNG                           */
+        /* 2. ZENTRIERUNG & SCROLLING               */
         /* ========================================= */
         .main-content {
-            flex: 1; /* Nimmt den gesamten freien Platz zwischen Header und Footer */
+            flex: 1;
             display: flex;          
-            justify-content: center; /* Horizontal mittig */
-            align-items: center;     /* Vertikal mittig */
+            justify-content: center; 
+            align-items: flex-start;     
             width: 100%;
             position: relative;
             z-index: 10;
-            padding: 0;
+            padding: 40px 0 40px 7.5%;
+            flex-direction: column; 
+            overflow-y: auto;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+            box-sizing: border-box;
+        }
+        
+        .main-content::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, and Opera */
         }
 
        /* ========================================= */
-/* 3. DAS LOGO (60% Breite + Transparenz)   */
-/* ========================================= */
-.logo-link {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    text-decoration: none;
-    border: none;
-}
+        /* 3. DAS LOGO                              */
+        /* ========================================= */
+        .logo-link {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            text-decoration: none;
+            border: none;
+            flex-shrink: 0;
+        }
 
-.simple-logo {
-    width: 80%;
-    min-width: 250px; 
-    max-width: 3700px; 
-    height: auto;
-    display: block;
+        .simple-logo {
+            width: 80%;
+            min-width: 250px; 
+            max-width: 577px; 
+            height: auto;
+            display: block;
+            opacity: 0.5; 
+            filter: drop-shadow(0 0 15px rgba(0,0,0,0.3)) blur(1px);
+            transition: all 0.3s ease;
+        }
 
-    /* HIER GEÄNDERT: Deckkraft auf 0.5 (wie die Menüs) */
-    opacity: 0.5; 
-    
-    /* Leichter Schatten bleibt für die Tiefe */
-    filter: drop-shadow(0 0 15px rgba(0,0,0,0.3));
-    
-    /* Sanfter Übergang beim Hover */
-    transition: all 0.3s ease;
-}
+        .logo-link:hover .simple-logo {
+            transform: scale(1.02);
+            opacity: 1.0; 
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+        }
 
-/* Beim Hover wird das Logo wieder voll sichtbar (1.0) */
-.logo-link:hover .simple-logo {
-    transform: scale(1.02);
-    opacity: 1.0; /* Leuchtet auf, wenn man drüberfährt */
-    filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
-}
+        /* ========================================= */
+        /* 4. SOCIAL MEDIA LINKS                    */
+        /* ========================================= */
+        .social-links {
+            display: flex;
+            align-items: center; 
+            gap: 30px; 
+            margin-top: 50px; 
+            flex-shrink: 0;
+            width: 80%;
+            max-width: 577px;
+            min-width: 250px;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .social-links a {
+            display: block;
+            opacity: 0.4; 
+            transition: all 0.3s ease;
+            filter: blur(1px);
+        }
+
+        .social-links a:hover {
+            opacity: 1.0;
+            transform: translateY(-3px); 
+            filter: none;
+        }
+
+        .social-links img {
+            height: 34px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+        
+        .strava-icon {
+            height: 29px; /* Adjust this value as needed */
+        }
+
+        /* ========================================= */
+        /* 5. BACKGROUND IMAGE                      */
+        /* ========================================= */
+        .background-image-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            z-index: 1;
+            pointer-events: none; /* Allow clicks to pass through */
+        }
+
+        .background-image {
+            height: 85vh; 
+            width: auto;
+            opacity: 0.5; 
+            filter: blur(1px);
+            transform: translateX(-7.5%);
+        }
+
         /* Header und Footer fixieren */
         header, footer {
-            flex-shrink: 0; /* Verhindert, dass sie zusammengedrückt werden */
+            flex-shrink: 0; 
             position: relative; 
             z-index: 20; 
         }
@@ -101,19 +161,24 @@
         <div class="orb orb-3"></div>
     </div>
 
-    <header class="header-container" id="header-container">
-        <div id="header-placeholder" style="width: 100%; display: flex; justify-content: flex-end;"></div>
-    </header>
+    <header class="header-container" id="header-container"><div id="header-placeholder"></div></header>
 
     <main class="main-content">
         <a href="verein.html" class="logo-link" title="Zum Verein">
             <img src="images/DeineCrewlang.svg" alt="SRSC Bach Logo" class="simple-logo">
         </a>
+        <div class="social-links">
+            <a href="#" title="Instagram"><img src="images/instagram.svg" alt="Instagram Logo"></a>
+            <a href="#" title="YouTube"><img src="images/youtube.svg" alt="YouTube Logo"></a>
+            <a href="#" title="Strava"><img src="images/Stravvektor.svg" alt="Strava Logo" class="strava-icon"></a>
+        </div>
     </main>
 
-    <footer class="footer-container" id="footer-container">
-        <div id="footer-placeholder" style="width: 100%; display: flex; justify-content: center;"></div>
-    </footer>
+    <div class="background-image-container">
+        <img src="images/srscfahrerschere.png" alt="SRSC Fahrer" class="background-image">
+    </div>
+
+    <footer class="footer-container" id="footer-container"><div id="footer-placeholder"></div></footer>
 
     <script src="main.js"></script>
 

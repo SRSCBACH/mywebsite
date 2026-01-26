@@ -351,75 +351,90 @@ strong { color: var(--text-primary); font-weight: 600; }
     .data-value { font-size: 1.0rem; } 
 }
 /* ========================================= */
-/* LEBENDIGER HINTERGRUND (ORBS)            */
+/* LEBENDIGER HINTERGRUND (ORBS) V2         */
 /* ========================================= */
 
-/* Container für den Hintergrund */
 .background-animation {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1; /* Ganz hinten */
-    overflow: hidden; /* Damit nichts scrollt */
-    pointer-events: none; /* Klicks gehen durch */
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
 }
 
-/* Basis-Design für alle Orbs */
 .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px); /* Der Weichzeichner-Effekt! */
-    opacity: 0.4; /* Nicht zu grell, damit Text lesbar bleibt */
-    animation: float 20s infinite ease-in-out alternate;
+    /* Weichzeichner-Effekt etwas reduziert für definiertere Farben */
+    filter: blur(70px); 
+    opacity: 0; /* Startet unsichtbar, wird per Animation eingeblendet */
 }
 
-/* ORB 1: Gelb (Oben Links) */
+/* ORB 1: Groß, langsam, Haupt-Akzentfarbe */
 .orb-1 {
-    top: -10%;
-    left: -10%;
-    width: 30vw;
-    height: 10vw;
-    background: #FFFFFF;
-    animation-duration: 7s;
+    width: 45vw;
+    height: 45vw;
+    top: -20vh;
+    left: -15vw;
+    background-color: var(--accent-blue); /* #0055ff */
+    animation: move-orb-1 35s infinite ease-in-out alternate;
 }
 
-/* ORB 2: Ein Gruen (Unten Rechts) - Moderner Kontrast */
+/* ORB 2: Mittel, hell, sorgt für Leuchten */
 .orb-2 {
-    bottom: -10%;
-    right: -10%;
-    width: 20vw;
-    height: 30vw;
-    background: #FFFFFF; /* Gruen */
-    animation-duration: 10s;
-    animation-direction: alternate-reverse;
+    width: 35vw;
+    height: 35vw;
+    bottom: -15vh;
+    right: -10vw;
+    background-color: #e2e8f0; /* Heller Grauton */
+    animation: move-orb-2 45s infinite ease-in-out alternate;
 }
 
-/* ORB 3: Ein Weiß (Mitte) - Für Tiefe */
+/* ORB 3: Kleiner, kontrastreich, etwas schneller */
 .orb-3 {
-    top: 30%;
-    left: 40%;
-    width: 40vw;
-    height: 40vw;
-    background: #FFFFFF; /* pink */
-    animation-duration:5s;
-    opacity: 0.3;
+    width: 25vw;
+    height: 25vw;
+    top: 30vh;
+    left: 40vw;
+    background-color: #22d3ee; /* Modernes Cyan */
+    animation: move-orb-3 25s infinite ease-in-out alternate;
 }
 
-/* Die Bewegung */
-@keyframes float {
-    0% {
+/* Individuelle Animationen für jeden Orb */
+
+@keyframes move-orb-1 {
+    from {
         transform: translate(0, 0) scale(1);
+        opacity: 0.5;
     }
-    33% {
-        transform: translate(50px, -50px) scale(1.1);
+    to {
+        transform: translate(10vw, 15vh) scale(1.1);
+        opacity: 0.3;
     }
-    66% {
-        transform: translate(-20px, 20px) scale(0.9);
-    }
-    100% {
+}
+
+@keyframes move-orb-2 {
+    from {
         transform: translate(0, 0) scale(1);
+        opacity: 0.3;
+    }
+    to {
+        transform: translate(-15vw, -10vh) scale(0.9);
+        opacity: 0.4;
+    }
+}
+
+@keyframes move-orb-3 {
+    from {
+        transform: translate(0, 0) scale(0.95);
+        opacity: 0.2;
+    }
+    to {
+        transform: translate(5vw, -5vh) scale(1.05);
+        opacity: 0.35;
     }
 }
 /* ========================================= */

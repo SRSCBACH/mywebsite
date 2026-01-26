@@ -9,93 +9,85 @@
     
     <style>
         /* ========================================= */
-        /* 1. SCROLLBAR FIX                         */
+        /* 1. LAYOUT & HINTERGRUND                  */
         /* ========================================= */
         html {
             scrollbar-width: thin;
             scrollbar-color: #475569 #0f172a;
             height: 100%;
         }
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb {
-            background-color: #475569;
-            border-radius: 5px;
-            border: 2px solid #0f172a;
-        }
-
-        /* ========================================= */
-        /* 2. LAYOUT: ZENTRIERUNG (GRID)            */
-        /* ========================================= */
         body {
             background-color: #0f172a; 
             margin: 0; padding: 0; 
             min-height: 100vh; width: 100%; 
             display: flex; flex-direction: column;
             overflow-x: hidden;
-            position: relative; /* Wichtig für z-index */
         }
 
-        .main-content {
-            /* Grid zentriert oft zuverlässiger als Flex */
-            display: grid;
-            place-items: center; 
-            flex: 1;                 
-            width: 100%;
-            position: relative; 
-            z-index: 10; /* Zwingt den Inhalt VOR den Hintergrund */
-        }
-
-        /* ========================================= */
-        /* 3. LOGO STYLES                           */
-        /* ========================================= */
-        .logo-link {
-            display: block;
-            position: relative;
-            z-index: 20; /* Logo ganz nach vorne */
-            /* Perspektive für 3D Effekte */
-            perspective: 1000px; 
-        }
-
-        .center-logo {
-            /* Feste Größe definieren - WICHTIG */
-            width: 350px;       
-            max-width: 80vw;    
-            height: auto;       
-            display: block; /* Verhindert Abstands-Fehler */
-            
-            /* Animation */
-            animation: atmen 4s infinite ease-in-out;
-            transition: all 0.5s ease;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.1));
-        }
-
-        @keyframes atmen {
-            0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255,255,255,0.1)); }
-            50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(255,255,255,0.3)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255,255,255,0.1)); }
-        }
-
-        .center-logo:hover {
-            animation: none; 
-            transform: scale(1.15); 
-            filter: drop-shadow(0 0 50px rgba(100, 149, 237, 0.7));
-        }
-
-        /* ========================================= */
-        /* 4. HINTERGRUND (ORBS)                    */
-        /* ========================================= */
+        /* Hintergrund-Animation (Orbs) */
         .background-animation {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1; /* Hinter dem Inhalt, aber vor dem Body */
-            pointer-events: none; /* Klicks gehen durch */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
         }
-
         /* Orb Speed Override */
         .orb-1 { animation-duration: 15s !important; }
         .orb-2 { animation-duration: 20s !important; }
         .orb-3 { animation-duration: 12s !important; }
+
+        /* ========================================= */
+        /* 2. MAIN CONTENT (Zentrierung)            */
+        /* ========================================= */
+        .main-content {
+            flex: 1;
+            display: flex;          
+            justify-content: center; /* Horizontal mittig */
+            align-items: center;     /* Vertikal mittig */
+            width: 100%;
+            position: relative;
+            z-index: 10; /* Inhalt vor den Hintergrund */
+        }
+
+        /* Wir nutzen wieder den Karten-Container als "Halterung", 
+           aber machen ihn komplett unsichtbar */
+        .logo-wrapper {
+            background: transparent; /* Unsichtbar */
+            border: 1px dashed red;  /* DEBUG: Roter Rahmen zum Testen (später entfernen!) */
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* ========================================= */
+        /* 3. LOGO BILD                             */
+        /* ========================================= */
+        .center-logo {
+            display: block;
+            width: 300px;        /* Feste Breite erzwingen */
+            height: auto;        /* Höhe automatisch */
+            
+            /* Pulsieren Animation */
+            animation: atmen 4s infinite ease-in-out;
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+        }
+
+        .center-logo:hover {
+            animation: none; 
+            transform: scale(1.1); 
+            filter: drop-shadow(0 0 40px rgba(100, 149, 237, 0.6));
+        }
+
+        @keyframes atmen {
+            0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 25px rgba(255,255,255,0.4)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
+        }
+
+        /* Header/Footer Layering */
+        header, footer { position: relative; z-index: 20; }
 
     </style>
 </head>
@@ -107,19 +99,21 @@
         <div class="orb orb-3"></div>
     </div>
 
-    <header class="header-container" id="header-container" style="position: relative; z-index: 50;">
+    <header class="header-container" id="header-container">
         <div id="header-placeholder" style="width: 100%; display: flex; justify-content: flex-end;"></div>
     </header>
 
     <main class="main-content">
-        <a href="verein.html" class="logo-link" title="Zum Verein">
-            <img src="https://static.wixstatic.com/shapes/9627cc_826a93d178b649dbb134b4376c5e88ee.svg" 
-                 alt="SRSC Bach Logo" 
-                 class="center-logo">
-        </a>
+        <div class="logo-wrapper">
+            <a href="verein.html" title="Zum Verein">
+                <img src="https://cdn-icons-png.flaticon.com/512/3082/3082383.png" 
+                     alt="SRSC Bach Logo" 
+                     class="center-logo">
+            </a>
+        </div>
     </main>
 
-    <footer class="footer-container" id="footer-container" style="position: relative; z-index: 50;">
+    <footer class="footer-container" id="footer-container">
         <div id="footer-placeholder" style="width: 100%; display: flex; justify-content: center;"></div>
     </footer>
 

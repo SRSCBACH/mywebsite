@@ -10,109 +10,80 @@
 
     <style>
         :root {
-            --bg-card-route: rgba(15, 34, 51, 0.5); 
-            --bg-map: #e2e8f0; 
+            --bg-card-route: rgba(15, 34, 51, 0.6); 
             --border-color: rgba(255, 255, 255, 0.1); 
             --btn-bg: rgba(255, 255, 255, 0.1);
-            --spacing-unit: 15px; 
             --accent-blue: #0055ff;
         }
 
-        /* LAYOUT-FIX: Kein Scrollen auf Body, nur im Automaten */
         html, body { 
-            height: 100%; 
-            margin: 0; padding: 0; 
-            overflow: hidden; 
-            background-color: #0f172a;
+            height: 100%; margin: 0; padding: 0; 
+            overflow: hidden; background-color: #0f172a;
         }
 
-        body {
-            display: flex;
-            flex-direction: column;
-            perspective: 1200px; /* Tiefe für den Walzen-Effekt */
-        }
+        body { display: flex; flex-direction: column; perspective: 1200px; }
 
-        /* DER WALZEN-CONTAINER */
+        /* WALZEN-CONTAINER OPTIMIERT */
         #app-container {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
-            overflow-y: scroll;
+            overflow-y: auto;
             scroll-snap-type: y mandatory;
-            padding-top: 30vh; 
-            padding-bottom: 30vh;
+            /* Padding sorgt dafür, dass die erste und letzte Karte mittig landen können */
+            padding: 35vh 0; 
             scrollbar-width: none;
-            -ms-overflow-style: none;
+            box-sizing: border-box;
         }
-
         #app-container::-webkit-scrollbar { display: none; }
 
-        /* DIE KARTEN (WALZEN-STYLING) */
         .card {
             background-color: var(--bg-card-route);
-            border-radius: 16px; 
+            border-radius: 20px; 
             border: 1px solid var(--border-color); 
-            padding: var(--spacing-unit); 
-            width: 90%; 
-            max-width: 950px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            
-            margin-bottom: 60px; /* Abstand zwischen den Walzen-Elementen */
+            padding: 20px; 
+            width: 90%; max-width: 900px;
+            backdrop-filter: blur(15px);
+            margin-bottom: 10vh; /* Abstand zwischen den Walzenelementen */
             scroll-snap-align: center;
             
-            /* Animation & Transformation */
-            transition: transform 0.5s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.5s ease, filter 0.5s ease;
-            transform-origin: center center;
+            /* Walzen-Effekt: Standardzustand (Unscharf/Klein) */
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             opacity: 0.2;
-            transform: scale(0.75) rotateX(25deg);
-            filter: blur(3px);
+            transform: scale(0.8) rotateX(20deg);
+            filter: blur(4px);
         }
 
-        /* Aktive Karte im Fokus */
+        /* Aktive Karte (In der Mitte) */
         .card.active {
             opacity: 1;
             transform: scale(1) rotateX(0deg);
             filter: blur(0px);
-            box-shadow: 0 20px 60px rgba(0, 85, 255, 0.2);
-            z-index: 10;
+            box-shadow: 0 20px 60px rgba(0, 85, 255, 0.25);
+            border-color: rgba(0, 85, 255, 0.4);
         }
 
-        .header {
-            display: flex; justify-content: space-between; align-items: center; 
-            border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px;
-        }
-        .title { font-size: 1.8rem; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .brand-logo { height: 22px; opacity: 0.7; }
-
-        .content-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; }
-        .left-column { display: flex; flex-direction: column; gap: 15px; }
+        /* Content Layout */
+        .header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px; }
+        .title { font-size: 1.6rem; color: #fff; margin: 0; }
+        .content-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; }
+        .map-wrapper { height: 250px; background: #e2e8f0; border-radius: 12px; overflow: hidden; }
+        .profile-container { height: 120px; background: rgba(0,0,0,0.3); border-radius: 12px; margin-top: 10px; padding: 10px; }
         
-        .map-wrapper { height: 260px; background-color: var(--bg-map); border-radius: 12px; z-index: 1; }
-        .profile-container { height: 130px; background-color: rgba(0,0,0,0.2); border-radius: 12px; padding: 5px 10px; box-sizing: border-box; }
-
-        .data-table { width: 100%; display: flex; flex-direction: column; }
-        .data-row { display: flex; border-bottom: 1px solid var(--border-color); align-items: center; min-height: 35px; }
-        .data-row:last-child { border-bottom: none; }
-        .data-label { flex: 0 0 45%; color: #94a3b8; font-size: 1.1rem; border-right: 1px solid var(--border-color); height: 100%; display: flex; align-items: center; }
-        .data-value { flex: 1; font-size: 1.4rem; font-weight: 800; padding-left: 15px; color: #fff; }
+        .data-table { display: flex; flex-direction: column; gap: 8px; }
+        .data-row { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding: 5px 0; }
+        .data-label { color: #94a3b8; font-size: 0.9rem; }
+        .data-value { color: #fff; font-weight: 700; font-size: 1.2rem; }
 
         .button-group { display: flex; gap: 10px; margin-top: 15px; }
-        .btn { flex: 1; padding: 12px; background: var(--btn-bg); color: #fff; text-decoration: none; border-radius: 8px; text-align: center; font-size: 0.85rem; font-weight: 800; border: 1px solid var(--border-color); text-transform: uppercase; transition: 0.2s; }
-        .btn:hover { background: #334155; transform: translateY(-2px); }
-        .btn.disabled { opacity: 0.3; pointer-events: none; }
+        .btn { flex: 1; padding: 10px; background: var(--btn-bg); color: #fff; border-radius: 8px; text-align: center; text-decoration: none; border: 1px solid var(--border-color); font-weight: bold; font-size: 0.8rem; }
+        .btn:hover { background: #334155; }
 
-        .loading-text { font-size: 0.9rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
-        @keyframes blink { 50% { opacity: 0.5; } }
-
-        @media (max-width: 850px) {
+        @media (max-width: 800px) {
             .content-grid { grid-template-columns: 1fr; }
-            .card { width: 95%; margin-bottom: 40px; }
-            .data-label { font-size: 0.8rem; }
-            .data-value { font-size: 1.1rem; }
-            .button-group { flex-direction: column; }
+            .card { width: 92%; }
         }
     </style>
 </head>
@@ -126,15 +97,12 @@
         <div class="orb orb-3"></div>
     </div>
 
-    <main class="main-content" style="flex: 1; display: flex; overflow: hidden;">
-        <div id="app-container"></div>
-    </main>
+    <main id="app-container"></main>
 
     <footer class="footer-container" id="footer-container"></footer>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="main.js"></script>
     
@@ -143,7 +111,7 @@
         Chart.defaults.font.family = customFont;
         Chart.defaults.color = '#cbd5e1';
 
-        // 1. DATEN LADEN
+        // 1. Daten laden
         fetch('strecken.json')
             .then(res => res.json())
             .then(touren => {
@@ -154,15 +122,15 @@
                         setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
                     }
                 });
-                initDrumEffect(); // Walzen-Scroll-Listener starten
+                setupIntersectionObserver(); // Modernes Fokus-System
             });
 
         function createCardHTML(container, id) {
             const html = `
             <div class="card" id="card-${id}">
                 <div class="header">
-                    <h1 class="title" id="title-${id}">Lade Tour...</h1>
-                    <img src="https://static.wixstatic.com/shapes/9627cc_826a93d178b649dbb134b4376c5e88ee.svg" class="brand-logo">
+                    <h2 class="title" id="title-${id}">Lade...</h2>
+                    <img src="https://static.wixstatic.com/shapes/9627cc_826a93d178b649dbb134b4376c5e88ee.svg" style="height:20px; opacity:0.5;">
                 </div>
                 <div class="content-grid">
                     <div class="left-column">
@@ -170,19 +138,14 @@
                         <div class="profile-container"><canvas id="chart-${id}"></canvas></div>
                     </div>
                     <div class="right-column">
-                        <div class="stats-wrapper">
-                            <div class="data-table">
-                                <div class="data-row"><div class="data-label">Distanz</div><div class="data-value" id="dist-${id}"><span class="loading-text">...</span></div></div>
-                                <div class="data-row"><div class="data-label">Höhenmeter</div><div class="data-value" id="elev-${id}"><span class="loading-text">...</span></div></div>
-                                <div class="data-row"><div class="data-label">Schnitt</div><div class="data-value" id="speed-${id}"><span class="loading-text">...</span></div></div>
-                                <div class="data-row"><div class="data-label">Dauer</div><div class="data-value" id="time-${id}"><span class="loading-text">...</span></div></div>
-                                <div class="data-row"><div class="data-label">Profil</div><div class="data-value" id="prof-${id}"><span class="loading-text">...</span></div></div>
-                            </div>
-                            <div class="button-group">
-                                <a id="btn-gpx-${id}" href="#" class="btn" target="_blank">GPX</a>
-                                <a id="btn-garmin-${id}" href="#" class="btn" target="_blank">Garmin</a>
-                                <a id="btn-komoot-${id}" href="#" class="btn" target="_blank">Komoot</a>
-                            </div>
+                        <div class="data-table">
+                            <div class="data-row"><span>Distanz</span><span id="dist-${id}">...</span></div>
+                            <div class="data-row"><span>Höhenmeter</span><span id="elev-${id}">...</span></div>
+                            <div class="data-row"><span>Profil</span><span id="prof-${id}">...</span></div>
+                        </div>
+                        <div class="button-group">
+                            <a id="btn-gpx-${id}" href="#" class="btn">GPX</a>
+                            <a id="btn-komoot-${id}" href="#" class="btn">Komoot</a>
                         </div>
                     </div>
                 </div>
@@ -190,106 +153,66 @@
             container.insertAdjacentHTML('beforeend', html);
         }
 
-        // 2. WALZEN-EFFEKT LOGIK
-        function initDrumEffect() {
-            const container = document.getElementById('app-container');
-            const handleScroll = () => {
-                const cards = document.querySelectorAll('.card');
-                const center = container.scrollTop + (container.offsetHeight / 2);
-
-                cards.forEach(card => {
-                    const cardCenter = card.offsetTop + (card.offsetHeight / 2);
-                    const diff = Math.abs(center - cardCenter);
-                    if (diff < 150) card.classList.add('active');
-                    else card.classList.remove('active');
-                });
+        // 2. MODERNES FOKUS-SYSTEM
+        function setupIntersectionObserver() {
+            const options = {
+                root: document.getElementById('app-container'),
+                threshold: 0.6 // Karte muss zu 60% sichtbar sein, um aktiv zu werden
             };
-            container.addEventListener('scroll', handleScroll);
-            setTimeout(handleScroll, 500);
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else {
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, options);
+
+            // Kurz warten, bis Karten generiert sind, dann beobachten
+            setTimeout(() => {
+                document.querySelectorAll('.card').forEach(card => observer.observe(card));
+            }, 500);
         }
 
-        // 3. INITSINGLECARD (Deine Logik)
-        function initSingleCard(id, data, fontName) {
+        // 3. GPX & LOGIK (Vereinfacht für Stabilität)
+        function initSingleCard(id, data, font) {
             if(data.gpx) document.getElementById(`btn-gpx-${id}`).href = data.gpx;
-            else document.getElementById(`btn-gpx-${id}`).classList.add('disabled');
-            if(data.garmin) document.getElementById(`btn-garmin-${id}`).href = data.garmin;
-            else document.getElementById(`btn-garmin-${id}`).classList.add('disabled');
-            if(data.komoot && data.komoot.trim() !== "") document.getElementById(`btn-komoot-${id}`).href = data.komoot;
-            else document.getElementById(`btn-komoot-${id}`).classList.add('disabled');
+            if(data.komoot) document.getElementById(`btn-komoot-${id}`).href = data.komoot;
 
-            const speedValueStr = data.schnitt || "30";
-            document.getElementById(`speed-${id}`).innerText = speedValueStr + " km/h";
-
-            let mapInstance = L.map(`map-${id}`);
-            let positionMarker = L.circleMarker([0, 0], { radius: 6, fillColor: "#0055ff", color: "#fff", weight: 2, opacity: 0, fillOpacity: 0 }).addTo(mapInstance);
-            let localTrackPoints = []; 
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapInstance);
+            let map = L.map(`map-${id}`, { zoomControl: false });
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
             if(data.gpx) {
-                new L.GPX(data.gpx, {
-                    async: true,
-                    marker_options: {
-                        startIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-start.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
-                        endIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-end.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
-                    },
-                    polyline_options: { color: '#0055ff', opacity: 0.8, weight: 4 }
-                }).on('loaded', function(e) {
-                    const gpx = e.target;
-                    mapInstance.fitBounds(gpx.getBounds());
-                    document.getElementById(`title-${id}`).innerText = gpx.get_name().replace(/\.gpx$/i, '') || "Tour " + id;
+                new L.GPX(data.gpx, { async: true, polyline_options: { color: '#0055ff', weight: 4 } })
+                .on('loaded', e => {
+                    const g = e.target;
+                    map.fitBounds(g.getBounds());
+                    document.getElementById(`title-${id}`).innerText = g.get_name().replace(/\.gpx$/i, '');
+                    document.getElementById(`dist-${id}`).innerText = (g.get_distance()/1000).toFixed(1) + " km";
+                    document.getElementById(`elev-${id}`).innerText = g.get_elevation_gain().toFixed(0) + " hm";
                     
-                    const dist = (gpx.get_distance() / 1000).toFixed(1);
-                    const elev = gpx.get_elevation_gain().toFixed(0);
-                    const dur = dist / (parseFloat(speedValueStr) || 30);
-                    const h = Math.floor(dur);
-                    const m = Math.round((dur - h) * 60);
-
-                    document.getElementById(`dist-${id}`).innerText = Math.round(dist) + " km";
-                    document.getElementById(`elev-${id}`).innerText = elev + " hm";
-                    document.getElementById(`time-${id}`).innerText = `${h}h ${m}m`;
-                    document.getElementById(`prof-${id}`).innerText = (elev / dist > 14) ? "Bergig" : (elev / dist > 8 ? "Wellig" : "Flach");
-
-                    addArrowsAndPoints(gpx, mapInstance, localTrackPoints);
-                    drawProfile(id, gpx.get_elevation_data(), localTrackPoints, mapInstance, positionMarker, fontName);
-                }).addTo(mapInstance);
+                    const ratio = g.get_elevation_gain() / (g.get_distance()/1000);
+                    document.getElementById(`prof-${id}`).innerText = ratio > 15 ? "Bergig" : (ratio > 8 ? "Wellig" : "Flach");
+                    
+                    renderChart(id, g.get_elevation_data(), font);
+                }).addTo(map);
             }
         }
 
-        function addArrowsAndPoints(layer, map, points) {
-            layer.eachLayer(l => {
-                if (l instanceof L.Polyline) {
-                    L.polylineDecorator(l, { patterns: [{ offset: '100px', repeat: '200px', symbol: L.Symbol.arrowHead({ pixelSize: 8, pathOptions: { color: '#0055ff' } }) }] }).addTo(map);
-                    points.push(...l.getLatLngs().flat());
-                }
-            });
-        }
-
-        function drawProfile(id, data, track, map, marker, font) {
-            const labels = []; const points = []; const step = Math.ceil(data.length / 80);
-            for (let i = 0; i < data.length; i += step) {
-                labels.push(data[i][0].toFixed(1)); points.push(data[i][1]);
-            }
+        function renderChart(id, data, font) {
             const ctx = document.getElementById(`chart-${id}`).getContext('2d');
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels,
-                    datasets: [{ data: points, borderColor: '#10b981', fill: true, backgroundColor: 'rgba(16, 185, 129, 0.2)', pointRadius: 0, tension: 0.4 }]
+                    labels: data.map(d => d[0].toFixed(1)),
+                    datasets: [{ data: data.map(d => d[1]), borderColor: '#10b981', fill: true, backgroundColor: 'rgba(16, 185, 129, 0.1)', pointRadius: 0 }]
                 },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
                     plugins: { legend: { display: false } },
-                    onHover: (e, el) => {
-                        if (el.length > 0 && track.length > 0) {
-                            const idx = Math.floor((el[0].index / labels.length) * track.length);
-                            marker.setLatLng(track[idx]).setStyle({ opacity: 1, fillOpacity: 1 });
-                        }
-                    },
-                    scales: {
-                        x: { grid: { display: false }, ticks: { font: { size: 9 }, color: '#94a3b8' } },
-                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { font: { size: 9 }, color: '#94a3b8' } }
-                    }
+                    scales: { x: { display: false }, y: { ticks: { font: { size: 8 } } } }
                 }
             });
         }

@@ -51,39 +51,40 @@
             padding: 0;
         }
 
-        /* ========================================= */
-        /* 3. DAS LOGO (60% Breite)                 */
-        /* ========================================= */
-        .logo-link {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            text-decoration: none;
-            border: none;
-        }
+       /* ========================================= */
+/* 3. DAS LOGO (60% Breite + Transparenz)   */
+/* ========================================= */
+.logo-link {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+}
 
-        .simple-logo {
-            /* HIER DIE ÄNDERUNG: Genau 60% der Fensterbreite */
-            width: 60%;
-            
-            /* Damit es auf dem Handy nicht zu winzig wird, mind. 250px */
-            min-width: 250px; 
-            
-            /* Auf riesigen Bildschirmen nicht unendlich groß */
-            max-width: 600px; 
-            
-            height: auto;
-            display: block;
-            
-            /* Leichter Schatten für bessere Lesbarkeit */
-            filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
-            transition: transform 0.3s ease;
-        }
+.simple-logo {
+    width: 60%;
+    min-width: 250px; 
+    max-width: 600px; 
+    height: auto;
+    display: block;
 
-        .logo-link:hover .simple-logo {
-            transform: scale(1.02); /* Minimaler Zoom beim Hover */
-        }
+    /* HIER GEÄNDERT: Deckkraft auf 0.5 (wie die Menüs) */
+    opacity: 0.5; 
+    
+    /* Leichter Schatten bleibt für die Tiefe */
+    filter: drop-shadow(0 0 15px rgba(0,0,0,0.3));
+    
+    /* Sanfter Übergang beim Hover */
+    transition: all 0.3s ease;
+}
 
+/* Beim Hover wird das Logo wieder voll sichtbar (1.0) */
+.logo-link:hover .simple-logo {
+    transform: scale(1.02);
+    opacity: 1.0; /* Leuchtet auf, wenn man drüberfährt */
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+}
         /* Header und Footer fixieren */
         header, footer {
             flex-shrink: 0; /* Verhindert, dass sie zusammengedrückt werden */

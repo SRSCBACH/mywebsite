@@ -6,132 +6,124 @@
     <title>Streckenkatalog - SRSC Bach</title>
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
     <link rel="stylesheet" href="style.css">
 
     <style>
         /* ================================================================= */
-        /* --- OPTIMIERTE STRECKEN-STYLES (PREMIUM LOOK) --- */
+        /* --- LOKALE STYLES FÜR STRECKEN (ORIGINAL VERSION) --- */
         /* ================================================================= */
         :root {
-            --bg-card-route: rgba(15, 34, 51, 0.4); 
-            --border-color: rgba(255, 255, 255, 0.08); 
-            --accent-blue: #0055ff;
-            --text-dim: #94a3b8;
+            --bg-card-route: rgba(15, 34, 51, 0.5); 
+            --bg-map: #e2e8f0; 
+            --border-color: rgba(255, 255, 255, 0.1); 
+            --btn-bg: rgba(255, 255, 255, 0.1);
+            --spacing-unit: 15px; 
         }
 
-        /* Scrollbar Design */
-        html { 
-            height: 100%; 
-            overflow-y: scroll; 
-            scrollbar-width: thin;
-            scrollbar-color: #475569 #0f172a;
-        }
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background-color: #475569; border-radius: 5px; border: 2px solid #0f172a; }
-
+        /* FIX FÜR WEISSEN BALKEN & SCROLLING */
+        html { height: 100%; overflow-y: scroll; }
         body {
             background-color: #0f172a; 
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
             margin: 0; padding: 0; min-height: 100vh; width: 100%; overflow-x: hidden;
-            font-family: var(--font-body), sans-serif;
         }
 
         #app-container {
-            display: flex; flex-direction: column; gap: 40px; 
-            align-items: center; width: 100%; padding: 40px 20px;
+            display: flex; flex-direction: column; gap: 20px; align-items: center; width: 100%;
             opacity: 0; animation: fadeInContent 0.8s ease-in-out forwards;
-            box-sizing: border-box;
         }
         @keyframes fadeInContent { to { opacity: 1; } }
 
         /* KARTEN DESIGN */
         .card {
-            background-color: var(--bg-card-route); 
-            border-radius: 24px; 
+            background-color: var(--bg-card-route); border-radius: 16px; 
             border: 1px solid var(--border-color); 
-            padding: 30px; 
-            width: 100%; max-width: 1000px;
-            backdrop-filter: blur(12px); 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-            box-sizing: border-box;
-            transition: transform 0.3s ease;
+            padding: var(--spacing-unit); 
+            width: 100%; max-width: 950px;
+            backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
-        .card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.15); }
-
+        
         .header {
-            position: relative; padding-bottom: 20px; margin-bottom: 25px; 
+            position: relative; padding-bottom: 10px; margin-bottom: var(--spacing-unit); 
             display: flex; justify-content: space-between; align-items: center; 
             border-bottom: 1px solid var(--border-color);
         }
         .title { 
-            font-family: var(--font-heading), sans-serif;
-            font-size: 1.8rem; color: #fff; font-weight: 800;
-            text-transform: uppercase; letter-spacing: 0.05em;
-            margin: 0;
+            font-size: 1.8rem; padding-top: 5px; padding-bottom: 3px; line-height: 1.4;    
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
         }
-        .brand-logo { height: 28px; width: auto; opacity: 0.4; }
+        .brand-logo { height: 22px; width: auto; opacity: 0.7; display: block; flex-shrink: 0; margin-left: 15px; }
 
         /* GRID */
-        .content-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
-        .left-column, .right-column { display: flex; flex-direction: column; }
+        .content-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; }
+        .left-column { display: flex; flex-direction: column; gap: var(--spacing-unit); } 
+        .right-column { display: flex; flex-direction: column; } 
 
-        /* MAP STYLING (DARK MODE FILTER) */
+        /* MAP & CHART */
         .map-wrapper {
-            height: 300px; width: 100%; 
-            background-color: #1e293b; border-radius: 16px; 
-            z-index: 1; overflow: hidden;
-            filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+            height: 260px; width: 100%; background-color: var(--bg-map); border-radius: 12px; 
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1); z-index: 1;
         }
+
+        .leaflet-bar a { 
+            background-color: #fff !important; color: #333 !important; 
+            width: 15px !important; height: 15px !important; line-height: 15px !important; font-size: 10px !important;
+        }
+        .leaflet-control-attribution { background: rgba(255,255,255,0.8) !important; }
 
         .profile-container {
-            height: 140px; width: 100%; 
-            background-color: rgba(0,0,0,0.3); border-radius: 16px; 
-            padding: 15px; margin-top: 20px; box-sizing: border-box;
+            height: 130px; width: 100%; background-color: rgba(0,0,0,0.2); border-radius: 12px; 
+            padding: 5px 10px; overflow: hidden; position: relative; box-sizing: border-box; 
         }
+        canvas { width: 100% !important; height: 100% !important; }
 
-        /* STATS & DATA */
-        .stats-wrapper {
-            display: flex; flex-direction: column; height: 100%; justify-content: space-between;
-        }
-        .data-table { width: 100%; }
-        .data-row { 
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); 
-        }
+        /* STATS */
+        .stats-wrapper { display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: space-between; }
+        .data-table { width: 100%; display: flex; flex-direction: column; flex: 1; }
+        .data-row { display: flex; border-bottom: 1px solid var(--border-color); align-items: center; flex: 1; min-height: 32px; }
         .data-row:last-child { border-bottom: none; }
         
-        .data-label { color: var(--text-dim); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; }
-        .data-value { 
-            font-size: 1.5rem; font-family: var(--font-heading); font-weight: 800; 
-            color: #fff; text-align: right;
-        }
+        .data-label { flex: 0 0 45%; color: var(--text-secondary); font-size: 1.2rem; font-weight: 200; border-right: 1px solid var(--border-color); height: 100%; display: flex; align-items: center; }
+        .data-value { flex: 1; font-size: 1.5rem; font-family: var(--font-heading); font-weight: 800; padding-left: 15px; display: flex; align-items: center; color: var(--accent-color); }
 
         /* BUTTONS */
-        .button-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 25px; }
+        .button-group { display: flex; flex-direction: row; height: 45px; gap: 10px; width: 100%; margin-top: 10px; }
         .btn {
-            background-color: rgba(255,255,255,0.05); 
-            color: #fff; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-            padding: 12px 5px; font-size: 0.7rem; font-weight: 800; text-align: center;
-            text-transform: uppercase; text-decoration: none; transition: all 0.3s;
-            display: flex; align-items: center; justify-content: center;
+            background-color: var(--btn-bg); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px;
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            font-size: 0.85rem; font-family: var(--font-heading); font-weight: 800; text-transform: uppercase;
+            cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.05em; padding: 0; 
         }
-        .btn:hover { background-color: #fff; color: #0f172a; transform: scale(1.05); }
-        .btn.disabled { opacity: 0.2; pointer-events: none; }
+        .btn:hover { background-color: #334155; color: #ffffff; transform: translateY(-2px); border-color: #334155; }
+        .btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
 
-        .loading-text { font-size: 0.8rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
+        .loading-text { font-size: 1rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.5; } }
 
         /* MOBILE */
         @media (max-width: 850px) {
-            .content-grid { grid-template-columns: 1fr; gap: 20px; }
-            .title { font-size: 1.4rem; }
-            .data-value { font-size: 1.2rem; }
-            .card { padding: 20px; }
-            .map-wrapper { height: 220px; }
-            .button-group { grid-template-columns: 1fr; }
+            .card { padding: 12px; }
+            .header { padding-bottom: 8px; margin-bottom: 10px; }
+            .title { font-size: 1.3rem; line-height: 1.4; padding-top: 3px; }
+            .brand-logo { display: none; } 
+            
+            .content-grid { grid-template-columns: 1fr; gap: 10px; }
+            .left-column { gap: 10px; } 
+
+            .map-wrapper { height: 220px; } 
+            .profile-container { height: 100px; }
+
+            .stats-wrapper { flex-direction: row; gap: 8px; align-items: stretch; }
+            .data-table { flex: 1; border-top: none; }
+            .data-row { min-height: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .data-label { font-size: 0.85rem; flex: 0 0 45%; } 
+            .data-value { font-size: 1.0rem; padding-left: 8px; } 
+
+            .button-group { margin-top: 0; flex-direction: column; width: 85px; height: auto; gap: 5px; justify-content: center; flex-shrink: 0; }
+            .btn { font-size: 0.6rem; width: 100%; flex: 1; padding: 0; line-height: 1.2; margin: 0; }
         }
     </style>
 </head>
@@ -147,7 +139,7 @@
         <div class="orb orb-3"></div>
     </div>
 
-    <main class="main-content">
+    <main class="main-content top-aligned">
         <div id="app-container"></div>
     </main>
 
@@ -159,6 +151,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <script src="main.js"></script>
     
     <script>
@@ -181,7 +174,7 @@
                 });
             })
             .catch(err => {
-                console.error("Fehler:", err);
+                console.error(err);
                 document.getElementById('app-container').innerText = "Fehler beim Laden der Touren.";
             });
 
@@ -189,7 +182,7 @@
             const html = `
             <div class="card" id="card-${id}">
                 <div class="header">
-                    <h1 class="title" id="title-${id}">Lade Tour...</h1>
+                    <h1 class="title" id="title-${id}">Lade Tour ${id}...</h1>
                     <img src="https://static.wixstatic.com/shapes/9627cc_826a93d178b649dbb134b4376c5e88ee.svg" alt="SRSC Logo" class="brand-logo">
                 </div>
                 <div class="content-grid">
@@ -202,11 +195,11 @@
                     <div class="right-column">
                         <div class="stats-wrapper">
                             <div class="data-table">
-                                <div class="data-row"><span class="data-label">Distanz</span><span class="data-value" id="dist-${id}"><span class="loading-text">...</span></span></div>
-                                <div class="data-row"><span class="data-label">Höhenmeter</span><span class="data-value" id="elev-${id}"><span class="loading-text">...</span></span></div>
-                                <div class="data-row"><span class="data-label">Schnitt</span><span class="data-value" id="speed-${id}"><span class="loading-text">...</span></span></div>
-                                <div class="data-row"><span class="data-label">Dauer</span><span class="data-value" id="time-${id}"><span class="loading-text">...</span></span></div>
-                                <div class="data-row"><span class="data-label">Profil</span><span class="data-value" id="prof-${id}"><span class="loading-text">...</span></span></div>
+                                <div class="data-row"><div class="data-label">Distanz</div><div class="data-value" id="dist-${id}"><span class="loading-text">...</span></div></div>
+                                <div class="data-row"><div class="data-label">Höhenmeter</div><div class="data-value" id="elev-${id}"><span class="loading-text">...</span></div></div>
+                                <div class="data-row"><div class="data-label">Schnitt</div><div class="data-value" id="speed-${id}"><span class="loading-text">...</span></div></div>
+                                <div class="data-row"><div class="data-label">Dauer</div><div class="data-value" id="time-${id}"><span class="loading-text">...</span></div></div>
+                                <div class="data-row"><div class="data-label">Profil</div><div class="data-value" id="prof-${id}"><span class="loading-text">...</span></div></div>
                             </div>
                             <div class="button-group">
                                 <a id="btn-gpx-${id}" href="#" class="btn" target="_blank">GPX</a>
@@ -223,14 +216,12 @@
         function initSingleCard(id, data, fontName) {
             if(data.gpx) document.getElementById(`btn-gpx-${id}`).href = data.gpx;
             else document.getElementById(`btn-gpx-${id}`).classList.add('disabled');
-
             if(data.garmin) document.getElementById(`btn-garmin-${id}`).href = data.garmin;
             else document.getElementById(`btn-garmin-${id}`).classList.add('disabled');
-
             if(data.komoot && data.komoot.trim() !== "") document.getElementById(`btn-komoot-${id}`).href = data.komoot;
             else document.getElementById(`btn-komoot-${id}`).classList.add('disabled');
 
-            const speedValueStr = data.schnitt || "30"; 
+            const speedValueStr = data.schnitt || "30";
             document.getElementById(`speed-${id}`).innerText = speedValueStr.includes('km/h') ? speedValueStr : speedValueStr + " km/h";
 
             let mapInstance = L.map(`map-${id}`);
@@ -258,7 +249,8 @@
                     
                     let gpxName = gpx.get_name(); 
                     if (!gpxName) gpxName = `Tour ${id}`; else gpxName = gpxName.replace(/\.gpx$/i, '');
-                    document.getElementById(`title-${id}`).innerText = gpxName;
+                    const titleEl = document.getElementById(`title-${id}`);
+                    titleEl.innerText = gpxName;
                     
                     const distKm = (gpx.get_distance() / 1000).toFixed(1);
                     const elevHm = gpx.get_elevation_gain().toFixed(0);
@@ -266,15 +258,27 @@
                     const durationDec = distKm / speedNum;
                     const hours = Math.floor(durationDec);
                     const minutes = Math.round((durationDec - hours) * 60);
-                    
+
+                    const ratio = elevHm / distKm;
+                    let profileStr = ratio > 18 ? "Bergig" : (ratio > 8 ? "Wellig" : "Flach");
+
                     document.getElementById(`dist-${id}`).innerText = Math.round(distKm) + " km";
                     document.getElementById(`elev-${id}`).innerText = elevHm + " hm";
-                    document.getElementById(`time-${id}`).innerText = `${hours}h ${minutes}m`;
-                    document.getElementById(`prof-${id}`).innerText = (elevHm / distKm > 14) ? "Bergig" : (elevHm / distKm >= 8 ? "Wellig" : "Flach");
+                    document.getElementById(`time-${id}`).innerText = `${hours} h ${minutes < 10 ? '0' : ''}${minutes} min`;
+                    document.getElementById(`prof-${id}`).innerText = profileStr;
 
+                    fitTitle(titleEl);
                     addArrowsAndExtractPoints(gpx, mapInstance, localTrackPoints);
                     drawDetailedProfile(id, gpx.get_elevation_data(), localTrackPoints, mapInstance, positionMarker, fontName);
                 }).addTo(mapInstance);
+            }
+        }
+
+        function fitTitle(el) {
+            const computedStyle = window.getComputedStyle(el);
+            let fontSize = parseFloat(computedStyle.fontSize);
+            while (el.scrollWidth > el.clientWidth && fontSize > 10) {
+                fontSize -= 1; el.style.fontSize = fontSize + 'px';
             }
         }
 
@@ -286,7 +290,7 @@
                     }).addTo(mapRef);
                     const latlngs = l.getLatLngs();
                     if (Array.isArray(latlngs) && latlngs.length > 0 && Array.isArray(latlngs[0])) {
-                        latlngs.forEach(arr => pointsRef.push(...arr));
+                        latlngs.forEach(arr => { if(Array.isArray(arr)) pointsRef.push(...arr); else pointsRef.push(arr); });
                     } else { latlngs.forEach(p => pointsRef.push(p)); }
                 } else if (l.eachLayer) { l.eachLayer(processLayer); }
             }
@@ -294,18 +298,20 @@
         }
 
         function drawDetailedProfile(id, data, trackPoints, mapRef, markerRef, fontName) {
-            const labels = []; const points = []; const slopes = []; const step = Math.ceil(data.length / 80); 
+            const labels = []; const points = []; const slopes = []; const step = Math.ceil(data.length / 100); 
             for (let i = 0; i < data.length; i += step) {
-                labels.push(data[i][0].toFixed(1)); points.push(data[i][1]);
-                if (i > 0) {
-                    const dD = (data[i][0] - data[i-step][0]) * 1000;
-                    slopes.push(dD > 0 ? ((data[i][1] - data[i-step][1]) / dD) * 100 : 0);
-                } else slopes.push(0);
+                const dist = data[i][0].toFixed(1); const elev = data[i][1];
+                let slopeVal = 0;
+                if (i > 0 && points.length > 0) {
+                    const distDiff = (parseFloat(dist) - parseFloat(labels[labels.length-1])) * 1000;
+                    if(distDiff > 0) slopeVal = Math.round(((elev - points[points.length-1]) / distDiff) * 100);
+                }
+                slopes.push(slopeVal); labels.push(dist); points.push(elev);
             }
-
             const ctx = document.getElementById(`chart-${id}`).getContext('2d');
-            const gGreen = ctx.createLinearGradient(0, 0, 0, 140); gGreen.addColorStop(0, 'rgba(16, 185, 129, 0.6)'); gGreen.addColorStop(1, 'transparent');
-            const gRed = ctx.createLinearGradient(0, 0, 0, 140); gRed.addColorStop(0, 'rgba(239, 68, 68, 0.6)'); gRed.addColorStop(1, 'transparent');
+            const gG = ctx.createLinearGradient(0, 0, 0, 160); gG.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); gG.addColorStop(1, 'transparent');
+            const gO = ctx.createLinearGradient(0, 0, 0, 160); gO.addColorStop(0, 'rgba(249, 115, 22, 0.8)'); gO.addColorStop(1, 'transparent');
+            const gR = ctx.createLinearGradient(0, 0, 0, 160); gR.addColorStop(0, 'rgba(239, 68, 68, 0.8)'); gR.addColorStop(1, 'transparent');
 
             new Chart(ctx, {
                 type: 'line',
@@ -313,15 +319,15 @@
                     labels: labels,
                     datasets: [{
                         data: points, borderColor: '#10b981', borderWidth: 2, fill: true, pointRadius: 0, tension: 0.4,
-                        segment: { 
-                            borderColor: ctx => slopes[ctx.p1DataIndex] > 5 ? '#ef4444' : '#10b981',
-                            backgroundColor: ctx => slopes[ctx.p1DataIndex] > 5 ? gRed : gGreen
+                        segment: {
+                            borderColor: ctx => slopes[ctx.p1DataIndex] > 6 ? '#ef4444' : (slopes[ctx.p1DataIndex] >= 4 ? '#f97316' : '#10b981'),
+                            backgroundColor: ctx => slopes[ctx.p1DataIndex] > 6 ? gR : (slopes[ctx.p1DataIndex] >= 4 ? gO : gG)
                         }
                     }]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } },
                     onHover: (e, el) => {
                         if (el.length > 0 && trackPoints.length > 0) {
                             const p = el[0].index / (labels.length - 1);
@@ -330,8 +336,8 @@
                         }
                     },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 9 } } },
-                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 9 } } }
+                        x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 } } },
+                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 } } }
                     }
                 }
             });

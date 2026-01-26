@@ -422,3 +422,48 @@ strong { color: var(--text-primary); font-weight: 600; }
         transform: translate(0, 0) scale(1);
     }
 }
+/* ========================================= */
+/* LOGO STYLES (FÜR EINGEBETTETE SVG)       */
+/* ========================================= */
+
+.center-logo {
+    width: 350px;           /* Größe anpassen, falls nötig */
+    max-width: 80vw;        /* Damit es auf Handys passt */
+    height: auto;           
+    display: block;
+
+    /* WICHTIG: Färbt das Logo weiß */
+    fill: #ffffff !important;  
+    color: #ffffff !important; 
+
+    /* Die Animation */
+    animation: atmen 4s infinite ease-in-out;
+    transition: all 0.5s ease;
+    
+    /* Leichter Schein */
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+}
+
+/* Sicherstellen, dass alle Teile des Logos weiß sind */
+.center-logo path, 
+.center-logo rect, 
+.center-logo polygon, 
+.center-logo circle {
+    fill: #ffffff !important;
+    stroke: transparent; /* Falls Ränder stören */
+}
+
+/* Die Animation definieren */
+@keyframes atmen {
+    0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255,255,255,0.1)); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(255,255,255,0.4)); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255,255,255,0.1)); }
+}
+
+/* Effekt wenn man mit der Maus draufgeht */
+.center-logo:hover {
+    animation: none;
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 50px rgba(100, 149, 237, 0.7));
+    cursor: pointer;
+}

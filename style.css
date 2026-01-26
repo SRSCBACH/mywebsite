@@ -391,7 +391,7 @@ strong { color: var(--text-primary); font-weight: 600; }
     right: -10%;
     width: 20vw;
     height: 30vw;
-    background: #FFFFFF; /* Grau */
+    background: #00FF00; /* Grau */
     animation-duration: 10s;
     animation-direction: alternate-reverse;
 }

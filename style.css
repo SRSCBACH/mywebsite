@@ -381,7 +381,7 @@ strong { color: var(--text-primary); font-weight: 600; }
     left: -10%;
     width: 30vw;
     height: 10vw;
-    background: #FFFF00;
+    background: #FFFFFF;
     animation-duration: 7s;
 }
 
@@ -391,7 +391,7 @@ strong { color: var(--text-primary); font-weight: 600; }
     right: -10%;
     width: 20vw;
     height: 30vw;
-    background: #458b00; /* Gruen */
+    background: #FFFFFF; /* Gruen */
     animation-duration: 10s;
     animation-direction: alternate-reverse;
 }

@@ -11,7 +11,7 @@
 
     <style>
         /* ================================================================= */
-        /* --- LOKALE STYLES FÜR STRECKEN (ORIGINAL VERSION) --- */
+        /* --- LOKALE STYLES FÜR STRECKEN (ROBUST VERSION) --- */
         /* ================================================================= */
         :root {
             --bg-card-route: rgba(15, 34, 51, 0.5); 
@@ -25,9 +25,11 @@
         html { height: 100%; overflow-y: scroll; }
         body {
             background-color: #0f172a; 
+            /* PARALLAX FIX */
             background-attachment: fixed;
             background-size: cover;
             background-position: center;
+            
             margin: 0; padding: 0; min-height: 100vh; width: 100%; overflow-x: hidden;
         }
 
@@ -138,7 +140,6 @@
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
     </div>
-
     <main class="main-content top-aligned">
         <div id="app-container"></div>
     </main>
@@ -155,13 +156,19 @@
     <script src="main.js"></script>
     
     <script>
+        // #####################################################################
+        //        AUTO-CALC LOGIK (OHNE FONT BLOCKING)
+        // #####################################################################
+
+        // Font Settings direkt setzen (nicht warten!)
         const customFont = "'Eloquia Text ExtLt', sans-serif";
         Chart.defaults.font.family = customFont;
         Chart.defaults.color = '#cbd5e1';
 
+        // JSON laden
         fetch('strecken.json')
             .then(response => {
-                if (!response.ok) throw new Error("JSON konnte nicht geladen werden");
+                if (!response.ok) { throw new Error("strecken.json konnte nicht geladen werden"); }
                 return response.json();
             })
             .then(touren => {
@@ -169,13 +176,16 @@
                 touren.forEach(tour => {
                     if(tour.active !== false) {
                         createCardHTML(container, tour.id);
+                        
+                        // Sofort initialisieren, ohne auf Fonts zu warten
+                        // setTimeout 0 stellt sicher, dass das HTML im DOM ist
                         setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
                     }
                 });
             })
             .catch(err => {
-                console.error(err);
-                document.getElementById('app-container').innerText = "Fehler beim Laden der Touren.";
+                console.error("Fehler beim Laden der Touren:", err);
+                document.getElementById('app-container').innerText = "Fehler: Touren konnten nicht geladen werden.";
             });
 
         function createCardHTML(container, id) {
@@ -214,21 +224,31 @@
         }
 
         function initSingleCard(id, data, fontName) {
+            // Buttons prüfen
             if(data.gpx) document.getElementById(`btn-gpx-${id}`).href = data.gpx;
             else document.getElementById(`btn-gpx-${id}`).classList.add('disabled');
+
             if(data.garmin) document.getElementById(`btn-garmin-${id}`).href = data.garmin;
             else document.getElementById(`btn-garmin-${id}`).classList.add('disabled');
-            if(data.komoot && data.komoot.trim() !== "") document.getElementById(`btn-komoot-${id}`).href = data.komoot;
-            else document.getElementById(`btn-komoot-${id}`).classList.add('disabled');
 
-            const speedValueStr = data.schnitt || "30";
+            if(data.komoot && data.komoot.trim() !== "") document.getElementById(`btn-komoot-${id}`).href = data.komoot;
+            else {
+                const btn = document.getElementById(`btn-komoot-${id}`);
+                btn.classList.add('disabled');
+                btn.innerText = "No Komoot";
+            }
+
+            const speedValueStr = data.schnitt || "30"; 
             document.getElementById(`speed-${id}`).innerText = speedValueStr.includes('km/h') ? speedValueStr : speedValueStr + " km/h";
 
+            // Leaflet
             let mapInstance = L.map(`map-${id}`);
             let positionMarker = null;
             let localTrackPoints = []; 
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapInstance);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap', opacity: 1.0
+            }).addTo(mapInstance);
 
             positionMarker = L.circleMarker([0, 0], {
                 radius: 6, fillColor: "#0055ff", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 1, zIndexOffset: 1000
@@ -248,29 +268,42 @@
                     mapInstance.fitBounds(gpx.getBounds());
                     
                     let gpxName = gpx.get_name(); 
-                    if (!gpxName) gpxName = `Tour ${id}`; else gpxName = gpxName.replace(/\.gpx$/i, '');
+                    if (!gpxName) { gpxName = `Tour ${id}`; } else { gpxName = gpxName.replace(/\.gpx$/i, ''); }
                     const titleEl = document.getElementById(`title-${id}`);
                     titleEl.innerText = gpxName;
                     
                     const distKm = (gpx.get_distance() / 1000).toFixed(1);
                     const elevHm = gpx.get_elevation_gain().toFixed(0);
+                    
                     const speedNum = parseFloat(speedValueStr.replace(/[^0-9.]/g, '')) || 30;
                     const durationDec = distKm / speedNum;
                     const hours = Math.floor(durationDec);
                     const minutes = Math.round((durationDec - hours) * 60);
+                    const timeStr = `${hours} h ${minutes < 10 ? '0' : ''}${minutes} min`;
 
+                    // Profil-Logik
                     const ratio = elevHm / distKm;
-                    let profileStr = ratio > 18 ? "Bergig" : (ratio > 8 ? "Wellig" : "Flach");
+                    let profileStr = "Flach";
+                    
+                    if(ratio > 14) { profileStr = "Bergig"; } 
+                    else if(ratio >= 8) { profileStr = "Wellig"; }
 
                     document.getElementById(`dist-${id}`).innerText = Math.round(distKm) + " km";
                     document.getElementById(`elev-${id}`).innerText = elevHm + " hm";
-                    document.getElementById(`time-${id}`).innerText = `${hours} h ${minutes < 10 ? '0' : ''}${minutes} min`;
+                    document.getElementById(`time-${id}`).innerText = timeStr;
                     document.getElementById(`prof-${id}`).innerText = profileStr;
 
                     fitTitle(titleEl);
                     addArrowsAndExtractPoints(gpx, mapInstance, localTrackPoints);
                     drawDetailedProfile(id, gpx.get_elevation_data(), localTrackPoints, mapInstance, positionMarker, fontName);
+
+                }).on('error', function(e) {
+                    console.error(`GPX Fehler Tour ${id}:`, e);
+                    document.getElementById(`title-${id}`).innerText = "GPX Fehler (siehe Konsole)";
+                    document.getElementById(`title-${id}`).style.color = "red";
                 }).addTo(mapInstance);
+            } else {
+                document.getElementById(`title-${id}`).innerText = "Keine GPX Datei";
             }
         }
 
@@ -286,7 +319,10 @@
             function processLayer(l) {
                 if (l instanceof L.Polyline && !(l instanceof L.Polygon)) {
                     L.polylineDecorator(l, {
-                        patterns: [{ offset: '100px', repeat: '200px', symbol: L.Symbol.arrowHead({ pixelSize: 8, polygon: false, pathOptions: { stroke: true, color: '#0055ff', weight: 2, opacity: 1 } }) }]
+                        patterns: [{ 
+                            offset: '100px', repeat: '200px', 
+                            symbol: L.Symbol.arrowHead({ pixelSize: 8, polygon: false, pathOptions: { stroke: true, color: '#0055ff', weight: 2, opacity: 1 } })
+                        }]
                     }).addTo(mapRef);
                     const latlngs = l.getLatLngs();
                     if (Array.isArray(latlngs) && latlngs.length > 0 && Array.isArray(latlngs[0])) {
@@ -303,42 +339,94 @@
                 const dist = data[i][0].toFixed(1); const elev = data[i][1];
                 let slopeVal = 0;
                 if (i > 0 && points.length > 0) {
-                    const distDiff = (parseFloat(dist) - parseFloat(labels[labels.length-1])) * 1000;
-                    if(distDiff > 0) slopeVal = Math.round(((elev - points[points.length-1]) / distDiff) * 100);
+                    const prevDist = parseFloat(labels[labels.length-1]);
+                    const prevElev = points[points.length-1];
+                    const distDiff = (parseFloat(dist) - prevDist) * 1000; 
+                    const elevDiff = elev - prevElev; 
+                    if(distDiff > 0) { slopeVal = Math.round((elevDiff / distDiff) * 100); }
                 }
                 slopes.push(slopeVal); labels.push(dist); points.push(elev);
             }
+
             const ctx = document.getElementById(`chart-${id}`).getContext('2d');
-            const gG = ctx.createLinearGradient(0, 0, 0, 160); gG.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); gG.addColorStop(1, 'transparent');
-            const gO = ctx.createLinearGradient(0, 0, 0, 160); gO.addColorStop(0, 'rgba(249, 115, 22, 0.8)'); gO.addColorStop(1, 'transparent');
-            const gR = ctx.createLinearGradient(0, 0, 0, 160); gR.addColorStop(0, 'rgba(239, 68, 68, 0.8)'); gR.addColorStop(1, 'transparent');
+            
+            const gradientGreen = ctx.createLinearGradient(0, 0, 0, 160); 
+            gradientGreen.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); 
+            gradientGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)'); 
+            
+            const gradientOrange = ctx.createLinearGradient(0, 0, 0, 160); 
+            gradientOrange.addColorStop(0, 'rgba(249, 115, 22, 0.8)'); 
+            gradientOrange.addColorStop(1, 'rgba(249, 115, 22, 0.0)');
+            
+            const gradientRed = ctx.createLinearGradient(0, 0, 0, 160); 
+            gradientRed.addColorStop(0, 'rgba(239, 68, 68, 0.8)'); 
+            gradientRed.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
+            
+            const isMobile = window.innerWidth < 850;
+            const chartFontSize = isMobile ? 8 : 10;
+            const chartBorderWidth = isMobile ? 1.5 : 2;
 
             new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
-                        data: points, borderColor: '#10b981', borderWidth: 2, fill: true, pointRadius: 0, tension: 0.4,
+                        data: points, borderColor: '#10b981', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
                         segment: {
-                            borderColor: ctx => slopes[ctx.p1DataIndex] > 6 ? '#ef4444' : (slopes[ctx.p1DataIndex] >= 4 ? '#f97316' : '#10b981'),
-                            backgroundColor: ctx => slopes[ctx.p1DataIndex] > 6 ? gR : (slopes[ctx.p1DataIndex] >= 4 ? gO : gG)
+                            borderColor: ctx => {
+                                if (ctx.p0DataIndex === undefined) return undefined;
+                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? '#ef4444' : (s >= 4 ? '#f97316' : '#10b981');
+                            },
+                            backgroundColor: ctx => {
+                                if (ctx.p0DataIndex === undefined) return undefined;
+                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? gradientRed : (s >= 4 ? gradientOrange : gradientGreen);
+                            }
                         }
                     }]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
                     plugins: { legend: { display: false }, tooltip: { enabled: false } },
-                    onHover: (e, el) => {
-                        if (el.length > 0 && trackPoints.length > 0) {
-                            const p = el[0].index / (labels.length - 1);
-                            const latlng = trackPoints[Math.floor(p * (trackPoints.length - 1))];
-                            if(latlng) { markerRef.setLatLng(latlng); markerRef.setStyle({ opacity: 1, fillOpacity: 1 }); }
+                    onHover: function(e, activeElements) {
+                        if (activeElements && activeElements.length > 0) {
+                            const index = activeElements[0].index;
+                            const totalChartPoints = this.data.datasets[0].data.length;
+                            if (trackPoints.length > 0 && mapRef && markerRef) {
+                                const percent = index / (totalChartPoints - 1);
+                                const mapIndex = Math.floor(percent * (trackPoints.length - 1));
+                                const latlng = trackPoints[mapIndex];
+                                if(latlng) { markerRef.setLatLng(latlng); markerRef.setStyle({ opacity: 1, fillOpacity: 1 }); }
+                            }
                         }
                     },
                     scales: {
-                        x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 } } },
-                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 } } }
-                    }
+                        x: { 
+                            display: true, 
+                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, 
+                            ticks: { 
+                                maxTicksLimit: 8, 
+                                color: '#94a3b8', 
+                                font: { family: fontName, size: chartFontSize },
+                                callback: function(value, index, values) {
+                                    const label = this.getLabelForValue(value);
+                                    return Math.round(label) + ' km';
+                                }
+                            } 
+                        },
+                        y: { 
+                            display: true, 
+                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, 
+                            ticks: { 
+                                stepSize: 50, 
+                                maxTicksLimit: 5, 
+                                color: '#94a3b8', 
+                                font: { family: fontName, size: chartFontSize }, 
+                                callback: v => v + ' m' 
+                            } 
+                        }
+                    },
+                    layout: { padding: { left: 5, right: 10, top: 5, bottom: 0 } }
                 }
             });
         }

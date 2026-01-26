@@ -15,9 +15,10 @@
             --border-color: rgba(255, 255, 255, 0.1); 
             --btn-bg: rgba(255, 255, 255, 0.1);
             --spacing-unit: 15px; 
+            --accent-blue: #0055ff;
         }
 
-        /* FIX FÜR LAYOUT: Kein Scrollen auf Body, nur im Container */
+        /* LAYOUT-FIX: Kein Scrollen auf Body, nur im Automaten */
         html, body { 
             height: 100%; 
             margin: 0; padding: 0; 
@@ -28,10 +29,10 @@
         body {
             display: flex;
             flex-direction: column;
-            perspective: 1000px; /* Ermöglicht 3D-Effekte */
+            perspective: 1200px; /* Tiefe für den Walzen-Effekt */
         }
 
-        /* WALZEN-CONTAINER */
+        /* DER WALZEN-CONTAINER */
         #app-container {
             flex: 1;
             display: flex;
@@ -40,15 +41,15 @@
             width: 100%;
             overflow-y: scroll;
             scroll-snap-type: y mandatory;
-            padding-top: 25vh; /* Erlaubt der ersten Karte, mittig zu starten */
-            padding-bottom: 25vh; /* Erlaubt der letzten Karte, mittig zu enden */
+            padding-top: 30vh; 
+            padding-bottom: 30vh;
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
 
         #app-container::-webkit-scrollbar { display: none; }
 
-        /* KARTEN DESIGN MIT WALZEN-EFFEKT */
+        /* DIE KARTEN (WALZEN-STYLING) */
         .card {
             background-color: var(--bg-card-route);
             border-radius: 16px; 
@@ -59,45 +60,59 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             
-            margin-bottom: 50px;
+            margin-bottom: 60px; /* Abstand zwischen den Walzen-Elementen */
             scroll-snap-align: center;
             
-            /* Basis-Transformation für den Effekt */
-            transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.4s ease, filter 0.4s ease;
+            /* Animation & Transformation */
+            transition: transform 0.5s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.5s ease, filter 0.5s ease;
             transform-origin: center center;
-            opacity: 0.3;
-            transform: scale(0.8) rotateX(15deg);
-            filter: blur(2px);
+            opacity: 0.2;
+            transform: scale(0.75) rotateX(25deg);
+            filter: blur(3px);
         }
 
-        /* Wenn die Karte im Fokus ist (wird per JS gesteuert) */
+        /* Aktive Karte im Fokus */
         .card.active {
             opacity: 1;
             transform: scale(1) rotateX(0deg);
             filter: blur(0px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 60px rgba(0, 85, 255, 0.2);
             z-index: 10;
         }
 
-        /* Restliches CSS bleibt gleich */
-        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px; }
-        .title { font-size: 1.8rem; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .header {
+            display: flex; justify-content: space-between; align-items: center; 
+            border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px;
+        }
+        .title { font-size: 1.8rem; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .brand-logo { height: 22px; opacity: 0.7; }
+
         .content-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; }
-        .map-wrapper { height: 260px; background-color: var(--bg-map); border-radius: 12px; }
+        .left-column { display: flex; flex-direction: column; gap: 15px; }
+        
+        .map-wrapper { height: 260px; background-color: var(--bg-map); border-radius: 12px; z-index: 1; }
         .profile-container { height: 130px; background-color: rgba(0,0,0,0.2); border-radius: 12px; padding: 5px 10px; box-sizing: border-box; }
-        .stats-wrapper { display: flex; flex-direction: column; gap: 10px; }
-        .data-row { display: flex; border-bottom: 1px solid var(--border-color); padding: 5px 0; }
-        .data-label { flex: 0 0 45%; color: #94a3b8; font-size: 0.9rem; }
-        .data-value { flex: 1; font-weight: 800; color: #fff; }
-        .button-group { display: flex; gap: 10px; margin-top: 10px; }
-        .btn { flex: 1; padding: 10px; background: var(--btn-bg); color: #fff; text-decoration: none; border-radius: 8px; text-align: center; font-size: 0.8rem; border: 1px solid var(--border-color); }
-        .btn:hover { background: #334155; }
+
+        .data-table { width: 100%; display: flex; flex-direction: column; }
+        .data-row { display: flex; border-bottom: 1px solid var(--border-color); align-items: center; min-height: 35px; }
+        .data-row:last-child { border-bottom: none; }
+        .data-label { flex: 0 0 45%; color: #94a3b8; font-size: 1.1rem; border-right: 1px solid var(--border-color); height: 100%; display: flex; align-items: center; }
+        .data-value { flex: 1; font-size: 1.4rem; font-weight: 800; padding-left: 15px; color: #fff; }
+
+        .button-group { display: flex; gap: 10px; margin-top: 15px; }
+        .btn { flex: 1; padding: 12px; background: var(--btn-bg); color: #fff; text-decoration: none; border-radius: 8px; text-align: center; font-size: 0.85rem; font-weight: 800; border: 1px solid var(--border-color); text-transform: uppercase; transition: 0.2s; }
+        .btn:hover { background: #334155; transform: translateY(-2px); }
+        .btn.disabled { opacity: 0.3; pointer-events: none; }
+
+        .loading-text { font-size: 0.9rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; } }
 
         @media (max-width: 850px) {
             .content-grid { grid-template-columns: 1fr; }
-            .card { width: 95%; }
-            .map-wrapper { height: 200px; }
+            .card { width: 95%; margin-bottom: 40px; }
+            .data-label { font-size: 0.8rem; }
+            .data-value { font-size: 1.1rem; }
+            .button-group { flex-direction: column; }
         }
     </style>
 </head>
@@ -128,6 +143,7 @@
         Chart.defaults.font.family = customFont;
         Chart.defaults.color = '#cbd5e1';
 
+        // 1. DATEN LADEN
         fetch('strecken.json')
             .then(res => res.json())
             .then(touren => {
@@ -138,9 +154,7 @@
                         setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
                     }
                 });
-                
-                // Walzen-Logik initialisieren
-                initDrumEffect();
+                initDrumEffect(); // Walzen-Scroll-Listener starten
             });
 
         function createCardHTML(container, id) {
@@ -158,12 +172,15 @@
                     <div class="right-column">
                         <div class="stats-wrapper">
                             <div class="data-table">
-                                <div class="data-row"><div class="data-label">Distanz</div><div class="data-value" id="dist-${id}">...</div></div>
-                                <div class="data-row"><div class="data-label">Höhenmeter</div><div class="data-value" id="elev-${id}">...</div></div>
-                                <div class="data-row"><div class="data-label">Profil</div><div class="data-value" id="prof-${id}">...</div></div>
+                                <div class="data-row"><div class="data-label">Distanz</div><div class="data-value" id="dist-${id}"><span class="loading-text">...</span></div></div>
+                                <div class="data-row"><div class="data-label">Höhenmeter</div><div class="data-value" id="elev-${id}"><span class="loading-text">...</span></div></div>
+                                <div class="data-row"><div class="data-label">Schnitt</div><div class="data-value" id="speed-${id}"><span class="loading-text">...</span></div></div>
+                                <div class="data-row"><div class="data-label">Dauer</div><div class="data-value" id="time-${id}"><span class="loading-text">...</span></div></div>
+                                <div class="data-row"><div class="data-label">Profil</div><div class="data-value" id="prof-${id}"><span class="loading-text">...</span></div></div>
                             </div>
                             <div class="button-group">
                                 <a id="btn-gpx-${id}" href="#" class="btn" target="_blank">GPX</a>
+                                <a id="btn-garmin-${id}" href="#" class="btn" target="_blank">Garmin</a>
                                 <a id="btn-komoot-${id}" href="#" class="btn" target="_blank">Komoot</a>
                             </div>
                         </div>
@@ -173,33 +190,109 @@
             container.insertAdjacentHTML('beforeend', html);
         }
 
-        // WALZEN-LOGIK: Erkennt, welche Karte in der Mitte ist
+        // 2. WALZEN-EFFEKT LOGIK
         function initDrumEffect() {
             const container = document.getElementById('app-container');
-            
             const handleScroll = () => {
                 const cards = document.querySelectorAll('.card');
-                const containerCenter = container.scrollTop + (container.offsetHeight / 2);
+                const center = container.scrollTop + (container.offsetHeight / 2);
 
                 cards.forEach(card => {
                     const cardCenter = card.offsetTop + (card.offsetHeight / 2);
-                    const distance = Math.abs(containerCenter - cardCenter);
-
-                    if (distance < 200) { // Karte ist nahe der Mitte
-                        card.classList.add('active');
-                    } else {
-                        card.classList.remove('active');
-                    }
+                    const diff = Math.abs(center - cardCenter);
+                    if (diff < 150) card.classList.add('active');
+                    else card.classList.remove('active');
                 });
             };
-
             container.addEventListener('scroll', handleScroll);
-            // Einmal initial triggern
             setTimeout(handleScroll, 500);
         }
 
-        // --- Dein initSingleCard und drawDetailedProfile Code hier einfügen ---
-        // (Wegen Kürze hier weggelassen, funktioniert aber identisch wie zuvor)
+        // 3. INITSINGLECARD (Deine Logik)
+        function initSingleCard(id, data, fontName) {
+            if(data.gpx) document.getElementById(`btn-gpx-${id}`).href = data.gpx;
+            else document.getElementById(`btn-gpx-${id}`).classList.add('disabled');
+            if(data.garmin) document.getElementById(`btn-garmin-${id}`).href = data.garmin;
+            else document.getElementById(`btn-garmin-${id}`).classList.add('disabled');
+            if(data.komoot && data.komoot.trim() !== "") document.getElementById(`btn-komoot-${id}`).href = data.komoot;
+            else document.getElementById(`btn-komoot-${id}`).classList.add('disabled');
+
+            const speedValueStr = data.schnitt || "30";
+            document.getElementById(`speed-${id}`).innerText = speedValueStr + " km/h";
+
+            let mapInstance = L.map(`map-${id}`);
+            let positionMarker = L.circleMarker([0, 0], { radius: 6, fillColor: "#0055ff", color: "#fff", weight: 2, opacity: 0, fillOpacity: 0 }).addTo(mapInstance);
+            let localTrackPoints = []; 
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapInstance);
+
+            if(data.gpx) {
+                new L.GPX(data.gpx, {
+                    async: true,
+                    marker_options: {
+                        startIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-start.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
+                        endIcon: new L.Icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/pin-icon-end.png', iconSize: [12, 18], iconAnchor: [6, 18] }),
+                    },
+                    polyline_options: { color: '#0055ff', opacity: 0.8, weight: 4 }
+                }).on('loaded', function(e) {
+                    const gpx = e.target;
+                    mapInstance.fitBounds(gpx.getBounds());
+                    document.getElementById(`title-${id}`).innerText = gpx.get_name().replace(/\.gpx$/i, '') || "Tour " + id;
+                    
+                    const dist = (gpx.get_distance() / 1000).toFixed(1);
+                    const elev = gpx.get_elevation_gain().toFixed(0);
+                    const dur = dist / (parseFloat(speedValueStr) || 30);
+                    const h = Math.floor(dur);
+                    const m = Math.round((dur - h) * 60);
+
+                    document.getElementById(`dist-${id}`).innerText = Math.round(dist) + " km";
+                    document.getElementById(`elev-${id}`).innerText = elev + " hm";
+                    document.getElementById(`time-${id}`).innerText = `${h}h ${m}m`;
+                    document.getElementById(`prof-${id}`).innerText = (elev / dist > 14) ? "Bergig" : (elev / dist > 8 ? "Wellig" : "Flach");
+
+                    addArrowsAndPoints(gpx, mapInstance, localTrackPoints);
+                    drawProfile(id, gpx.get_elevation_data(), localTrackPoints, mapInstance, positionMarker, fontName);
+                }).addTo(mapInstance);
+            }
+        }
+
+        function addArrowsAndPoints(layer, map, points) {
+            layer.eachLayer(l => {
+                if (l instanceof L.Polyline) {
+                    L.polylineDecorator(l, { patterns: [{ offset: '100px', repeat: '200px', symbol: L.Symbol.arrowHead({ pixelSize: 8, pathOptions: { color: '#0055ff' } }) }] }).addTo(map);
+                    points.push(...l.getLatLngs().flat());
+                }
+            });
+        }
+
+        function drawProfile(id, data, track, map, marker, font) {
+            const labels = []; const points = []; const step = Math.ceil(data.length / 80);
+            for (let i = 0; i < data.length; i += step) {
+                labels.push(data[i][0].toFixed(1)); points.push(data[i][1]);
+            }
+            const ctx = document.getElementById(`chart-${id}`).getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{ data: points, borderColor: '#10b981', fill: true, backgroundColor: 'rgba(16, 185, 129, 0.2)', pointRadius: 0, tension: 0.4 }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    onHover: (e, el) => {
+                        if (el.length > 0 && track.length > 0) {
+                            const idx = Math.floor((el[0].index / labels.length) * track.length);
+                            marker.setLatLng(track[idx]).setStyle({ opacity: 1, fillOpacity: 1 });
+                        }
+                    },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { font: { size: 9 }, color: '#94a3b8' } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { font: { size: 9 }, color: '#94a3b8' } }
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>

@@ -9,75 +9,87 @@
     
     <style>
         /* ========================================= */
-        /* 1. LAYOUT (Zentrierung)                  */
+        /* 1. LAYOUT (Fixed Viewport)               */
         /* ========================================= */
         html {
+            /* Verhindert Scrollen auf der Startseite */
             height: 100%;
-            scrollbar-width: thin;
-            scrollbar-color: #475569 #0f172a;
+            overflow: hidden; 
         }
+
         body {
             background-color: #0f172a; 
             margin: 0; padding: 0; 
-            min-height: 100vh; width: 100%; 
-            display: flex; flex-direction: column;
-            overflow-x: hidden;
-        }
-
-        .main-content {
-            flex: 1;
-            display: flex;          
-            justify-content: center; /* Horizontal mittig */
-            align-items: center;     /* Vertikal mittig */
             width: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-            position: relative;
-            z-index: 10;
+            
+            /* WICHTIG FÜR HANDY: 100dvh passt sich der Adressleiste an */
+            height: 100vh; /* Fallback für alte Browser */
+            height: 100dvh; /* Modern: Zieht Adressleiste ab */
+            
+            display: flex; 
+            flex-direction: column;
+            overflow: hidden; /* Kein Scrollbalken auf Startseite */
         }
 
-        /* ========================================= */
-        /* 2. DAS LOGO (Ganz einfach)               */
-        /* ========================================= */
-        .simple-logo {
-            /* WICHTIG: SVGs brauchen eine Breite, sonst sind sie 0px groß */
-            width: 400px;       
-            max-width: 90vw; /* Auf Handys maximal 90% der Breite */
-            height: auto;
-            display: block;
-            
-            /* Optional: Ein leichter Schatten, damit es sich vom Hintergrund abhebt */
-            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
-            
-            /* Keine Animation, kein Blinken, einfach nur das Bild */
-        }
-        
-        /* Link ohne Rahmen */
-        .logo-link {
-            text-decoration: none;
-            border: none;
-            display: block;
-            transition: transform 0.2s ease;
-        }
-        
-        /* Kleiner Zoom beim Drüberfahren (Optional, kann auch weg) */
-        .logo-link:hover {
-            transform: scale(1.02);
-        }
-
-        /* ========================================= */
-        /* 3. HINTERGRUND (Orbs bleiben)            */
-        /* ========================================= */
+        /* Hintergrund (Orbs) */
         .background-animation {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; pointer-events: none;
         }
-        /* Orb Speed */
-        .orb-1 { animation-duration: 15s !important; }
-        .orb-2 { animation-duration: 20s !important; }
-        .orb-3 { animation-duration: 12s !important; }
 
-        header, footer { position: relative; z-index: 20; }
+        /* ========================================= */
+        /* 2. ZENTRIERUNG                           */
+        /* ========================================= */
+        .main-content {
+            flex: 1; /* Nimmt den gesamten freien Platz zwischen Header und Footer */
+            display: flex;          
+            justify-content: center; /* Horizontal mittig */
+            align-items: center;     /* Vertikal mittig */
+            width: 100%;
+            position: relative;
+            z-index: 10;
+            padding: 0;
+        }
+
+        /* ========================================= */
+        /* 3. DAS LOGO (60% Breite)                 */
+        /* ========================================= */
+        .logo-link {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            text-decoration: none;
+            border: none;
+        }
+
+        .simple-logo {
+            /* HIER DIE ÄNDERUNG: Genau 60% der Fensterbreite */
+            width: 60%;
+            
+            /* Damit es auf dem Handy nicht zu winzig wird, mind. 250px */
+            min-width: 250px; 
+            
+            /* Auf riesigen Bildschirmen nicht unendlich groß */
+            max-width: 600px; 
+            
+            height: auto;
+            display: block;
+            
+            /* Leichter Schatten für bessere Lesbarkeit */
+            filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
+            transition: transform 0.3s ease;
+        }
+
+        .logo-link:hover .simple-logo {
+            transform: scale(1.02); /* Minimaler Zoom beim Hover */
+        }
+
+        /* Header und Footer fixieren */
+        header, footer {
+            flex-shrink: 0; /* Verhindert, dass sie zusammengedrückt werden */
+            position: relative; 
+            z-index: 20; 
+        }
     </style>
 </head>
 <body>

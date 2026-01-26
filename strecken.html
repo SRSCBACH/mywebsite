@@ -6,114 +6,134 @@
     <title>Streckenkatalog - SRSC Bach</title>
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
     <link rel="stylesheet" href="style.css">
 
     <style>
-    /* ================================================================= */
-    /* --- OPTIMIERTE STRECKEN-STYLES (PREMIUM LOOK) --- */
-    /* ================================================================= */
-    :root {
-        --bg-card-route: rgba(15, 34, 51, 0.4); 
-        --border-color: rgba(255, 255, 255, 0.08); 
-        --accent-blue: #0055ff;
-        --text-dim: #94a3b8;
-    }
+        /* ================================================================= */
+        /* --- OPTIMIERTE STRECKEN-STYLES (PREMIUM LOOK) --- */
+        /* ================================================================= */
+        :root {
+            --bg-card-route: rgba(15, 34, 51, 0.4); 
+            --border-color: rgba(255, 255, 255, 0.08); 
+            --accent-blue: #0055ff;
+            --text-dim: #94a3b8;
+        }
 
-    html { height: 100%; overflow-y: scroll; scroll-behavior: smooth; }
-    
-    body {
-        background-color: #0f172a; 
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: center;
-        margin: 0; padding: 0; min-height: 100vh; width: 100%; overflow-x: hidden;
-        font-family: var(--font-body), sans-serif;
-    }
+        /* Scrollbar Design */
+        html { 
+            height: 100%; 
+            overflow-y: scroll; 
+            scrollbar-width: thin;
+            scrollbar-color: #475569 #0f172a;
+        }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background-color: #475569; border-radius: 5px; border: 2px solid #0f172a; }
 
-    #app-container {
-        display: flex; flex-direction: column; gap: 40px; /* Mehr Abstand zwischen den Touren */
-        align-items: center; width: 100%; padding: 40px 20px;
-        opacity: 0; animation: fadeInContent 0.8s ease-in-out forwards;
-    }
-    @keyframes fadeInContent { to { opacity: 1; } }
+        body {
+            background-color: #0f172a; 
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            margin: 0; padding: 0; min-height: 100vh; width: 100%; overflow-x: hidden;
+            font-family: var(--font-body), sans-serif;
+        }
 
-    /* KARTEN DESIGN */
-    .card {
-        background-color: var(--bg-card-route); 
-        border-radius: 24px; /* Runder wirkt moderner */
-        border: 1px solid var(--border-color); 
-        padding: 30px; 
-        width: 100%; max-width: 1000px;
-        backdrop-filter: blur(12px); 
-        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-        transition: transform 0.3s ease;
-    }
-    .card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.15); }
+        #app-container {
+            display: flex; flex-direction: column; gap: 40px; 
+            align-items: center; width: 100%; padding: 40px 20px;
+            opacity: 0; animation: fadeInContent 0.8s ease-in-out forwards;
+            box-sizing: border-box;
+        }
+        @keyframes fadeInContent { to { opacity: 1; } }
 
-    .header {
-        position: relative; padding-bottom: 20px; margin-bottom: 25px; 
-        display: flex; justify-content: space-between; align-items: center; 
-        border-bottom: 1px solid var(--border-color);
-    }
-    .title { 
-        font-family: var(--font-heading), sans-serif;
-        font-size: 2rem; color: #fff; font-weight: 800;
-        text-transform: uppercase; letter-spacing: 0.05em;
-    }
-    .brand-logo { height: 28px; width: auto; opacity: 0.4; }
+        /* KARTEN DESIGN */
+        .card {
+            background-color: var(--bg-card-route); 
+            border-radius: 24px; 
+            border: 1px solid var(--border-color); 
+            padding: 30px; 
+            width: 100%; max-width: 1000px;
+            backdrop-filter: blur(12px); 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            box-sizing: border-box;
+            transition: transform 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.15); }
 
-    /* GRID */
-    .content-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
+        .header {
+            position: relative; padding-bottom: 20px; margin-bottom: 25px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            border-bottom: 1px solid var(--border-color);
+        }
+        .title { 
+            font-family: var(--font-heading), sans-serif;
+            font-size: 1.8rem; color: #fff; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            margin: 0;
+        }
+        .brand-logo { height: 28px; width: auto; opacity: 0.4; }
 
-    /* MAP STYLING (DARK MODE FILTER) */
-    .map-wrapper {
-        height: 300px; width: 100%; 
-        background-color: #1e293b; border-radius: 16px; 
-        z-index: 1; overflow: hidden;
-        /* Macht die Karte dunkel/blau-stichig passend zum Design */
-        filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-    }
+        /* GRID */
+        .content-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
+        .left-column, .right-column { display: flex; flex-direction: column; }
 
-    .profile-container {
-        height: 140px; width: 100%; 
-        background-color: rgba(0,0,0,0.3); border-radius: 16px; 
-        padding: 15px; margin-top: 20px;
-    }
+        /* MAP STYLING (DARK MODE FILTER) */
+        .map-wrapper {
+            height: 300px; width: 100%; 
+            background-color: #1e293b; border-radius: 16px; 
+            z-index: 1; overflow: hidden;
+            filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+        }
 
-    /* STATS & DATA */
-    .data-table { width: 100%; }
-    .data-row { 
-        display: flex; justify-content: space-between; align-items: center;
-        padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); 
-    }
-    .data-row:last-child { border-bottom: none; }
-    
-    .data-label { color: var(--text-dim); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; }
-    .data-value { 
-        font-size: 1.6rem; font-family: var(--font-heading); font-weight: 800; 
-        color: #fff; text-align: right;
-    }
+        .profile-container {
+            height: 140px; width: 100%; 
+            background-color: rgba(0,0,0,0.3); border-radius: 16px; 
+            padding: 15px; margin-top: 20px; box-sizing: border-box;
+        }
 
-    /* BUTTONS */
-    .button-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 25px; }
-    .btn {
-        background-color: rgba(255,255,255,0.05); 
-        color: #fff; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
-        padding: 12px; font-size: 0.75rem; font-weight: 800; text-align: center;
-        text-transform: uppercase; text-decoration: none; transition: all 0.3s;
-    }
-    .btn:hover { background-color: #fff; color: #0f172a; transform: scale(1.05); }
-    .btn.disabled { opacity: 0.2; pointer-events: none; }
+        /* STATS & DATA */
+        .stats-wrapper {
+            display: flex; flex-direction: column; height: 100%; justify-content: space-between;
+        }
+        .data-table { width: 100%; }
+        .data-row { 
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); 
+        }
+        .data-row:last-child { border-bottom: none; }
+        
+        .data-label { color: var(--text-dim); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        .data-value { 
+            font-size: 1.5rem; font-family: var(--font-heading); font-weight: 800; 
+            color: #fff; text-align: right;
+        }
 
-    /* MOBILE */
-    @media (max-width: 850px) {
-        .content-grid { grid-template-columns: 1fr; }
-        .title { font-size: 1.4rem; }
-        .data-value { font-size: 1.3rem; }
-        .card { padding: 20px; }
-    }
-</style>
+        /* BUTTONS */
+        .button-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 25px; }
+        .btn {
+            background-color: rgba(255,255,255,0.05); 
+            color: #fff; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+            padding: 12px 5px; font-size: 0.7rem; font-weight: 800; text-align: center;
+            text-transform: uppercase; text-decoration: none; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .btn:hover { background-color: #fff; color: #0f172a; transform: scale(1.05); }
+        .btn.disabled { opacity: 0.2; pointer-events: none; }
+
+        .loading-text { font-size: 0.8rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; } }
+
+        /* MOBILE */
+        @media (max-width: 850px) {
+            .content-grid { grid-template-columns: 1fr; gap: 20px; }
+            .title { font-size: 1.4rem; }
+            .data-value { font-size: 1.2rem; }
+            .card { padding: 20px; }
+            .map-wrapper { height: 220px; }
+            .button-group { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
 
@@ -126,7 +146,8 @@
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
     </div>
-    <main class="main-content top-aligned">
+
+    <main class="main-content">
         <div id="app-container"></div>
     </main>
 
@@ -138,23 +159,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <script src="main.js"></script>
     
     <script>
-        // #####################################################################
-        //        AUTO-CALC LOGIK (OHNE FONT BLOCKING)
-        // #####################################################################
-
-        // Font Settings direkt setzen (nicht warten!)
         const customFont = "'Eloquia Text ExtLt', sans-serif";
         Chart.defaults.font.family = customFont;
         Chart.defaults.color = '#cbd5e1';
 
-        // JSON laden
         fetch('strecken.json')
             .then(response => {
-                if (!response.ok) { throw new Error("strecken.json konnte nicht geladen werden"); }
+                if (!response.ok) throw new Error("JSON konnte nicht geladen werden");
                 return response.json();
             })
             .then(touren => {
@@ -162,23 +176,20 @@
                 touren.forEach(tour => {
                     if(tour.active !== false) {
                         createCardHTML(container, tour.id);
-                        
-                        // Sofort initialisieren, ohne auf Fonts zu warten
-                        // setTimeout 0 stellt sicher, dass das HTML im DOM ist
                         setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
                     }
                 });
             })
             .catch(err => {
-                console.error("Fehler beim Laden der Touren:", err);
-                document.getElementById('app-container').innerText = "Fehler: Touren konnten nicht geladen werden.";
+                console.error("Fehler:", err);
+                document.getElementById('app-container').innerText = "Fehler beim Laden der Touren.";
             });
 
         function createCardHTML(container, id) {
             const html = `
             <div class="card" id="card-${id}">
                 <div class="header">
-                    <h1 class="title" id="title-${id}">Lade Tour ${id}...</h1>
+                    <h1 class="title" id="title-${id}">Lade Tour...</h1>
                     <img src="https://static.wixstatic.com/shapes/9627cc_826a93d178b649dbb134b4376c5e88ee.svg" alt="SRSC Logo" class="brand-logo">
                 </div>
                 <div class="content-grid">
@@ -191,11 +202,11 @@
                     <div class="right-column">
                         <div class="stats-wrapper">
                             <div class="data-table">
-                                <div class="data-row"><div class="data-label">Distanz</div><div class="data-value" id="dist-${id}"><span class="loading-text">...</span></div></div>
-                                <div class="data-row"><div class="data-label">Höhenmeter</div><div class="data-value" id="elev-${id}"><span class="loading-text">...</span></div></div>
-                                <div class="data-row"><div class="data-label">Schnitt</div><div class="data-value" id="speed-${id}"><span class="loading-text">...</span></div></div>
-                                <div class="data-row"><div class="data-label">Dauer</div><div class="data-value" id="time-${id}"><span class="loading-text">...</span></div></div>
-                                <div class="data-row"><div class="data-label">Profil</div><div class="data-value" id="prof-${id}"><span class="loading-text">...</span></div></div>
+                                <div class="data-row"><span class="data-label">Distanz</span><span class="data-value" id="dist-${id}"><span class="loading-text">...</span></span></div>
+                                <div class="data-row"><span class="data-label">Höhenmeter</span><span class="data-value" id="elev-${id}"><span class="loading-text">...</span></span></div>
+                                <div class="data-row"><span class="data-label">Schnitt</span><span class="data-value" id="speed-${id}"><span class="loading-text">...</span></span></div>
+                                <div class="data-row"><span class="data-label">Dauer</span><span class="data-value" id="time-${id}"><span class="loading-text">...</span></span></div>
+                                <div class="data-row"><span class="data-label">Profil</span><span class="data-value" id="prof-${id}"><span class="loading-text">...</span></span></div>
                             </div>
                             <div class="button-group">
                                 <a id="btn-gpx-${id}" href="#" class="btn" target="_blank">GPX</a>
@@ -210,7 +221,6 @@
         }
 
         function initSingleCard(id, data, fontName) {
-            // Buttons prüfen
             if(data.gpx) document.getElementById(`btn-gpx-${id}`).href = data.gpx;
             else document.getElementById(`btn-gpx-${id}`).classList.add('disabled');
 
@@ -218,23 +228,16 @@
             else document.getElementById(`btn-garmin-${id}`).classList.add('disabled');
 
             if(data.komoot && data.komoot.trim() !== "") document.getElementById(`btn-komoot-${id}`).href = data.komoot;
-            else {
-                const btn = document.getElementById(`btn-komoot-${id}`);
-                btn.classList.add('disabled');
-                btn.innerText = "No Komoot";
-            }
+            else document.getElementById(`btn-komoot-${id}`).classList.add('disabled');
 
             const speedValueStr = data.schnitt || "30"; 
             document.getElementById(`speed-${id}`).innerText = speedValueStr.includes('km/h') ? speedValueStr : speedValueStr + " km/h";
 
-            // Leaflet
             let mapInstance = L.map(`map-${id}`);
             let positionMarker = null;
             let localTrackPoints = []; 
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap', opacity: 1.0
-            }).addTo(mapInstance);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapInstance);
 
             positionMarker = L.circleMarker([0, 0], {
                 radius: 6, fillColor: "#0055ff", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 1, zIndexOffset: 1000
@@ -254,50 +257,24 @@
                     mapInstance.fitBounds(gpx.getBounds());
                     
                     let gpxName = gpx.get_name(); 
-                    if (!gpxName) { gpxName = `Tour ${id}`; } else { gpxName = gpxName.replace(/\.gpx$/i, ''); }
-                    const titleEl = document.getElementById(`title-${id}`);
-                    titleEl.innerText = gpxName;
+                    if (!gpxName) gpxName = `Tour ${id}`; else gpxName = gpxName.replace(/\.gpx$/i, '');
+                    document.getElementById(`title-${id}`).innerText = gpxName;
                     
                     const distKm = (gpx.get_distance() / 1000).toFixed(1);
                     const elevHm = gpx.get_elevation_gain().toFixed(0);
-                    
                     const speedNum = parseFloat(speedValueStr.replace(/[^0-9.]/g, '')) || 30;
                     const durationDec = distKm / speedNum;
                     const hours = Math.floor(durationDec);
                     const minutes = Math.round((durationDec - hours) * 60);
-                    const timeStr = `${hours} h ${minutes < 10 ? '0' : ''}${minutes} min`;
-
-                    // Profil-Logik
-                    const ratio = elevHm / distKm;
-                    let profileStr = "Flach";
                     
-                    if(ratio > 14) { profileStr = "Bergig"; } 
-                    else if(ratio >= 8) { profileStr = "Wellig"; }
-
                     document.getElementById(`dist-${id}`).innerText = Math.round(distKm) + " km";
                     document.getElementById(`elev-${id}`).innerText = elevHm + " hm";
-                    document.getElementById(`time-${id}`).innerText = timeStr;
-                    document.getElementById(`prof-${id}`).innerText = profileStr;
+                    document.getElementById(`time-${id}`).innerText = `${hours}h ${minutes}m`;
+                    document.getElementById(`prof-${id}`).innerText = (elevHm / distKm > 14) ? "Bergig" : (elevHm / distKm >= 8 ? "Wellig" : "Flach");
 
-                    fitTitle(titleEl);
                     addArrowsAndExtractPoints(gpx, mapInstance, localTrackPoints);
                     drawDetailedProfile(id, gpx.get_elevation_data(), localTrackPoints, mapInstance, positionMarker, fontName);
-
-                }).on('error', function(e) {
-                    console.error(`GPX Fehler Tour ${id}:`, e);
-                    document.getElementById(`title-${id}`).innerText = "GPX Fehler (siehe Konsole)";
-                    document.getElementById(`title-${id}`).style.color = "red";
                 }).addTo(mapInstance);
-            } else {
-                document.getElementById(`title-${id}`).innerText = "Keine GPX Datei";
-            }
-        }
-
-        function fitTitle(el) {
-            const computedStyle = window.getComputedStyle(el);
-            let fontSize = parseFloat(computedStyle.fontSize);
-            while (el.scrollWidth > el.clientWidth && fontSize > 10) {
-                fontSize -= 1; el.style.fontSize = fontSize + 'px';
             }
         }
 
@@ -305,14 +282,11 @@
             function processLayer(l) {
                 if (l instanceof L.Polyline && !(l instanceof L.Polygon)) {
                     L.polylineDecorator(l, {
-                        patterns: [{ 
-                            offset: '100px', repeat: '200px', 
-                            symbol: L.Symbol.arrowHead({ pixelSize: 8, polygon: false, pathOptions: { stroke: true, color: '#0055ff', weight: 2, opacity: 1 } })
-                        }]
+                        patterns: [{ offset: '100px', repeat: '200px', symbol: L.Symbol.arrowHead({ pixelSize: 8, polygon: false, pathOptions: { stroke: true, color: '#0055ff', weight: 2, opacity: 1 } }) }]
                     }).addTo(mapRef);
                     const latlngs = l.getLatLngs();
                     if (Array.isArray(latlngs) && latlngs.length > 0 && Array.isArray(latlngs[0])) {
-                        latlngs.forEach(arr => { if(Array.isArray(arr)) pointsRef.push(...arr); else pointsRef.push(arr); });
+                        latlngs.forEach(arr => pointsRef.push(...arr));
                     } else { latlngs.forEach(p => pointsRef.push(p)); }
                 } else if (l.eachLayer) { l.eachLayer(processLayer); }
             }
@@ -320,99 +294,45 @@
         }
 
         function drawDetailedProfile(id, data, trackPoints, mapRef, markerRef, fontName) {
-            const labels = []; const points = []; const slopes = []; const step = Math.ceil(data.length / 100); 
+            const labels = []; const points = []; const slopes = []; const step = Math.ceil(data.length / 80); 
             for (let i = 0; i < data.length; i += step) {
-                const dist = data[i][0].toFixed(1); const elev = data[i][1];
-                let slopeVal = 0;
-                if (i > 0 && points.length > 0) {
-                    const prevDist = parseFloat(labels[labels.length-1]);
-                    const prevElev = points[points.length-1];
-                    const distDiff = (parseFloat(dist) - prevDist) * 1000; 
-                    const elevDiff = elev - prevElev; 
-                    if(distDiff > 0) { slopeVal = Math.round((elevDiff / distDiff) * 100); }
-                }
-                slopes.push(slopeVal); labels.push(dist); points.push(elev);
+                labels.push(data[i][0].toFixed(1)); points.push(data[i][1]);
+                if (i > 0) {
+                    const dD = (data[i][0] - data[i-step][0]) * 1000;
+                    slopes.push(dD > 0 ? ((data[i][1] - data[i-step][1]) / dD) * 100 : 0);
+                } else slopes.push(0);
             }
 
             const ctx = document.getElementById(`chart-${id}`).getContext('2d');
-            
-            const gradientGreen = ctx.createLinearGradient(0, 0, 0, 160); 
-            gradientGreen.addColorStop(0, 'rgba(16, 185, 129, 0.8)'); 
-            gradientGreen.addColorStop(1, 'rgba(16, 185, 129, 0.0)'); 
-            
-            const gradientOrange = ctx.createLinearGradient(0, 0, 0, 160); 
-            gradientOrange.addColorStop(0, 'rgba(249, 115, 22, 0.8)'); 
-            gradientOrange.addColorStop(1, 'rgba(249, 115, 22, 0.0)');
-            
-            const gradientRed = ctx.createLinearGradient(0, 0, 0, 160); 
-            gradientRed.addColorStop(0, 'rgba(239, 68, 68, 0.8)'); 
-            gradientRed.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
-            
-            const isMobile = window.innerWidth < 850;
-            const chartFontSize = isMobile ? 8 : 10;
-            const chartBorderWidth = isMobile ? 1.5 : 2;
+            const gGreen = ctx.createLinearGradient(0, 0, 0, 140); gGreen.addColorStop(0, 'rgba(16, 185, 129, 0.6)'); gGreen.addColorStop(1, 'transparent');
+            const gRed = ctx.createLinearGradient(0, 0, 0, 140); gRed.addColorStop(0, 'rgba(239, 68, 68, 0.6)'); gRed.addColorStop(1, 'transparent');
 
             new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
-                        data: points, borderColor: '#10b981', borderWidth: chartBorderWidth, fill: true, pointRadius: 0, tension: 0.4,
-                        segment: {
-                            borderColor: ctx => {
-                                if (ctx.p0DataIndex === undefined) return undefined;
-                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? '#ef4444' : (s >= 4 ? '#f97316' : '#10b981');
-                            },
-                            backgroundColor: ctx => {
-                                if (ctx.p0DataIndex === undefined) return undefined;
-                                const s = slopes[ctx.p1DataIndex]; return s > 6 ? gradientRed : (s >= 4 ? gradientOrange : gradientGreen);
-                            }
+                        data: points, borderColor: '#10b981', borderWidth: 2, fill: true, pointRadius: 0, tension: 0.4,
+                        segment: { 
+                            borderColor: ctx => slopes[ctx.p1DataIndex] > 5 ? '#ef4444' : '#10b981',
+                            backgroundColor: ctx => slopes[ctx.p1DataIndex] > 5 ? gRed : gGreen
                         }
                     }]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
-                    plugins: { legend: { display: false }, tooltip: { enabled: false } },
-                    onHover: function(e, activeElements) {
-                        if (activeElements && activeElements.length > 0) {
-                            const index = activeElements[0].index;
-                            const totalChartPoints = this.data.datasets[0].data.length;
-                            if (trackPoints.length > 0 && mapRef && markerRef) {
-                                const percent = index / (totalChartPoints - 1);
-                                const mapIndex = Math.floor(percent * (trackPoints.length - 1));
-                                const latlng = trackPoints[mapIndex];
-                                if(latlng) { markerRef.setLatLng(latlng); markerRef.setStyle({ opacity: 1, fillOpacity: 1 }); }
-                            }
+                    plugins: { legend: { display: false } },
+                    onHover: (e, el) => {
+                        if (el.length > 0 && trackPoints.length > 0) {
+                            const p = el[0].index / (labels.length - 1);
+                            const latlng = trackPoints[Math.floor(p * (trackPoints.length - 1))];
+                            if(latlng) { markerRef.setLatLng(latlng); markerRef.setStyle({ opacity: 1, fillOpacity: 1 }); }
                         }
                     },
                     scales: {
-                        x: { 
-                            display: true, 
-                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, 
-                            ticks: { 
-                                maxTicksLimit: 8, 
-                                color: '#94a3b8', 
-                                font: { family: fontName, size: chartFontSize },
-                                callback: function(value, index, values) {
-                                    const label = this.getLabelForValue(value);
-                                    return Math.round(label) + ' km';
-                                }
-                            } 
-                        },
-                        y: { 
-                            display: true, 
-                            grid: { color: 'rgba(255, 255, 255, 0.05)', drawBorder: false }, 
-                            ticks: { 
-                                stepSize: 50, 
-                                maxTicksLimit: 5, 
-                                color: '#94a3b8', 
-                                font: { family: fontName, size: chartFontSize }, 
-                                callback: v => v + ' m' 
-                            } 
-                        }
-                    },
-                    layout: { padding: { left: 5, right: 10, top: 5, bottom: 0 } }
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 9 } } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 9 } } }
+                    }
                 }
             });
         }

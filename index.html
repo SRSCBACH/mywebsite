@@ -22,14 +22,14 @@
             min-height: 100vh; width: 100%; 
             display: flex; flex-direction: column;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Hintergrund-Animation (Orbs) */
         .background-animation {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; pointer-events: none;
         }
-        /* Orb Speed Override */
+        /* Orb Speed Override (Schnell) */
         .orb-1 { animation-duration: 15s !important; }
         .orb-2 { animation-duration: 20s !important; }
         .orb-3 { animation-duration: 12s !important; }
@@ -39,54 +39,71 @@
         /* ========================================= */
         .main-content {
             flex: 1;
-            display: flex;          
-            justify-content: center; /* Horizontal mittig */
-            align-items: center;     /* Vertikal mittig */
+            display: grid;          
+            place-items: center;     
             width: 100%;
             position: relative;
-            z-index: 10; /* Inhalt vor den Hintergrund */
+            z-index: 10;
         }
 
-        /* Wir nutzen wieder den Karten-Container als "Halterung", 
-           aber machen ihn komplett unsichtbar */
-        .logo-wrapper {
-            background: transparent; /* Unsichtbar */
-            border: 1px dashed red;  /* DEBUG: Roter Rahmen zum Testen (später entfernen!) */
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        /* ========================================= */
-        /* 3. LOGO BILD                             */
-        /* ========================================= */
-        .center-logo {
+        .logo-link {
+            text-decoration: none; /* Kein Unterstrich */
             display: block;
-            width: 300px;        /* Feste Breite erzwingen */
-            height: auto;        /* Höhe automatisch */
+            perspective: 1000px;
+        }
+
+        /* ========================================= */
+        /* 3. DAS NEUE TEXT-LOGO (Funktioniert immer) */
+        /* ========================================= */
+        .text-logo {
+            font-family: var(--font-heading), 'Arial Black', sans-serif;
+            font-size: 5rem; /* Sehr groß */
+            font-weight: 900;
+            color: #ffffff;
+            text-align: center;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 5px;
             
-            /* Pulsieren Animation */
+            /* Der Herzschlag-Effekt */
             animation: atmen 4s infinite ease-in-out;
             transition: all 0.5s ease;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+            
+            /* Schein */
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        
+        /* Die Subline "BACH e.V." etwas kleiner */
+        .text-logo span {
+            display: block;
+            font-size: 2rem;
+            color: #94a3b8; /* Helles Grau */
+            letter-spacing: 10px;
+            margin-top: 10px;
         }
 
-        .center-logo:hover {
-            animation: none; 
-            transform: scale(1.1); 
-            filter: drop-shadow(0 0 40px rgba(100, 149, 237, 0.6));
+        .logo-link:hover .text-logo {
+            animation: none;
+            transform: scale(1.1);
+            text-shadow: 0 0 50px rgba(100, 149, 237, 0.8);
+        }
+        
+        .logo-link:hover .text-logo span {
+            color: #ffffff;
         }
 
         @keyframes atmen {
-            0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
-            50% { transform: scale(1.05); filter: drop-shadow(0 0 25px rgba(255,255,255,0.4)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
+            0% { transform: scale(1); text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+            50% { transform: scale(1.05); text-shadow: 0 0 40px rgba(255,255,255,0.5); }
+            100% { transform: scale(1); text-shadow: 0 0 20px rgba(255,255,255,0.2); }
         }
 
-        /* Header/Footer Layering */
+        /* Mobile Anpassung */
+        @media (max-width: 600px) {
+            .text-logo { font-size: 3.5rem; }
+            .text-logo span { font-size: 1.5rem; }
+        }
+
         header, footer { position: relative; z-index: 20; }
 
     </style>
@@ -104,13 +121,12 @@
     </header>
 
     <main class="main-content">
-        <div class="logo-wrapper">
-            <a href="verein.html" title="Zum Verein">
-                <img src="https://cdn-icons-png.flaticon.com/512/3082/3082383.png" 
-                     alt="SRSC Bach Logo" 
-                     class="center-logo">
-            </a>
-        </div>
+        <a href="verein.html" class="logo-link" title="Zum Verein">
+            <div class="text-logo">
+                SRSC
+                <span>BACH e.V.</span>
+            </div>
+        </a>
     </main>
 
     <footer class="footer-container" id="footer-container">

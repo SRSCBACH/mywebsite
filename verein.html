@@ -36,6 +36,27 @@
             filter: brightness(0) invert(1) drop-shadow(0 0 50px rgba(100, 149, 237, 0.7));
             cursor: pointer;
         }
+
+        @media (max-width: 768px) {
+            .link-section {
+                flex-direction: column;
+                width: 90%;
+                margin: 20px auto;
+            }
+            .content-card {
+                width: 90%;
+                margin: 0 auto;
+                padding: 25px;
+            }
+            .card-title {
+                font-size: 1.8rem; /* Feste, gut lesbare Größe für Mobile */
+                opacity: 0.9;
+                /* Kein nowrap, kein overflow:hidden -> Umbruch erlaubt */
+            }
+            .text-content, .faq-question, .faq-answer {
+                opacity: 0.9;
+            }
+        }
     </style>
 </head>
 <body style="opacity: 0.9;">
@@ -65,11 +86,11 @@
         </div>
 
         <div style="text-align: center; margin-top: 20px;">
-            <img src="images/srscfulllogowhite.svg" alt="SRSC Full Logo White" style="max-width: 300px; margin-bottom: 20px;">
+            <img src="images/srscfulllogowhite.svg" alt="SRSC Full Logo White" style="max-width: 300px; margin-bottom: 10px; opacity: 0.9;">
         </div>
 
-        <div class="content-card" style="background: transparent; border: none; box-shadow: none; backdrop-filter: none; text-align: center;">
-            <h2 class="card-title" style="font-size: 2rem; margin-bottom: 20px;">Vernetze dich mit uns</h2>
+        <div class="content-card" style="background: transparent; border: none; box-shadow: none; backdrop-filter: none; text-align: center; padding-top: 0;">
+            <h2 class="card-title" style="margin-bottom: 20px;">Vernetze dich mit uns</h2>
             <p style="color: var(--text-secondary); margin: 0 auto 30px auto; font-size: 1rem; opacity: 0.9; max-width: 90%;">
                 Verpasse keine Neuigkeiten! Folge uns auf Instagram für aktuelle Storys und Einblicke und tritt unserem Strava-Club bei, um unsere gemeinsamen Touren zu verfolgen.
             </p>

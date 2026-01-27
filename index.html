@@ -67,14 +67,15 @@
         }
 
         .simple-logo {
-            width: 80%;
-            min-width: 250px; 
-            max-width: 577px; 
+            width: 45vw; /* Skaliert mit der Fensterbreite */
+            max-width: 577px; /* Verhindert, dass es auf großen Bildschirmen zu riesig wird */
+            min-width: 250px; /* Stellt Lesbarkeit auf kleinen Bildschirmen sicher */
             height: auto;
             display: block;
             opacity: 1.0; 
             filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
             transition: all 0.3s ease;
+            transform-origin: left center; /* FIX: Skalierung von links */
         }
 
         .logo-container:hover .simple-logo {
@@ -90,11 +91,11 @@
             display: flex;
             align-items: center; 
             gap: 40px; 
-            margin-top: 50px; 
+            margin-top: 25px; /* Abstand verringert */
             flex-shrink: 0;
-            width: 80%;
-            max-width: 577px;
-            min-width: 250px;
+            width: 45vw; /* Gleiche Breite wie Logo für perfekte Symmetrie */
+            max-width: 577px; /* Synchron mit Logo */
+            min-width: 250px; /* Synchron mit Logo */
             justify-content: center;
             box-sizing: border-box;
         }

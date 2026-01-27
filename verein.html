@@ -10,10 +10,13 @@
         .content-card { background-color: rgba(15, 34, 51, 0.15); border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; width: 100%; max-width: 800px; backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); margin: 0 20px; }
         .card-title { font-family: var(--font-heading), sans-serif; font-size: 2.5rem; color: #ffffff; margin-bottom: 30px; text-align: center; text-transform: uppercase; border: none; opacity: 0.9; }
         .text-content { font-size: 1rem; line-height: 1.6; color: #e2e8f0; text-align: justify; opacity: 0.9; }
+        .text-content ul { padding-left: 20px; margin-top: 1em; margin-bottom: 1em; }
+        .text-content li { margin-bottom: 0.5em; }
         .faq-item { border-bottom: none; margin-bottom: 15px; }
         .faq-question { font-family: var(--font-heading), sans-serif; font-size: 1.1rem; color: #ffffff; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; opacity: 0.9; }
         .faq-toggle { font-size: 1.5rem; font-weight: 300; transition: transform 0.3s ease; color: #64748b; opacity: 0.9; }
         .faq-answer { font-family: var(--font-body), sans-serif; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.4s ease; opacity: 0; padding-bottom: 0; text-align: justify; }
+        .faq-answer a { color: var(--text-secondary); }
         .faq-item.active .faq-toggle { transform: rotate(45deg); }
         .faq-item.active .faq-answer { max-height: 2000px; opacity: 0.9; padding-bottom: 20px; }
         .link-section { display: flex; gap: 20px; width: 100%; max-width: 800px; margin: 20px; }
@@ -48,8 +51,16 @@
         <div class="content-card" style="background: transparent; border: none; box-shadow: none; backdrop-filter: none; padding-top: 0; padding-bottom: 10px; margin-bottom: -20px;">
             <h1 class="card-title">Der Verein</h1>
             <div class="text-content">
-                <p><strong>Willkommen beim SRSC Bach e.V.!</strong></p>
-                <p>Wir sind ein Rad Verein mit Schwerpunkt auf MTB, Gravel und Rennrad. Unsere Geschichte begann vor über 30 Jahren mit einer Handvoll Radfahrern, die ihre Leidenschaft für den Radsport teilen wollten. Heute haben wir uns zu einem starken und engagierten Team entwickelt, das sowohl interne Events für Jung und Alt organisiert, sowie jährlich an Radmarathons (national & international) und RTFs teilnimmt. Wir heißen alle Radbegeisterten willkommen, die sich uns anschließen möchten.</p>
+                <p><strong>Willkommen beim Ski- und Radsportclub Bach e.V.</strong> – deinem etwas anderen Verein im Landkreis Regensburg!</p>
+                <p>Wir sind mehr als nur ein Radsportverein; wir sind eine Gemeinschaft aus MTB-Trail-Liebhabern, Gravel-Abenteurern und Rennrad-Enthusiasten. Was vor über 30 Jahren mit einer Handvoll Visionären begann, ist heute ein starkes, engagiertes Team, das die Straßen und Pfade der Oberpfalz (und darüber hinaus) unsicher macht.</p>
+                <p><strong>Was uns auszeichnet:</strong></p>
+                <ul>
+                    <li><strong>Gemeinschaft erleben:</strong> Wir organisieren interne Events für jede Altersklasse – vom Nachwuchstalent bis zum erfahrenen Kilometerfresser.</li>
+                    <li><strong>Grenzen testen:</strong> Jährlich sind wir auf nationalen und internationalen Radmarathons sowie RTFs vertreten.</li>
+                    <li><strong>Jagdfieber:</strong> Bei uns kommt auch der sportliche Ehrgeiz nicht zu kurz. Wir lieben die Herausforderung und nehmen gemeinsam den ein oder anderen KOM in Angriff – der Spaß am Speed gehört bei uns einfach dazu!</li>
+                </ul>
+                <p>Egal, ob du den Wind im Gesicht auf dem Asphalt suchst oder den Dreck an den Reifen im Wald: Wenn du die Leidenschaft fürs Radfahren teilst, bist du bei uns genau richtig.</p>
+                <p><strong>Schließ dich uns an und tritt mit uns in die Pedale!</strong></p>
             </div>
         </div>
 
@@ -60,11 +71,11 @@
             </p>
             <div class="link-section" style="max-width: 600px; margin: 0 auto;">
                 <a href="#" class="link-box" target="_blank" rel="noopener noreferrer">
-                    <h3>INSTA</h3>
+                    <h3>INSTAGRAM</h3>
                     <p>Bilder, Storys & News</p>
                 </a>
                 <a href="#" class="link-box" target="_blank" rel="noopener noreferrer">
-                    <h3>Strava Club</h3>
+                    <h3>STRAVA CLUB</h3>
                     <p>Gemeinsame Ausfahrten</p>
                 </a>
             </div>
@@ -102,11 +113,11 @@
             </div>
             <div class="faq-item">
                 <div class="faq-question">Wo ist der Treffpunkt und das Ziel?<span class="faq-toggle">+</span></div>
-                <div class="faq-answer"><strong>Start:</strong> Kindergarten Bach a. d. Donau<br><strong>Ziel:</strong> Gasthof Peutler Kiefenholz</div>
+                <div class="faq-answer"><strong>Start:</strong> <a href="https://www.google.com/maps/search/?api=1&query=Zum+Altwasser+2,+93090+Bach+an+der+Donau" target="_blank" rel="noopener noreferrer">Kindergarten in Bach an der Donau, Zum Altwasser 2, 93090 Bach an der Donau</a><br><strong>Ziel:</strong> Gasthof Peutler Kiefenholz</div>
             </div>
             <div class="faq-item">
                 <div class="faq-question">Welche Distanzen fahrt ihr?<span class="faq-toggle">+</span></div>
-                <div class="faq-answer">Einen perfekten Vorgeschmack bekommst du direkt in unserer <a href="strecken.html">Streckenübersicht</a>.<br><br>Dort findest du unsere typischen Routen im Detail. Der dort angegebene <strong>Schnitt</strong> (Durchschnittsgeschwindigkeit) dient dir dabei als gute Orientierung, was dich erwartet.</div>
+                <div class="faq-answer">Einen perfekten Vorgeschmack bekommst du direkt in unserer <a href="strecken.html">TRACKS</a>.<br><br>Dort findest du unsere typischen Routen im Detail. Der dort angegebene <strong>Schnitt</strong> (Durchschnittsgeschwindigkeit) dient dir dabei als gute Orientierung, was dich erwartet.</div>
             </div>
             <div class="faq-item">
                 <div class="faq-question">Gibt es eine Helmpflicht?<span class="faq-toggle">+</span></div>

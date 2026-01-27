@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     
-    // 1. Die zentrale Konfigurationsdatei laden
-    fetch('config.json')
+    // 1. Die zentrale Konfigurationsdatei laden (mit Cache-Busting)
+    fetch('config.json?v=' + new Date().getTime())
         .then(response => {
             if (!response.ok) {
                 throw new Error("Konnte config.json nicht laden.");

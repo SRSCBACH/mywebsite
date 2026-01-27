@@ -57,7 +57,7 @@
        /* ========================================= */
         /* 3. DAS LOGO                              */
         /* ========================================= */
-        .logo-link {
+        .logo-container {
             width: 100%;
             display: flex;
             justify-content: flex-start;
@@ -72,15 +72,15 @@
             max-width: 577px; 
             height: auto;
             display: block;
-            opacity: 0.5; 
-            filter: drop-shadow(0 0 15px rgba(0,0,0,0.3)) blur(1px);
+            opacity: 1.0; 
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
             transition: all 0.3s ease;
         }
 
-        .logo-link:hover .simple-logo {
+        .logo-container:hover .simple-logo {
             transform: scale(1.02);
-            opacity: 1.0; 
-            filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+            opacity: 0.5; 
+            filter: drop-shadow(0 0 15px rgba(0,0,0,0.3)) blur(1px);
         }
 
         /* ========================================= */
@@ -89,7 +89,7 @@
         .social-links {
             display: flex;
             align-items: center; 
-            gap: 30px; 
+            gap: 40px; 
             margin-top: 50px; 
             flex-shrink: 0;
             width: 80%;
@@ -99,27 +99,26 @@
             box-sizing: border-box;
         }
 
-        .social-links a {
-            display: block;
-            opacity: 0.4; 
+        .social-text-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            padding: 5px;
+            opacity: 0.4;
             transition: all 0.3s ease;
             filter: blur(1px);
         }
 
-        .social-links a:hover {
+        .social-text-link:hover {
             opacity: 1.0;
-            transform: translateY(-3px); 
+            transform: translateY(-3px);
             filter: none;
-        }
-
-        .social-links img {
-            height: 34px;
-            width: auto;
-            filter: brightness(0) invert(1);
-        }
-        
-        .strava-icon {
-            height: 29px; /* Adjust this value as needed */
+            color: var(--accent-color);
+            text-shadow: 0 0 15px rgba(255,255,255,0.6);
         }
 
         /* ========================================= */
@@ -164,18 +163,17 @@
     <header class="header-container" id="header-container"><div id="header-placeholder"></div></header>
 
     <main class="main-content">
-        <a href="verein.html" class="logo-link" title="Zum Verein">
+        <div class="logo-container">
             <img src="images/DeineCrewlang.svg" alt="SRSC Bach Logo" class="simple-logo">
-        </a>
+        </div>
         <div class="social-links">
-            <a href="#" title="Instagram"><img src="images/instagram.svg" alt="Instagram Logo"></a>
-            <a href="#" title="YouTube"><img src="images/youtube.svg" alt="YouTube Logo"></a>
-            <a href="#" title="Strava"><img src="images/Stravvektor.svg" alt="Strava Logo" class="strava-icon"></a>
+            <a href="#" title="Instagram" class="social-text-link">INSTA</a>
+            <a href="#" title="Strava" class="social-text-link">Strava</a>
         </div>
     </main>
 
     <div class="background-image-container">
-        <img src="images/srscfahrerschere.png" alt="SRSC Fahrer" class="background-image">
+        <img src="images/srscfahrerschereweich.png" alt="SRSC Fahrer" class="background-image">
     </div>
 
     <footer class="footer-container" id="footer-container"><div id="footer-placeholder"></div></footer>

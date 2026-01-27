@@ -61,6 +61,7 @@ html, body {
 body {
     font-family: var(--font-body);
     color: var(--text-primary);
+    opacity: 0.9;
     
     /* HINTERGRUND-KONFIGURATION */
     /* Das Bild (URL) wird von main.js / config.json gesetzt */

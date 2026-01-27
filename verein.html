@@ -8,22 +8,34 @@
     <style>
         .main-content { display: flex; flex-direction: column; align-items: center; padding-top: 40px; padding-bottom: 40px; gap: 40px; position: relative; z-index: 10; }
         .content-card { background-color: rgba(15, 34, 51, 0.15); border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; width: 100%; max-width: 800px; backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); margin: 0 20px; }
-        .card-title { font-family: var(--font-heading), sans-serif; font-size: 2.5rem; color: #ffffff; margin-bottom: 30px; text-align: center; text-transform: uppercase; border: none; }
-        .text-content { font-size: 1rem; line-height: 1.6; color: #e2e8f0; text-align: justify; }
+        .card-title { font-family: var(--font-heading), sans-serif; font-size: 2.5rem; color: #ffffff; margin-bottom: 30px; text-align: center; text-transform: uppercase; border: none; opacity: 0.9; }
+        .text-content { font-size: 1rem; line-height: 1.6; color: #e2e8f0; text-align: justify; opacity: 0.9; }
         .faq-item { border-bottom: none; margin-bottom: 15px; }
-        .faq-question { font-family: var(--font-heading), sans-serif; font-size: 1.1rem; color: #ffffff; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-        .faq-toggle { font-size: 1.5rem; font-weight: 300; transition: transform 0.3s ease; color: #64748b; }
+        .faq-question { font-family: var(--font-heading), sans-serif; font-size: 1.1rem; color: #ffffff; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; opacity: 0.9; }
+        .faq-toggle { font-size: 1.5rem; font-weight: 300; transition: transform 0.3s ease; color: #64748b; opacity: 0.9; }
         .faq-answer { font-family: var(--font-body), sans-serif; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.4s ease; opacity: 0; padding-bottom: 0; text-align: justify; }
         .faq-item.active .faq-toggle { transform: rotate(45deg); }
-        .faq-item.active .faq-answer { max-height: 2000px; opacity: 1; padding-bottom: 20px; }
+        .faq-item.active .faq-answer { max-height: 2000px; opacity: 0.9; padding-bottom: 20px; }
         .link-section { display: flex; gap: 20px; width: 100%; max-width: 800px; margin: 20px; }
         .link-box { flex: 1; display: block; padding: 30px; border-radius: 12px; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); text-decoration: none; text-align: center; transition: all 0.3s ease; }
         .link-box:hover { background-color: rgba(255, 255, 255, 0.1); border-color: #94a3b8; transform: translateY(-5px); }
-        .link-box h3 { font-family: var(--font-heading), sans-serif; font-size: 1.5rem; color: #ffffff; margin-top: 0; margin-bottom: 10px; }
-        .link-box p { font-family: var(--font-body), sans-serif; color: var(--text-secondary); margin: 0; }
+        .link-box h3 { font-family: var(--font-heading), sans-serif; font-size: 1.5rem; color: #ffffff; margin-top: 0; margin-bottom: 10px; opacity: 0.9; }
+        .link-box p { font-family: var(--font-body), sans-serif; color: var(--text-secondary); margin: 0; opacity: 0.9; }
+        
+        .partner-logo {
+            max-width: 220px;
+            filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(255,255,255,0.2));
+            transition: all 0.5s ease;
+        }
+
+        .partner-logo:hover {
+            transform: scale(1.15);
+            filter: brightness(0) invert(1) drop-shadow(0 0 50px rgba(100, 149, 237, 0.7));
+            cursor: pointer;
+        }
     </style>
 </head>
-<body>
+<body style="opacity: 0.9;">
     <div class="background-animation">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
@@ -41,13 +53,30 @@
             </div>
         </div>
 
+        <div class="content-card" style="background: transparent; border: none; box-shadow: none; backdrop-filter: none; text-align: center;">
+            <h2 class="card-title" style="font-size: 2rem; margin-bottom: 20px;">Vernetze dich mit uns</h2>
+            <p style="color: var(--text-secondary); margin: 0 auto 30px auto; font-size: 1rem; opacity: 0.9; max-width: 90%;">
+                Verpasse keine Neuigkeiten! Folge uns auf Instagram für aktuelle Storys und Einblicke und tritt unserem Strava-Club bei, um unsere gemeinsamen Touren zu verfolgen.
+            </p>
+            <div class="link-section" style="max-width: 600px; margin: 0 auto;">
+                <a href="#" class="link-box" target="_blank" rel="noopener noreferrer">
+                    <h3>INSTA</h3>
+                    <p>Bilder, Storys & News</p>
+                </a>
+                <a href="#" class="link-box" target="_blank" rel="noopener noreferrer">
+                    <h3>Strava Club</h3>
+                    <p>Gemeinsame Ausfahrten</p>
+                </a>
+            </div>
+        </div>
+
         <div class="content-card" style="background-color: rgba(15, 34, 51, 0.1);">
             <h2 class="card-title" style="font-size: 2rem; margin-bottom: 40px;">Unser Partner</h2>
             <div style="text-align: center;">
                 <a href="https://www.mfa-film.de/home/" target="_blank" rel="noopener noreferrer" title="MFA+ Filmverleih">
-                    <img src="images/MFA.svg" alt="Logo MFA+ Filmverleih" style="max-width: 220px; filter: brightness(0) invert(1); transition: all 0.3s ease;">
+                    <img src="images/MFA.svg" alt="Logo MFA+ Filmverleih" class="partner-logo">
                 </a>
-                <p style="color: var(--text-secondary); margin-top: 25px; font-size: 1rem;">
+                <p style="color: var(--text-secondary); margin-top: 25px; font-size: 1rem; opacity: 0.9;">
                     Wir bedanken uns herzlich bei unserem Partner <strong>MFA+ Filmverleih</strong> für die großartige Unterstützung unserer Leidenschaft für den Radsport.
                 </p>
             </div>

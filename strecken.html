@@ -216,11 +216,11 @@
 
         @media (max-width: 850px) {
 
-            .header-container { padding: 15px 20px; justify-content: center; } 
+            .header-container { padding: 15px 20px; justify-content: center !important; } /* WICHTIG: !important hinzugefügt */
 
             .footer-container { padding-bottom: 30px; } 
 
-            .header-nav ul, .footer-nav { gap: 15px; } /* NEU: Geringerer Abstand der Links */
+            .header-nav ul, .footer-nav { gap: 15px; } 
 
 
 
@@ -274,7 +274,7 @@
 
     <header class="header-container" id="header-container">
 
-        <div id="header-placeholder" style="width: 100%; display: flex; justify-content: flex-end;"></div>
+        <div id="header-placeholder"></div>
 
     </header>
 

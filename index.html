@@ -41,17 +41,17 @@
             align-items: flex-start;     
             width: 100%;
             position: relative;
-            z-index: 10;
+            z-index: 10; /* Inhalt liegt über dem Hintergrundbild */
             padding: 40px 0 40px 7.5%;
             flex-direction: column; 
-            overflow-y: auto;
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
             box-sizing: border-box;
+            /* HINTERGRUND-FIX: Deaktiviert Maus-Events für den Container */
+            pointer-events: none; 
         }
-        
-        .main-content::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, and Opera */
+
+        /* HINTERGRUND-FIX: Aktiviert Maus-Events wieder für die direkten Kinder */
+        .main-content > * {
+            pointer-events: auto;
         }
 
        /* ========================================= */
@@ -84,7 +84,7 @@
         }
 
         /* ========================================= */
-        /* 4. SOCIAL MEDIA LINKS                    */
+        /* 4. SOCIAL MEDIA & NAV LINKS (INDEX ONLY) */
         /* ========================================= */
         .social-links {
             display: flex;
@@ -99,7 +99,9 @@
             box-sizing: border-box;
         }
 
-        .social-text-link {
+        .social-text-link,
+        .header-nav a, 
+        .footer-nav a {
             text-decoration: none;
             color: var(--text-primary);
             font-family: var(--font-heading);
@@ -113,7 +115,9 @@
             filter: blur(1px);
         }
 
-        .social-text-link:hover {
+        .social-text-link:hover,
+        .header-nav a:hover, 
+        .footer-nav a:hover {
             opacity: 1.0;
             transform: translateY(-3px);
             filter: none;
@@ -132,8 +136,7 @@
             display: flex;
             justify-content: flex-end;
             align-items: flex-end;
-            z-index: 1;
-            pointer-events: none; /* Allow clicks to pass through */
+            z-index: 1; /* Liegt unter dem Inhalt */
         }
 
         .background-image {
@@ -142,6 +145,14 @@
             opacity: 0.5; 
             filter: blur(1px);
             transform: translateX(-7.5%);
+            transition: all 0.3s ease;
+            /* HINTERGRUND-FIX: Das Bild selbst kann jetzt Events empfangen */
+            pointer-events: auto; 
+        }
+
+        .background-image:hover {
+            opacity: 1.0;
+            filter: none;
         }
 
         /* Header und Footer fixieren */

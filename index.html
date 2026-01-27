@@ -74,13 +74,15 @@
             opacity: 1.0; 
             filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
             transition: all 0.3s ease;
-            transform-origin: left center; /* FIX: Skalierung von links */
+            transform-origin: center; /* NEU: Animation und Hover sind zentriert */
+            animation: atmen 4s ease-in-out infinite; /* Pulsierender Effekt */
         }
 
         .logo-container:hover .simple-logo {
             transform: scale(1.02);
             opacity: 0.5; 
             filter: drop-shadow(0 0 15px rgba(0,0,0,0.3)) blur(1px);
+            animation: none; /* Deaktiviert die Animation beim Hover, um den Hover-Effekt zu priorisieren */
         }
 
         /* ========================================= */
@@ -175,7 +177,7 @@
 
     <main class="main-content">
         <div class="logo-container">
-            <img src="images/DeineCrewlang.svg" alt="SRSC Bach Logo" class="simple-logo">
+            <img src="images/deinecrew.svg" alt="SRSC Bach Logo" class="simple-logo">
         </div>
         <div class="social-links">
             <a href="#" title="Instagram" class="social-text-link">INSTA</a>
@@ -184,7 +186,7 @@
     </main>
 
     <div class="background-image-container">
-        <img src="images/srscfahrerschereweich.png" alt="SRSC Fahrer" class="background-image">
+        <img src="images/srscpaar.png" alt="SRSC Fahrer" class="background-image">
     </div>
 
     <footer class="footer-container" id="footer-container"><div id="footer-placeholder"></div></footer>

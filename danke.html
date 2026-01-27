@@ -28,20 +28,21 @@
             text-align: center;
         }
         .content-card {
-            background-color: rgba(15, 34, 51, 0.5);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+            backdrop-filter: none;
             padding: 50px 40px;
             width: 100%;
             max-width: 600px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
         .card-title {
             font-family: var(--font-heading), sans-serif;
             font-size: 2.2rem;
             color: #ffffff;
             margin-bottom: 15px;
+            border: none;
+            opacity: 0.9;
         }
         .card-text {
             font-family: var(--font-body), sans-serif;
@@ -49,6 +50,7 @@
             font-size: 1.1rem;
             line-height: 1.6;
             margin-bottom: 30px;
+            opacity: 0.9;
         }
         .home-button {
             display: inline-block;
@@ -63,9 +65,11 @@
             text-decoration: none;
             cursor: pointer;
             transition: all 0.3s ease;
+            opacity: 0.9;
         }
         .home-button:hover {
             background-color: #475569;
+            opacity: 1;
         }
     </style>
 </head>
@@ -81,8 +85,8 @@
     <main class="main-content">
         <div class="content-card">
             <h2 class="card-title">Vielen Dank!</h2>
-            <p class="card-text">Dein Mitgliedsantrag wurde erfolgreich an uns übermittelt. Wir werden uns in Kürze mit dir in Verbindung setzen.</p>
-            <a href="index.html" class="home-button">Zur Startseite</a>
+            <p class="card-text">Dein Formular wurde erfolgreich an uns übermittelt. Wir werden uns in Kürze mit dir in Verbindung setzen.</p>
+            <a href="index.html" class="home-button">HOME</a>
         </div>
     </main>
 

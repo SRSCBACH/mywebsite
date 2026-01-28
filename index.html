@@ -129,6 +129,19 @@
             text-shadow: 0 0 15px rgba(255,255,255,0.6);
         }
 
+        .social-text-link {
+            position: relative;
+        }
+
+        .lock-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 150%;
+            color: white;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
         /* ========================================= */
         /* 5. BACKGROUND IMAGE (DESKTOP)            */
         /* ========================================= */
@@ -259,8 +272,14 @@
             <img src="images/deinecrew.svg" alt="SRSC Bach Logo" class="simple-logo">
         </div>
         <div class="social-links">
-            <a href="#" title="Instagram" class="social-text-link">INSTA</a>
-            <a href="#" title="Strava" class="social-text-link">Strava</a>
+            <a href="#" title="Instagram" class="social-text-link">
+                <span class="lock-icon">🔒</span>
+                <span>INSTA</span>
+            </a>
+            <a href="#" title="Strava" class="social-text-link">
+                <span class="lock-icon">🔒</span>
+                <span>Strava</span>
+            </a>
         </div>
     </main>
 

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <gpx version="1.1" creator="https://www.komoot.de" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
   <metadata>
-    <name>18 - Hill Repeat Intervalle</name>
+    <name>18 Hill Repeat Intervalle</name>
     <author>
       <link href="https://www.komoot.de">
         <text>komoot</text>
@@ -10,7 +10,7 @@
     </author>
   </metadata>
   <trk>
-    <name>18 - Hill Repeat Intervalle</name>
+    <name>18 Hill Repeat Intervalle</name>
     <trkseg>
       <trkpt lat="49.019660" lon="12.302801">
         <ele>325.137505</ele>

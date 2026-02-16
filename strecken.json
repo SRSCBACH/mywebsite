@@ -1,3 +1,4 @@
+
 [
     {
         "id": "00",
@@ -214,5 +215,185 @@
         "distanz": "87",
         "hoehenmeter": "490",
         "dauer": "2 h 30 min"
+    },
+    {
+        "id": "18",
+        "active": true,
+        "gpx": "/gpxfiles/18 Hill Repeat Intervalle.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2489499832?share_token=aarlabcYidO5zELB6GVsiIH87GSih4DbK8NYjEwz9AOzaR8ATs&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432880960",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "19",
+        "active": true,
+        "gpx": "/gpxfiles/19 Mount Wiesent.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2759844446?share_token=awpvWDx3HMjEgz7B6Cam97frWeBYo8Ho24czv9bfPJluikAqXA&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881041",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "20",
+        "active": true,
+        "gpx": "/gpxfiles/20 Haunsbacher Hund.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2787468491?share_token=aMmiH8Cia3W2u7agJ0QMObcnWddu2xoyfIEapLVC6MZmALCTRh&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881086",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "21",
+        "active": true,
+        "gpx": "/gpxfiles/21 Auf an Abstecher ins Penker.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2787469890?share_token=acwiSDXZG36LL7XykNGSRxw4OH5a3s4A4PjKPwO4MRzUlg9O37&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881195",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "22",
+        "active": true,
+        "gpx": "/gpxfiles/22 Luftkur in St. Engelmar.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2787471886?share_token=aIj94un7eHiZr7NEj8KIzrx7fI29RXf8jZP3hmmRIloRbdV2E1&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881240",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "23",
+        "active": true,
+        "gpx": "/gpxfiles/23 Zinzenzeller Rodeo.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2787474362?share_token=ajnO13ioxvi2t3z3WZLzkvnN64U8LS4odll7rvxFOZh3u1hjXO&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881284",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "24",
+        "active": true,
+        "gpx": "/gpxfiles/24 Hör ich da 1000 Höhenmeter.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2787476118?share_token=aHrxs5SvniZEoWmwlv13FnashooHoSZWMyBi7PW5OVUF7tHYVd&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881328",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "25",
+        "active": true,
+        "gpx": "/gpxfiles/25 Petersberg Reverse.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2787477458?share_token=aNfqwT7uTpUmfEEFPx1J2hO5eURWqWexVSthOLrNC23T6IWXTC&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881385",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "26",
+        "active": true,
+        "gpx": "/gpxfiles/26 Matthias Spezial.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2787478456?share_token=ayquJuUI6yYnj8jhTr9kdQHyyGHDJkMyER4pf1tr91INTebNMg&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881421",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "27",
+        "active": true,
+        "gpx": "/gpxfiles/27 Auf den Spuren Napoleons.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2787480681?share_token=a8FziOUE9mAFX6tC80DTQKNZ67LPSCm3WVnhrBjHIf1C0272t8&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881450",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "28",
+        "active": true,
+        "gpx": "/gpxfiles/28 Kettenfeuer-Express.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2787481392?share_token=ayu624UtldHTN1UG2e6qwM2zFKK9CpeCfWwjBGO9We3unp9j3G&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881481",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "29",
+        "active": true,
+        "gpx": "/gpxfiles/29 Laktat-Massaker.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2787481912?share_token=aFYIS4FFrvq4AUUP69zUGtPqZG6YjtphlXM4GaUPRdKDb9jDDv&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881523",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "30",
+        "active": true,
+        "gpx": "/gpxfiles/30 Puls-Punisher.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2787483286?share_token=am6gvoLPvfVrDX2viPleE6yo20iFBpZ127CMjkTRDOgCWJrrem&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881544",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "31",
+        "active": true,
+        "gpx": "/gpxfiles/31 Sauerstoffnot.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2787484967?share_token=a7cH5xTr1S4xx4NjfaYFPHU2rGanJmTqJE8uNVsyIOc6RNs68Y&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881583",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "32",
+        "active": true,
+        "gpx": "/gpxfiles/32 Beinfriedhof.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2787485567?share_token=aTZVpaKTxgbhokafiuvq6fUNXhqvd35mH7mCB8nXzBT1UL4uKg&ref=",
+        "garmin": "https://connect.garmin.com/modern/course/432881611",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
     }
 ]

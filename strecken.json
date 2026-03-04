@@ -395,5 +395,29 @@
         "distanz": "",
         "hoehenmeter": "",
         "dauer": ""
+    },
+    {
+        "id": "XX1",
+        "active": true,
+        "gpx": "/gpxfiles/XX Kühtai.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2809109410?share_token=ajYnBEoN8DyP35b0BwvUiY74vfRVT6rBg55qttNJ2M0pzxeFUt&ref=wtd",
+        "garmin": "https://connect.garmin.com/modern/course/436333007",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "XX2",
+        "active": true,
+        "gpx": "/gpxfiles/XX Timmelsjoch.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2809107811?share_token=aT4Z1bhqxHOyIj1CFDN3utxHepFKKQVGRFrs2mLT7vi2FPNWHR&ref=wtd",
+        "garmin": "https://connect.garmin.com/modern/course/436333087",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
     }
 ]

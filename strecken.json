@@ -403,10 +403,10 @@
         "komoot": "https://www.komoot.com/de-de/tour/2809109410?share_token=ajYnBEoN8DyP35b0BwvUiY74vfRVT6rBg55qttNJ2M0pzxeFUt&ref=wtd",
         "garmin": "https://connect.garmin.com/modern/course/436333007",
         "schnitt": "14,2 km/h",
-        "profil": "",
-        "distanz": "",
-        "hoehenmeter": "",
-        "dauer": ""
+        "profil": "Alpin",
+        "distanz": "43,75",
+        "hoehenmeter": "1.613",
+        "dauer": "3 h 04 min"
     },
     {
         "id": "XX2",
@@ -415,9 +415,9 @@
         "komoot": "https://www.komoot.com/de-de/tour/2809107811?share_token=aT4Z1bhqxHOyIj1CFDN3utxHepFKKQVGRFrs2mLT7vi2FPNWHR&ref=wtd",
         "garmin": "https://connect.garmin.com/modern/course/436333087",
         "schnitt": "19,3 km/h",
-        "profil": "",
-        "distanz": "",
-        "hoehenmeter": "",
-        "dauer": ""
+        "profil": "Alpin",
+        "distanz": "94,66",
+        "hoehenmeter": "1.964",
+        "dauer": "4 h 45 min"
     }
 ]

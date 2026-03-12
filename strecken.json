@@ -419,5 +419,17 @@
         "distanz": "94,66",
         "hoehenmeter": "1.964",
         "dauer": "4 h 45 min"
+    },
+    {
+        "id": "M01",
+        "active": true,
+        "gpx": "/gpxfiles/M01 Currywurstexpress.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2823343435?share_token=aUGJdP8W1apyGoldFi4R0CwV7ULlc9t81bQeHl3xCz1AHySVNw&ref=wtd",
+        "garmin": "https://connect.garmin.com/modern/course/438444689",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
     }
 ]

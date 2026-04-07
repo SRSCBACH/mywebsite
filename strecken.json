@@ -431,5 +431,17 @@
         "distanz": "",
         "hoehenmeter": "",
         "dauer": ""
+    },
+    {
+        "id": "XX3",
+        "active": true,
+        "gpx": "/gpxfiles/XX Anradeln 2026.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2870224304?share_token=aeo1aM78Ef0pdP5vBpAo9teYiQn78r2P8i65zFh4e4kLjzFTyl&ref=wtd",
+        "garmin": "https://connect.garmin.com/modern/course/446699971",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
     }
 ]

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://srsc-bach.de/sitemap.xml

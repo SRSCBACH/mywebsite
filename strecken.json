@@ -443,5 +443,17 @@
         "distanz": "",
         "hoehenmeter": "",
         "dauer": ""
+    },
+    {
+        "id": "LR01",
+        "active": true,
+        "gpx": "/gpxfiles/LR01 Auf ein Eis nach Nittenau.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2926978207?share_token=a8K35W8fsMPv27vX9yt6Xo9GhBd5J7m0mvhjQT65RiDmIKEUNl&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=2798095529344",
+        "garmin": "https://connect.garmin.com/modern/course/456711773",
+        "schnitt": "28km/h",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
     }
 ]

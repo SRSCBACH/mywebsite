@@ -455,5 +455,17 @@
         "distanz": "",
         "hoehenmeter": "",
         "dauer": ""
+    },
+    {
+        "id": "LR02",
+        "active": true,
+        "gpx": "/gpxfiles/LR02 The Raindrop Chase.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2936771073?share_token=a8LfIbAMMSbAW60bIdlDnHjH8n3JDRR2xhsFPWBf4ajEYcngYb&ref=wtd&t_s=referral&t_ref_username=2798095529344",
+        "garmin": "https://connect.garmin.com/modern/course/458339353",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
     }
 ]

@@ -467,5 +467,17 @@
         "distanz": "",
         "hoehenmeter": "",
         "dauer": ""
+    },
+    {
+        "id": "LR03",
+        "active": true,
+        "gpx": "/gpxfiles/LR03 Leg Day at Ludwigs.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/2948028657?share_token=amSPny2PuDdEI34fQGI0SNgVhmApWJVQU1ptElbqaKFHmoRyi1&ref=wtd&t_s=referral&t_ref_username=2798095529344",
+        "garmin": "https://connect.garmin.com/modern/course/460376735",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
     }
 ]

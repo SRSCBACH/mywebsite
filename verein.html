@@ -43,7 +43,7 @@
         .faq-answer { font-family: var(--font-body), sans-serif; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.4s ease; opacity: 0; padding-bottom: 0; text-align: justify; }
         .faq-answer a { color: var(--text-secondary); }
         .faq-item.active .faq-toggle { transform: rotate(45deg); }
-        .faq-item.active .faq-answer { max-height: 2000px; opacity: 0.9; padding-bottom: 20px; }
+        .faq-item.active .faq-answer { max-height: 2000px; opacity: 0.9; padding-bottom: 20px; } /* This allows only active answers to expand */
         .link-section { display: flex; gap: 20px; width: 100%; max-width: 800px; margin: 20px; }
         .link-box { flex: 1; display: block; padding: 30px; border-radius: 12px; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); text-decoration: none; text-align: center; transition: all 0.3s ease; position: relative; }
         .link-box:hover { background-color: rgba(255, 255, 255, 0.1); border-color: #94a3b8; transform: translateY(-5px); }
@@ -101,6 +101,12 @@
             }
             .text-content, .faq-question, .faq-answer {
                 opacity: 0.9;
+            }
+            /* Ensure all FAQ answers have enough height on mobile when active */
+            .faq-item.active .faq-answer {
+                max-height: 5000px; /* Sufficiently large for content */
+                opacity: 0.9;
+                padding-bottom: 20px;
             }
         }
         @media (min-width: 769px) {

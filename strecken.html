@@ -243,27 +243,17 @@
             
             activeFilter = filter;
 
-            allTours.forEach(tour => {
-                let shouldDisplay = false;
-                switch(filter) {
-                    case 'all':
-                        shouldDisplay = true;
-                        break;
-                    case 'dropzone':
-                        shouldDisplay = tour.category === 'dropzone';
-                        break;
-                    case 'socialride':
-                        shouldDisplay = tour.category === 'socialride';
-                        break;
-                    case 'offroad':
-                        shouldDisplay = tour.category === 'offroad';
-                        break;
-                    case 'special':
-                        shouldDisplay = tour.category === 'special';
-                        break;
+            // Filter the tours based on the selected category
+            const filteredTours = allTours.filter(tour => {
+                if (filter === 'all') {
+                    return true; // Show all if filter is 'all'
                 }
+                return tour.category === filter;
+            });
 
-                if(tour.active !== false && shouldDisplay) {
+            // Render the filtered tours
+            filteredTours.forEach(tour => {
+                if(tour.active !== false) {
                     createCardHTML(container, tour.id);
                     setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
                 }
@@ -278,6 +268,18 @@
             })
             .then(touren => {
                 allTours = touren; // Alle Touren speichern
+                
+                // Sort tours by ID when 'all' filter is active, otherwise use the order from JSON
+                allTours.sort((a, b) => {
+                    // Ensure IDs are treated as numbers for correct sorting
+                    const idA = typeof a.id === 'string' && a.id.match(/^\d+$/) ? parseInt(a.id) : a.id;
+                    const idB = typeof b.id === 'string' && b.id.match(/^\d+$/) ? parseInt(b.id) : b.id;
+
+                    if (idA < idB) return -1;
+                    if (idA > idB) return 1;
+                    return 0;
+                });
+
                 // Set the active filter visually when the page loads
                 const initialFilterButton = document.querySelector(`.btn-filter[data-filter="${activeFilter}"]`);
                 if (initialFilterButton) {

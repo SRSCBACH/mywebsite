@@ -125,6 +125,7 @@
         }
         .btn:hover { background-color: #334155; color: #ffffff; transform: translateY(-2px); border-color: #334155; }
         .btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+        .btn.active { background-color: #334155; color: #ffffff; border-color: #334155; } /* Style for active filter button */
 
         .loading-text { font-size: 1rem; color: var(--accent-blue); animation: blink 1.5s infinite; }
         @keyframes blink { 50% { opacity: 0.5; } }
@@ -194,7 +195,16 @@
         <div class="orb orb-3"></div>
     </div>
     <main class="main-content top-aligned">
-        <div id="app-container"></div>
+        <div id="app-container">
+            <!-- Button group will be rendered here -->
+            <div class="button-group">
+                <button class="btn btn-filter" data-filter="all">Alle</button>
+                <button class="btn btn-filter" data-filter="dropzone">Drop Zone</button>
+                <button class="btn btn-filter" data-filter="socialride">Social Ride</button>
+                <button class="btn btn-filter" data-filter="offroad">OFF Road</button>
+                <button class="btn btn-filter" data-filter="special">Special</button>
+            </div>
+        </div>
     </main>
 
     <footer class="footer-container" id="footer-container">
@@ -218,6 +228,48 @@
         Chart.defaults.font.family = customFont;
         Chart.defaults.color = '#cbd5e1';
 
+        let allTours = []; // Variable zum Speichern aller Touren
+        let activeFilter = 'all'; // Aktuell aktiver Filter
+
+        // Funktion zum Filtern und Anzeigen der Touren
+        function displayTours(filter) {
+            const container = document.getElementById('app-container');
+            // Clear existing tour cards, but keep the button group
+            const buttonGroup = container.querySelector('.button-group');
+            container.innerHTML = '';
+            if (buttonGroup) {
+                container.appendChild(buttonGroup);
+            }
+            
+            activeFilter = filter;
+
+            allTours.forEach(tour => {
+                let shouldDisplay = false;
+                switch(filter) {
+                    case 'all':
+                        shouldDisplay = true;
+                        break;
+                    case 'dropzone':
+                        shouldDisplay = tour.category === 'dropzone';
+                        break;
+                    case 'socialride':
+                        shouldDisplay = tour.category === 'socialride';
+                        break;
+                    case 'offroad':
+                        shouldDisplay = tour.category === 'offroad';
+                        break;
+                    case 'special':
+                        shouldDisplay = tour.category === 'special';
+                        break;
+                }
+
+                if(tour.active !== false && shouldDisplay) {
+                    createCardHTML(container, tour.id);
+                    setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
+                }
+            });
+        }
+
         // JSON laden
         fetch('strecken.json')
             .then(response => {
@@ -225,16 +277,13 @@
                 return response.json();
             })
             .then(touren => {
-                const container = document.getElementById('app-container');
-                touren.forEach(tour => {
-                    if(tour.active !== false) {
-                        createCardHTML(container, tour.id);
-
-                        // Sofort initialisieren, ohne auf Fonts zu warten
-                        // setTimeout 0 stellt sicher, dass das HTML im DOM ist
-                        setTimeout(() => initSingleCard(tour.id, tour, customFont), 0);
-                    }
-                });
+                allTours = touren; // Alle Touren speichern
+                // Set the active filter visually when the page loads
+                const initialFilterButton = document.querySelector(`.btn-filter[data-filter="${activeFilter}"]`);
+                if (initialFilterButton) {
+                    initialFilterButton.classList.add('active');
+                }
+                displayTours(activeFilter); // Touren mit dem initialen Filter anzeigen
             })
             .catch(err => {
                 console.error("Fehler beim Laden der Touren:", err);
@@ -510,6 +559,19 @@
                 }
             });
         }
+
+        // Event Listener für die Filter-Buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('btn-filter')) {
+                const filter = event.target.dataset.filter;
+                displayTours(filter);
+
+                // Aktiven Button hervorheben
+                document.querySelectorAll('.btn-filter').forEach(btn => btn.classList.remove('active'));
+                event.target.classList.add('active');
+            }
+        });
+
     </script>
 </body>
 </html>

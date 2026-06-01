@@ -2,6 +2,7 @@
 [
     {
         "id": "00",
+        "category": "special",
         "active": true,
         "gpx": "/gpxfiles/00 Zeitfahren.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2455911148?share_token=ak3wgKn8o2MaAQLEGyo69KHchwoHAh3IppPykg43OvvQX9uBeg&ref=wtd",
@@ -14,6 +15,7 @@
     },
     {
         "id": "01",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/01 Zur schönen Aussicht.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2455939345?share_token=aRHJ7mJEsjiHYK8wy07lXCxaohifs5UYESCn3IXed0IXKvZh79&ref=wtd",
@@ -26,6 +28,7 @@
     },
     {
         "id": "02",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/02 Wörther Rampe.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2455965304?share_token=aH0nwrECvnHyaiXpxwCYHv2sYaNKOhqzb84OQZWH3Qy6V4rwYh&ref=wtd",
@@ -38,6 +41,7 @@
     },
     {
         "id": "03",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/03 Auf nach Aufhausen.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2455985513?share_token=aF8USlul6kmFvZ8Yh1npfmo3bLHfEvAbsPQETFliLxu687HHrU&ref=wtd",
@@ -50,6 +54,7 @@
     },
     {
         "id": "04",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/04 Projekt Schallmauer.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456098576?share_token=aJSAs9eM74oqA72B1fyGl1PM59fbiCkcW4f2dnSjaWTjnaZwzM&ref=wtd",
@@ -62,6 +67,7 @@
     },
     {
         "id": "05",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/05 Simon´s Hausrunde.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456111925?share_token=amDNsQIueumVSH1d4U9stGy44GWqo2BzJBVTvgAMCPLEgz6ZpI&ref=wtd",
@@ -74,6 +80,7 @@
     },
     {
         "id": "06",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/06 Somebody will crack.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456125020?share_token=ab7AC2iHJqXTwyTy7VzsP0Yv1kNhIUNqpJEwykYA5Vl2xggAZv&ref=wtd",
@@ -86,6 +93,7 @@
     },
     {
         "id": "07",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/07 Hammertime.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456138510?share_token=anUe4XOqr6gWznk1fKAagN7Hhfy0eUK8eKhGkZ3GsRwZSV9VXe&ref=wtd",
@@ -98,6 +106,7 @@
     },
     {
         "id": "08",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/08 ’s Leben is wiar a Traum.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2455750816?share_token=azhUUEHlSpVJ68jwavuDIZ1nALNuqk3PFVUTU55L4tBxZT6QwD&ref=wtd",
@@ -110,6 +119,7 @@
     },
     {
         "id": "09",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/09 Donaurunde.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456318151?share_token=aD9MdwxIhxicLiktjN020NjTefQfpV5b4Qe2QYBue4VIeDriXs&ref=wtd",
@@ -122,6 +132,7 @@
     },
     {
         "id": "10",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/10 Wellenreiten.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456353767?share_token=aBLMta4XbZxCHo4t42ekI5HvpBmJpwVVdLYgg5gEchozrv637c&ref=wtd",
@@ -134,6 +145,7 @@
     },
     {
         "id": "11",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/11 Taubenmarktrunde.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456383581?share_token=aU2vPOthTdldJj4jkzmyMliFJAzTounlYLwgm7XQpB7QZ6Uj0x&ref=wtd",
@@ -146,6 +158,7 @@
     },
     {
         "id": "12",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/12 Easy Peasy.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456399178?share_token=afgn0SlhpRGhmoCFzSijm7oA7z30EoLODBnw1XIat01sbI8o96&ref=wtd",
@@ -158,6 +171,7 @@
     },
     {
         "id": "13",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/13 Stilfser Joch für Arme.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456431338?share_token=a45qmPf3syrY5LJo2JUGdlkRxShChuBuZwS0xy9J8Tfx6nITDh&ref=wtd",
@@ -170,6 +184,7 @@
     },
     {
         "id": "14",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/14 Schmerzhafte Mutter.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456884690?share_token=aWTRAgqLzYfrAaSKJkkG98ee12KhmEpFWt0oZH9DprasOlQd8D&ref=wtd",
@@ -182,6 +197,7 @@
     },
     {
         "id": "15",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/15 Pentlinger Gschaftlhuber.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456914703?share_token=aZzrdgC1JApg7obRr1YBqGZ42vOVd0V2xf2KNHXCOVHn0wQ6ep&ref=wtd",
@@ -194,6 +210,7 @@
     },
     {
         "id": "16",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/16 Siaßabacher Waidlerrunde.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456949845?share_token=aM4I7FMc1EwkWP5CV968lxG9ar34s6CDsA6HOhAuELPwiaX3vg&ref=wtd",
@@ -206,6 +223,7 @@
     },
     {
         "id": "17",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/17 Wallfahrt nach Bogenberg.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2456978167?share_token=a6AErPL3MGxrFs0O7dUwrA99aWS4ZAcYEeFhsnXJ5Hm3KSJHNr&ref=wtd",
@@ -218,6 +236,7 @@
     },
     {
         "id": "18",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/18 Hill Repeat Intervalle.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2489499832?share_token=aarlabcYidO5zELB6GVsiIH87GSih4DbK8NYjEwz9AOzaR8ATs&ref=",
@@ -230,6 +249,7 @@
     },
     {
         "id": "19",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/19 Mount Wiesent.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2759844446?share_token=awpvWDx3HMjEgz7B6Cam97frWeBYo8Ho24czv9bfPJluikAqXA&ref=",
@@ -242,6 +262,7 @@
     },
     {
         "id": "20",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/20 Haunsbacher Hund.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787468491?share_token=aMmiH8Cia3W2u7agJ0QMObcnWddu2xoyfIEapLVC6MZmALCTRh&ref=",
@@ -254,6 +275,7 @@
     },
     {
         "id": "21",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/21 Auf an Abstecher ins Penker.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787469890?share_token=acwiSDXZG36LL7XykNGSRxw4OH5a3s4A4PjKPwO4MRzUlg9O37&ref=",
@@ -265,9 +287,10 @@
         "dauer": ""
     },
     {
-        "id": "22",
+        "id": "LR05",
+        "category": "socialride",
         "active": true,
-        "gpx": "/gpxfiles/22 Luftkur in St. Engelmar.gpx",
+        "gpx": "/gpxfiles/LR05 Luftkur in St. Engelmar.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787471886?share_token=aIj94un7eHiZr7NEj8KIzrx7fI29RXf8jZP3hmmRIloRbdV2E1&ref=",
         "garmin": "https://connect.garmin.com/modern/course/432881240",
         "schnitt": "",
@@ -277,9 +300,10 @@
         "dauer": ""
     },
     {
-        "id": "23",
+        "id": "LR06",
+        "category": "socialride",
         "active": true,
-        "gpx": "/gpxfiles/23 Zinzenzeller Rodeo.gpx",
+        "gpx": "/gpxfiles/LR06 Zinzenzeller Rodeo.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787474362?share_token=ajnO13ioxvi2t3z3WZLzkvnN64U8LS4odll7rvxFOZh3u1hjXO&ref=",
         "garmin": "https://connect.garmin.com/modern/course/432881284",
         "schnitt": "",
@@ -290,6 +314,7 @@
     },
     {
         "id": "24",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/24 Hör ich da 1000 Höhenmeter.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787476118?share_token=aHrxs5SvniZEoWmwlv13FnashooHoSZWMyBi7PW5OVUF7tHYVd&ref=",
@@ -302,6 +327,7 @@
     },
     {
         "id": "25",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/25 Petersberg Reverse.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787477458?share_token=aNfqwT7uTpUmfEEFPx1J2hO5eURWqWexVSthOLrNC23T6IWXTC&ref=",
@@ -313,9 +339,10 @@
         "dauer": ""
     },
     {
-        "id": "26",
+        "id": "LR07",
+        "category": "socialride",
         "active": true,
-        "gpx": "/gpxfiles/26 Matthias Spezial.gpx",
+        "gpx": "/gpxfiles/LR07 Matthias Spezial.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787478456?share_token=ayquJuUI6yYnj8jhTr9kdQHyyGHDJkMyER4pf1tr91INTebNMg&ref=",
         "garmin": "https://connect.garmin.com/modern/course/432881421",
         "schnitt": "",
@@ -326,6 +353,7 @@
     },
     {
         "id": "27",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/27 Auf den Spuren Napoleons.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787480681?share_token=a8FziOUE9mAFX6tC80DTQKNZ67LPSCm3WVnhrBjHIf1C0272t8&ref=",
@@ -338,6 +366,7 @@
     },
     {
         "id": "28",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/28 Kettenfeuer-Express.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787481392?share_token=ayu624UtldHTN1UG2e6qwM2zFKK9CpeCfWwjBGO9We3unp9j3G&ref=",
@@ -350,6 +379,7 @@
     },
     {
         "id": "29",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/29 Laktat-Massaker.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787481912?share_token=aFYIS4FFrvq4AUUP69zUGtPqZG6YjtphlXM4GaUPRdKDb9jDDv&ref=",
@@ -362,6 +392,7 @@
     },
     {
         "id": "30",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/30 Puls-Punisher.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787483286?share_token=am6gvoLPvfVrDX2viPleE6yo20iFBpZ127CMjkTRDOgCWJrrem&ref=",
@@ -374,6 +405,7 @@
     },
     {
         "id": "31",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/31 Sauerstoffnot.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787484967?share_token=a7cH5xTr1S4xx4NjfaYFPHU2rGanJmTqJE8uNVsyIOc6RNs68Y&ref=",
@@ -386,6 +418,7 @@
     },
     {
         "id": "32",
+        "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/32 Beinfriedhof.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787485567?share_token=aTZVpaKTxgbhokafiuvq6fUNXhqvd35mH7mCB8nXzBT1UL4uKg&ref=",
@@ -398,6 +431,7 @@
     },
     {
         "id": "XX1",
+        "category": "special",
         "active": true,
         "gpx": "/gpxfiles/XX Kühtai.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2809109410?share_token=ajYnBEoN8DyP35b0BwvUiY74vfRVT6rBg55qttNJ2M0pzxeFUt&ref=wtd",
@@ -410,6 +444,7 @@
     },
     {
         "id": "XX2",
+        "category": "special",
         "active": true,
         "gpx": "/gpxfiles/XX Timmelsjoch.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2809107811?share_token=aT4Z1bhqxHOyIj1CFDN3utxHepFKKQVGRFrs2mLT7vi2FPNWHR&ref=wtd",
@@ -422,6 +457,7 @@
     },
     {
         "id": "M01",
+        "category": "offroad",
         "active": true,
         "gpx": "/gpxfiles/M01 Currywurstexpress.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2823343435?share_token=aUGJdP8W1apyGoldFi4R0CwV7ULlc9t81bQeHl3xCz1AHySVNw&ref=wtd",
@@ -434,6 +470,7 @@
     },
     {
         "id": "XX3",
+        "category": "special",
         "active": true,
         "gpx": "/gpxfiles/XX Anradeln 2026.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2870224304?share_token=aeo1aM78Ef0pdP5vBpAo9teYiQn78r2P8i65zFh4e4kLjzFTyl&ref=wtd",
@@ -446,6 +483,7 @@
     },
     {
         "id": "LR01",
+        "category": "socialride",
         "active": true,
         "gpx": "/gpxfiles/LR01 Auf ein Eis nach Nittenau.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2926978207?share_token=a8K35W8fsMPv27vX9yt6Xo9GhBd5J7m0mvhjQT65RiDmIKEUNl&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=2798095529344",
@@ -458,6 +496,7 @@
     },
     {
         "id": "LR02",
+        "category": "socialride",
         "active": true,
         "gpx": "/gpxfiles/LR02 The Raindrop Chase.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2936771073?share_token=a8LfIbAMMSbAW60bIdlDnHjH8n3JDRR2xhsFPWBf4ajEYcngYb&ref=wtd&t_s=referral&t_ref_username=2798095529344",
@@ -470,6 +509,7 @@
     },
     {
         "id": "LR03",
+        "category": "socialride",
         "active": true,
         "gpx": "/gpxfiles/LR03 Leg Day at Ludwigs.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2948028657?share_token=amSPny2PuDdEI34fQGI0SNgVhmApWJVQU1ptElbqaKFHmoRyi1&ref=wtd&t_s=referral&t_ref_username=2798095529344",
@@ -482,6 +522,7 @@
     },
     {
         "id": "LR04",
+        "category": "socialride",
         "active": true,
         "gpx": "/gpxfiles/LR04 Kleine Arberrunde.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2969396486?share_token=aJTNIDuVP1QQpZjV8MenTGTFZdbHhu7nFmX2EnllnEjIGRUWG1&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=2798095529344",

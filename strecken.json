@@ -287,10 +287,10 @@
         "dauer": ""
     },
     {
-        "id": "LR05",
+        "id": "SR05",
         "category": "socialride",
         "active": true,
-        "gpx": "/gpxfiles/LR05 Luftkur in St. Engelmar.gpx",
+        "gpx": "/gpxfiles/SR05 Luftkur in St. Engelmar.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787471886?share_token=aIj94un7eHiZr7NEj8KIzrx7fI29RXf8jZP3hmmRIloRbdV2E1&ref=",
         "garmin": "https://connect.garmin.com/modern/course/432881240",
         "schnitt": "",
@@ -300,10 +300,10 @@
         "dauer": ""
     },
     {
-        "id": "LR06",
+        "id": "SR06",
         "category": "socialride",
         "active": true,
-        "gpx": "/gpxfiles/LR06 Zinzenzeller Rodeo.gpx",
+        "gpx": "/gpxfiles/SR06 Zinzenzeller Rodeo.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787474362?share_token=ajnO13ioxvi2t3z3WZLzkvnN64U8LS4odll7rvxFOZh3u1hjXO&ref=",
         "garmin": "https://connect.garmin.com/modern/course/432881284",
         "schnitt": "",
@@ -339,10 +339,10 @@
         "dauer": ""
     },
     {
-        "id": "LR07",
+        "id": "SR07",
         "category": "socialride",
         "active": true,
-        "gpx": "/gpxfiles/LR07 Matthias Spezial.gpx",
+        "gpx": "/gpxfiles/SR07 Matthias Spezial.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787478456?share_token=ayquJuUI6yYnj8jhTr9kdQHyyGHDJkMyER4pf1tr91INTebNMg&ref=",
         "garmin": "https://connect.garmin.com/modern/course/432881421",
         "schnitt": "",
@@ -482,10 +482,10 @@
         "dauer": ""
     },
     {
-        "id": "LR01",
+        "id": "SR01",
         "category": "socialride",
         "active": true,
-        "gpx": "/gpxfiles/LR01 Auf ein Eis nach Nittenau.gpx",
+        "gpx": "/gpxfiles/SR01 Auf ein Eis nach Nittenau.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2926978207?share_token=a8K35W8fsMPv27vX9yt6Xo9GhBd5J7m0mvhjQT65RiDmIKEUNl&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=2798095529344",
         "garmin": "https://connect.garmin.com/modern/course/456774916",
         "schnitt": "28",
@@ -495,10 +495,10 @@
         "dauer": ""
     },
     {
-        "id": "LR02",
+        "id": "SR02",
         "category": "socialride",
         "active": true,
-        "gpx": "/gpxfiles/LR02 The Raindrop Chase.gpx",
+        "gpx": "/gpxfiles/SR02 The Raindrop Chase.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2936771073?share_token=a8LfIbAMMSbAW60bIdlDnHjH8n3JDRR2xhsFPWBf4ajEYcngYb&ref=wtd&t_s=referral&t_ref_username=2798095529344",
         "garmin": "https://connect.garmin.com/modern/course/458339353",
         "schnitt": "",
@@ -508,10 +508,10 @@
         "dauer": ""
     },
     {
-        "id": "LR03",
+        "id": "SR03",
         "category": "socialride",
         "active": true,
-        "gpx": "/gpxfiles/LR03 Leg Day at Ludwigs.gpx",
+        "gpx": "/gpxfiles/SR03 Leg Day at Ludwigs.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2948028657?share_token=amSPny2PuDdEI34fQGI0SNgVhmApWJVQU1ptElbqaKFHmoRyi1&ref=wtd&t_s=referral&t_ref_username=2798095529344",
         "garmin": "https://connect.garmin.com/modern/course/460376735",
         "schnitt": "",
@@ -521,10 +521,10 @@
         "dauer": ""
     },
     {
-        "id": "LR04",
+        "id": "SR04",
         "category": "socialride",
         "active": true,
-        "gpx": "/gpxfiles/LR04 Kleine Arberrunde.gpx",
+        "gpx": "/gpxfiles/SR04 Kleine Arberrunde.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2969396486?share_token=aJTNIDuVP1QQpZjV8MenTGTFZdbHhu7nFmX2EnllnEjIGRUWG1&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=2798095529344",
         "garmin": "https://connect.garmin.com/app/course/464337972",
         "schnitt": "26,3",

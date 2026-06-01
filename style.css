@@ -319,6 +319,46 @@ strong { color: var(--text-primary); font-weight: 600; }
 
 .btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
 
+/* --- NEUE STYLES FÜR DIE BUTTONS --- */
+
+/* Container für die Buttons, um sie nebeneinander anzuordnen */
+.button-row {
+    display: flex;
+    /* Centriert die Gruppe von Buttons, falls sie nicht die gesamte Breite einnehmen */
+    justify-content: center; 
+    gap: 10px; /* Kleiner Abstand zwischen den Buttons */
+    margin-top: 20px; /* Abstand zum oberen Element */
+    margin-bottom: 20px; /* Abstand zum unteren Element */
+    
+    /* NEU: Stellt sicher, dass der Container die volle Breite des Elternelements einnimmt */
+    width: 100%; 
+    /* NEU: Entfernt die explizite max-width, damit es sich der .card anpasst */
+    max-width: none; 
+}
+
+/* Style für den Parent-Container, der die Tabelle und die Buttons umschließt */
+/* Angenommen, dieser Container ist direkt über .data-table und .button-row */
+/* Ich nenne ihn hier .track-content-wrapper. Du musst dies eventuell anpassen */
+/* Basierend auf der Annahme, dass .card der Container ist, der auf 80% begrenzt wird */
+.card { /* <-- Dieser Selektor ist jetzt der Ziel-Container */
+    max-width: 80% !important; /* Setzt die maximale Breite auf 80% */
+    margin-left: auto !important; /* Zentriert den Container */
+    margin-right: auto !important; /* Zentriert den Container */
+    width: 100% !important; /* Stellt sicher, dass er die volle Breite ausfüllt, bis zur max-width */
+}
+
+/* Alle Buttons im Button-Row sollen die gleiche Breite haben und den Platz ausfüllen */
+.button-row .btn {
+    /* Änderung hier: flex: 0 0 auto; statt flex: 1; */
+    flex: 0 0 auto; 
+    /* Sicherstellen, dass die Breite des Inhalts berücksichtigt wird, aber nicht zu schmal */
+    min-width: 120px; /* Mindestbreite für Lesbarkeit */
+    padding: 10px 20px; /* Fügt etwas Innenabstand hinzu für bessere Optik */
+    width: auto; /* Breite passt sich dem Inhalt an */
+}
+
+/* Falls die Buttons breiter sein sollen als die Spalte, ggf. max-width setzen */
+/* Hier gehen wir davon aus, dass sie sich der Spaltenbreite anpassen sollen */
 
 /* --- 9. MOBILE OPTIMIERUNG --- */
 @media (max-width: 850px) {

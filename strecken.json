@@ -351,38 +351,12 @@
         "dauer": ""
     },
     {
-        "id": "30",
-        "category": "dropzone",
-        "active": true,
-        "gpx": "/gpxfiles/30 Puls-Punisher.gpx",
-        "komoot": "https://www.komoot.com/de-de/tour/2787483286?share_token=am6gvoLPvfVrDX2viPleE6yo20iFBpZ127CMjkTRDOgCWJrrem&ref=",
-        "garmin": "https://connect.garmin.com/modern/course/432881544",
-        "schnitt": "",
-        "profil": "",
-        "distanz": "",
-        "hoehenmeter": "",
-        "dauer": ""
-    },
-    {
         "id": "31",
         "category": "dropzone",
         "active": true,
         "gpx": "/gpxfiles/31 Sauerstoffnot.gpx",
         "komoot": "https://www.komoot.com/de-de/tour/2787484967?share_token=a7cH5xTr1S4xx4NjfaYFPHU2rGanJmTqJE8uNVsyIOc6RNs68Y&ref=",
         "garmin": "https://connect.garmin.com/modern/course/432881583",
-        "schnitt": "",
-        "profil": "",
-        "distanz": "",
-        "hoehenmeter": "",
-        "dauer": ""
-    },
-    {
-        "id": "32",
-        "category": "dropzone",
-        "active": true,
-        "gpx": "/gpxfiles/32 Beinfriedhof.gpx",
-        "komoot": "https://www.komoot.com/de-de/tour/2787485567?share_token=aTZVpaKTxgbhokafiuvq6fUNXhqvd35mH7mCB8nXzBT1UL4uKg&ref=",
-        "garmin": "https://connect.garmin.com/modern/course/432881611",
         "schnitt": "",
         "profil": "",
         "distanz": "",

@@ -286,6 +286,22 @@
         "dauer": ""
     },
     {
+        "id": "22",
+        "category": "dropzone",
+        "active": true,
+        "gpx": "/gpxfiles/22 Norberts Threshold Blast.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/3031099483?share_token=aKe8vmKIDqfaQbd2A98w8C2QiGeLXTyWvZBx7wc8Ma6AoJ4oUu&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=2798095529344",
+        "garmin": "https://connect.garmin.com/app/course/474104188",
+        "schnitt": "26",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    
+    
+    
+    {
         "id": "24",
         "category": "dropzone",
         "active": true,

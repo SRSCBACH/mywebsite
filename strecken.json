@@ -298,9 +298,6 @@
         "hoehenmeter": "",
         "dauer": ""
     },
-    
-    
-    
     {
         "id": "24",
         "category": "dropzone",
@@ -465,6 +462,19 @@
         "komoot": "https://www.komoot.com/de-de/tour/2787478456?share_token=ayquJuUI6yYnj8jhTr9kdQHyyGHDJkMyER4pf1tr91INTebNMg&ref=",
         "garmin": "https://connect.garmin.com/modern/course/432881421",
         "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "SR08",
+        "category": "socialride",
+        "active": true,
+        "gpx": "/gpxfiles/SR08 Die Knusper-Kurbel-Tour.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/3060867909?share_token=akgbTRb3ebJHqcgETp8tcDLjGrMH2rgSYAVdLlBe9Tql4NKzSt&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=2798095529344",
+        "garmin": "https://connect.garmin.com/app/course/479096012",
+        "schnitt": "27",
         "profil": "",
         "distanz": "",
         "hoehenmeter": "",

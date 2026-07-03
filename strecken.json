@@ -481,6 +481,19 @@
         "dauer": ""
     },
     {
+        "id": "SR09",
+        "category": "socialride",
+        "active": true,
+        "gpx": "/gpxfiles/SR09 Wurst-Case Scenario.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/3080366354?share_token=am2DM3vrW2lbz8OE2eZGu7lAINYBxqTzpdDVP0ydVUoRuUE1y7&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=2798095529344",
+        "garmin": "https://connect.garmin.com/app/course/482444070",
+        "schnitt": "28",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
         "id": "M01",
         "category": "offroad",
         "active": true,
@@ -530,6 +543,19 @@
         "profil": "",
         "distanz": "",
         "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
+        "id": "XX4",
+        "category": "special",
+        "active": true,
+        "gpx": "/gpxfiles/XX SRSC Vintage Velo - Stahl statt Carbon.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/3080074709?ref=itd&share_token=aNeVC4NFxhDlWQgOCHLsVZx2TfzmdnQQYcqFl4tDt7Zv2KwTLs&ref=its&t_s=referral&t_cid=route_share&t_ref_username=499499472000",
+        "garmin": "https://connect.garmin.com/app/course/482437925",
+        "schnitt": "30,4",
+        "profil": "54,5",
+        "distanz": "",
+        "hoehenmeter": "240",
         "dauer": ""
     }
 ]

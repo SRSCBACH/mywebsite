@@ -291,9 +291,6 @@
             <img src="images/deinecrew.svg" alt="SRSC Bach Logo" class="simple-logo">
         </div>
         <div class="social-links">
-            <div id="play-button-container" class="social-text-link">
-                <span id="play-button-text">PLAY</span>
-            </div>
             <a href="https://www.instagram.com/srscbachcrew" title="Instagram" class="social-text-link" target="_blank">
                 <span>INSTA</span>
             </a>
@@ -318,17 +315,14 @@
 
     <script src="main.js"></script>
     <script>
-        const playButtonContainer = document.getElementById('play-button-container');
-        const playButtonText = document.getElementById('play-button-text');
+        const logo = document.querySelector('.simple-logo');
         const crewSong = document.getElementById('crew-song');
 
-        playButtonContainer.addEventListener('click', () => {
+        logo.addEventListener('click', () => {
             if (crewSong.paused) {
                 crewSong.play();
-                playButtonText.textContent = 'PAUSE';
             } else {
                 crewSong.pause();
-                playButtonText.textContent = 'PLAY';
             }
         });
     </script>

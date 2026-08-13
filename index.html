@@ -157,6 +157,10 @@
             position: relative;
         }
 
+        #play-button-container.social-text-link {
+            cursor: pointer;
+        }
+
         /* ========================================= */
         /* 5. BACKGROUND IMAGE (DESKTOP)            */
         /* ========================================= */
@@ -287,6 +291,13 @@
             <img src="images/deinecrew.svg" alt="SRSC Bach Logo" class="simple-logo">
         </div>
         <div class="social-links">
+            <div id="play-button-container" class="social-text-link">
+                <span id="play-button">
+                    <svg width="18" height="18" viewBox="0 0 100 100" fill="currentColor">
+                        <polygon points="20,10 90,50 20,90" />
+                    </svg>
+                </span>
+            </div>
             <a href="https://www.instagram.com/srscbachcrew" title="Instagram" class="social-text-link" target="_blank">
                 <span>INSTA</span>
             </a>
@@ -307,8 +318,31 @@
     </div>
 
     <footer class="footer-container" id="footer-container"><div id="footer-placeholder"></div></footer>
+    <audio id="crew-song" src="MP3 Files/SRSC Bach Crewsong.mp3"></audio>
 
     <script src="main.js"></script>
+    <script>
+        const playButtonContainer = document.getElementById('play-button-container');
+        const playButton = document.getElementById('play-button');
+        const crewSong = document.getElementById('crew-song');
 
+        const playIconHTML = `<svg width="18" height="18" viewBox="0 0 100 100" fill="currentColor">
+                                <polygon points="20,10 90,50 20,90" />
+                              </svg>`;
+        const pauseIconHTML = `<svg width="18" height="18" viewBox="0 0 100 100" fill="currentColor">
+                                 <rect x="20" y="10" width="25" height="80" />
+                                 <rect x="55" y="10" width="25" height="80" />
+                               </svg>`;
+
+        playButtonContainer.addEventListener('click', () => {
+            if (crewSong.paused) {
+                crewSong.play();
+                playButton.innerHTML = pauseIconHTML;
+            } else {
+                crewSong.pause();
+                playButton.innerHTML = playIconHTML;
+            }
+        });
+    </script>
 </body>
 </html>

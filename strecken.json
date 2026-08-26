@@ -520,6 +520,19 @@
         "dauer": ""
     },
     {
+        "id": "SR12",
+        "category": "socialride",
+        "active": true,
+        "gpx": "/gpxfiles/SR12 Kulinariktour.gpx",
+        "komoot": "https://www.komoot.com/de-de/tour/3232357770?share_token=ae8vnEXabiKzrOvoo1T7jH1Q3zK1FnsyRpxJNTtS1x2tSjBpQy&ref=wtd&t_s=referral&t_cid=route_share&t_ref_username=2798095529344",
+        "garmin": "https://connect.garmin.com/app/course/507396420",
+        "schnitt": "",
+        "profil": "",
+        "distanz": "",
+        "hoehenmeter": "",
+        "dauer": ""
+    },
+    {
         "id": "M01",
         "category": "offroad",
         "active": true,
